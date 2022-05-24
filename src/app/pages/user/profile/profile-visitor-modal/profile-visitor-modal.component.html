@@ -1,0 +1,15 @@
+<div class="modal-header" style="padding: 15px 15px 15px 15px !important;">
+    <h5 class="modal-title" style="margin-left: -1px;" *ngIf="isFavoriteModal">Merkliste</h5>
+    <h5 class="modal-title" *ngIf="isLastVisitorModal">Feed</h5>
+
+    <div class="ml-auto">
+        <i (click)="clickFavoriteModal()" class="fas fa-clipboard-list mr-2 text-muted cursor-pointer"></i>
+        <i (click)="clickLastVisitorModal()" class="fas fa-exclamation text-muted mr-2 cursor-pointer"></i>
+        <i id="closeModal" (click)="closeModal()" style="margin-right: -3px;"
+           class="fas fa-times text-muted cursor-pointer"></i>
+    </div>
+</div>
+<div class="modal-body" style="padding: 15px 15px 0px 15px !important;">
+    <app-last-visitors *ngIf="isLastVisitorModal"></app-last-visitors>
+    <app-favorite-list *ngIf="isFavoriteModal"></app-favorite-list>
+</div>

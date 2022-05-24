@@ -1,0 +1,56 @@
+{
+  "This field is required": "This field is required",
+  "Your e-mail address is invalid": "Your e-mail address is invalid",
+
+
+  "E-mail Address": "E-mail Address",
+  "Password": "Password",
+  "Password is incorrect": "Password is incorrect",
+  "I am": "I am",
+  "I'm looking for": "I'm looking for",
+  "CONTINUE": "CONTINUE",
+  "CONTINUE WITH FACEBOOK": "CONTINUE WITH FACEBOOK",
+  "JOIN NOW": "JETZT REGISTRIEREN",
+  "LOG IN": "LOG IN",
+  "LOGOUT": "LOGOUT",
+
+  "Register First Info Text": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea, sit repudiandae? Excepturi atque, illum recusandae nostrum dolorum laborum repellat a minus, quae illo quibusdam modi sunt ea, non ratione. Ducimus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores voluptatum aliquam omnis, tempora commodi obcaecati quia porro accusantium aspernatur aliquid nam neque! Eum magni beatae ipsa accusamus ut. Minus, odit?",
+  "Man": "Man",
+  "Woman":  "Woman",
+  "Other": "Other",
+
+  "Day": "Day",
+  "Month": "Month",
+  "Year": "Year",
+
+  "State": "State",
+  "Post Code": "PLZ",
+  "Post Code is incorrect": "PLZ ist falsch",
+  "Please Enter Valid Date": "Please Enter Valid Date",
+  "REGISTER": "REGISTRIEREN",
+  "AGB": "AGB",
+  "read and agreed": "read and agreed",
+  "DSE": "DSE",
+  "Profile Name": "Profile Name",
+  "Eye Color": "Eye Color",
+  "Black": "Black",
+  "Yellow": "Yellow",
+  "Blue": "Blue",
+
+  "How do you know us": "How do you know us",
+  "From the Internet": "From the Internet",
+  "From Search Engine": "From Search Engine",
+  "From My Friends": "From My Friends",
+
+  "Non Paid Man User": "Gentelmen",
+  "Paid Man User": "VIP Gentlemens",
+  "Non Paid Couple": "Lovers",
+  "Paid Couple": "VIP Lovers",
+  "Woman User": "VIP Ladies",
+  "Pin is incorrect": "Pin is incorrect",
+  "Male": "Male",
+  "Female": "Female",
+  "Couple": "Couple",
+  "Profile name is exist": "Profile name is exist",
+  "E-Mail name is exist": "E-Mail name is exist"
+}

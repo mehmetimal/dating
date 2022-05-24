@@ -1,0 +1,29 @@
+<div class="card text-center border-radius-12px">
+    <div class="card-header bg-transparent border-0">
+        <img width="100" height="100" src="../../../../../assets/img/Rauchen.svg"/>
+    </div>
+    <div class="card-body">
+        <h6 class="card-title">{{msg?.senderName}} möchte von dir wissen, ob du
+            Piercings hast: Wähle jetzt
+            deine Antwort!</h6>
+
+    </div>
+    <div class="card-footer">
+        <button (click)="answerRaucherQuestion(JA)"
+                class="btn btn-sm btn-primary m-2">JA
+        </button>
+        <button (click)="answerRaucherQuestion(NEIN)"
+                class="btn btn-sm btn-primary m-2">NEIN
+        </button>
+        <button (click)="answerRaucherQuestion(VIELLEICHT)"
+                class="btn btn-sm btn-primary m-2">VIELLEICHT
+        </button>
+        <button (click)="answerRaucherQuestion(VIDEOCHATZEIGEN)"
+                class="btn btn-sm btn-primary m-2">Lass sie dir im
+            Videochat zeigen
+        </button>
+        <button (click)="answerRaucherQuestion(KEINEANGABE)"
+                class="btn btn-sm btn-primary m-2">keine Angabe
+        </button>
+    </div>
+</div>

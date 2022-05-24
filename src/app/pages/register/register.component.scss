@@ -1,0 +1,79 @@
+
+.register-content {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.wizard {
+  top: 125px;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+}
+
+.wizard-down {
+  top: 500px;
+  position: absolute;
+  width: 100%;
+}
+
+.next-disabled {
+  pointer-events: none; //This makes it not clickable
+  opacity: 0.6; //This grays it out to look disabled
+}
+
+
+.isMobile {
+  display: none;
+}
+
+.isTablet {
+  display: none;
+}
+
+.isDesktop {
+  display: none;
+}
+
+@media (max-width: 479px) {
+  .isMobile {
+    display: block !important;
+  }
+
+  .isTablet {
+    display: none !important;
+  }
+
+  .isDesktop {
+    display: none !important;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 1279px) {
+  .isMobile {
+    display: none !important;
+  }
+
+  .isTablet {
+    display: block !important;
+  }
+
+  .isDesktop {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .isMobile {
+    display: none !important;
+  }
+
+  .isTablet {
+    display: none !important;
+  }
+
+  .isDesktop {
+    display: block !important;
+  }
+}

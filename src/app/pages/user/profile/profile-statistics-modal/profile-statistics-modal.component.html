@@ -1,0 +1,79 @@
+<div class="modal-header m-auto">
+  <h4 *ngIf="isOverview" class="modal-title w-100 statistics-modal-title">deine Statistik</h4>
+  <h4 *ngIf="!isOverview" class="modal-title w-100 statistics-modal-title">Gesamtübersicht</h4>
+
+  <button
+          (click)="changeOverviewState(true)"
+          class="btn"
+          style="margin-top: -7px;"
+          type="button">
+    <i [ngClass]="{ 'custom-text': !isOverview }" class="far fa-chart-bar"></i>
+  </button>
+
+  <button
+          (click)="changeOverviewState(false)"
+          class="btn"
+          style="margin-top: -7px;"
+          type="button">
+    <i [ngClass]="{ 'custom-text': isOverview }" class="fas fa-chart-line"></i>
+  </button>
+
+  <button
+          (click)="closeModal()"
+          aria-label="Close"
+          class="close"
+          type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div
+        *ngIf="isOverview"
+        class="modal-body text-center"
+        style="margin: 20px 50px;">
+  <div class="firstDropModalTitle">
+    <h5>Willkommen zurück!</h5>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-4">
+      <h1 class="theme-color statistics-modal-number">+ {{user?.viewCount}}</h1>
+      <p>AUFRUFE</p>
+    </div>
+
+    <div class="col-4">
+      <h1 class="theme-color statistics-modal-number">+ {{totalLikeCount}}</h1>
+      <p>LIKES</p>
+    </div>
+
+    <div class="col-4">
+      <h1 class="theme-color statistics-modal-number">+ {{messageCount}}</h1>
+      <p>NACHRICHTEN</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isOverview" class="modal-body">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <ngx-charts-bar-vertical-2d
+                (select)="onSelect($event)"
+                [gradient]="gradient"
+                [legendPosition]="'bellow'"
+                [legendTitle]="legendTitle"
+                [legend]="true"
+                [results]="single"
+                [scheme]="colorScheme"
+                [showXAxisLabel]="false"
+                [showYAxisLabel]="false"
+                [tooltipDisabled]="tooltipDisabled"
+                [view]="undefined"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+        >
+        </ngx-charts-bar-vertical-2d>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<div class="card rounded-0 border-top-0">
+    <div class="card-body pb-0">
+        <form>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="profile-card-dark" style="display: contents">
+
+                        <div class="col-12 col-sm-6 col-md-6 col-lg col-xl-2 pl-0 pr-0 pr-sm-3 pr-md-3 pr-lg-3 pr-xl-3 mt-1 cursor-pointer"
+                             [placement]="'bottom'" [ngbPopover]="popContent"
+                             triggers="manual"
+                             #warningpopover="ngbPopover" (click)="openModal(warningpopover)">
+                            <div class="pin-erstellen d-flex">
+                                <i class="far fa-plus-square mt-auto default-icon-color cursor-pointer"
+                                   style="font-size: 28px;"></i>
+                                <div class="pin-erstellen-text m-auto">
+                                    Date erstellen
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg col-xl-2 pl-0 pr-0 pr-sm-0 pr-lg-3 pr-xl-3 pr-md-0 mt-1">
+                        <input class="form-control text-center rounded"
+                               placeholder="{{ 'Post Code' | translate }}"
+                               name="postCode"
+                               (keyup)="searchPostsByFilters()" (keydown)="plzChanged($event)" [(ngModel)]="postFilter.postCode"
+                               type="text" style="height: 40px;" [maxLength]="5"/>
+                        <small *ngIf="plzTimeoutErr" class="text-danger">
+                            PLZ Falsch
+                        </small>
+                    </div>
+
+                    <div class="col-12 col-lg col-xl-2 col-md-4 filter-text pl-0 pr-3 pr-lg-0">
+                        <div class="row">
+                            <div class="col-12 col-lg-12 col-xl-12 col-md-12">
+                                <div class="custom-control custom-checkbox filter-text-right">
+                                    <input [(ngModel)]="postFilter.sortCriteria" class="custom-control-input" id="sortCriteria" name="sortCriteria" type="checkbox" (change)="searchPostsByFilters()"/>
+                                    <label class="custom-control-label font-12" for="sortCriteria"
+                                           style="font-size: 14px;">Neuste Beiträge zuerst</label>
+                                </div>
+                            </div>
+                            <div *ngIf="false" class="col-6 col-lg-12 col-xl-12 col-md-12">
+
+                                <div class="custom-control custom-checkbox filter-left">
+                                    <input class="custom-control-input" id="isSearchNear" name="isSearchNear" type="checkbox" (change)="searchPostsByFilters()" [(ngModel)]="postFilter.isSearchNear"/>
+                                    <label class="custom-control-label font-12" for="isSearchNear"
+                                           style="font-size: 14px;">In meiner Nähe suchen</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg col-xl-2 col-md-4 pl-0 pr-1 pr-sm-1 pr-md-4 pr-lg-4 pr-xl-4">
+                        <div class="custom-slider">
+                            <ng5-slider [(value)]="postFilter.distance"
+                                        (valueChange)="searchPostsByFilters()"
+                                        [manualRefresh]="manualRefresh"
+                                        [options]="options"></ng5-slider>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg col-xl-2 col-md-4 p-0 mt-1 search-bottom">
+                        <div class="dropdown">
+                            <select name="category" [(ngModel)]="postFilter.category" (ngModelChange)="searchPostsByFilters()" class="form-control rounded filter-category-options custom-select-icon-two">
+                                <option [ngValue]="null" selected>{{ "Main Category" | translate }}</option>
+                                <option *ngFor="let postMainCategory of postMainCategoryOptions; "
+                                        value="{{ postMainCategory._id }}">
+                                    {{ postMainCategory.name | translate }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div *ngIf="false" class="dropdown">
+                            <button aria-expanded="false" aria-haspopup="true"
+                                    class="btn btn-sm w-100 text-white bg-secondary dropdown-toggle"
+                                    data-toggle="dropdown" id="subCategoryDropdown" type="button">
+                                {{ "Sub Category" | translate }}
+                            </button>
+                            <div aria-labelledby="dropdownMenuButton" class="dropdown-menu"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<ng-template #popContent>
+    <p class="text-white text-center mb-0 pb-0">Als Mitglied darfst du nicht <br>
+        mehr, als einen Date <br>
+        erstellen.</p>
+</ng-template>

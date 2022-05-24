@@ -1,0 +1,37 @@
+
+.theme-second-outline-button-sm {
+  padding:0px 10px;
+}
+
+.theme-second-outline-button {
+  border-color: #66cccc;
+  color: #66cccc;
+}
+.theme-second-outline-button:hover {
+  background-color: #66cccc;
+  color: #fff;
+  border-color: #66cccc;
+}
+
+.theme-outline-button-sm {
+  padding: 0px 10px;
+}
+
+.theme-outline-button {
+  border-color: #ff3366;
+  color: #ff3366;
+}
+.theme-outline-button:hover {
+  background-color: #ff3366;
+  color: #fff;
+  border-color: #ff3366;
+}
+
+.category-list button:last-child {
+  margin:0px !important;
+}
+
+ .disableDiv{
+   pointer-events:none;
+   opacity: 0.4;
+ }

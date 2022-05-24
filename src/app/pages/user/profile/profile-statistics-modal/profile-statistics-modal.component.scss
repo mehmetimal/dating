@@ -1,0 +1,30 @@
+.firstDropModalTitle {
+  border: 3px solid #B5B5B5;
+  border-radius: 10px;
+  padding: 5px 10px 0px 10px;
+}
+
+.modal-body p {
+  font-size: 12px;
+}
+
+.custom-text {
+  color: #6c757d;
+}
+@media (max-width: 576px) {
+  .statistics-modal-title {
+    font-size: 18px !important;
+  }
+  .statistics-modal-number {
+    font-size: 30px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .statistics-modal-title {
+    font-size: 18px !important;
+  }
+  .statistics-modal-number {
+    font-size: 18px !important;
+  }
+}

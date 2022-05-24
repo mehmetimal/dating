@@ -1,0 +1,43 @@
+<div class="row last-visitor-scroll-vertical">
+    <div *ngFor="let item of profileVisitors"
+         class="col-12 border-bottom mb-3 cursor-pointer">
+        <div class="row mb-2">
+            <div (click)="goToUserProfile(item?.userId?.profileName)" class="col-2">
+                <img *ngIf="item.userId && item.userId.profileImage && item.userId.profileImage.acceptState === approved
+                && (!isCurrentUserBlockList(item.userId) && isSharedProfileImageWithCurrentUser(item.userId))" [src]="backendURL + (item?.userId?.profileImage?._id | getImageById: false | async)" class="image-search rounded w-100"
+                     style="border: 2px solid #CCCCCC !important">
+
+              <img *ngIf="item.userId && item.userId.profileImage && item.userId.profileImage.acceptState === approved
+                && !(!isCurrentUserBlockList(item.userId) && isSharedProfileImageWithCurrentUser(item.userId))" [src]="backendURL + (item?.userId?.profileImage?._id | getImageById: true | async)" class="image-search rounded w-100"
+                   style="border: 2px solid #CCCCCC !important">
+
+                <div *ngIf="item.userId && (!item.userId?.profileImage || item.userId?.profileImage.acceptState !== approved)">
+                    <img
+                            *ngIf="isCurrentUserBlockList(item.userId) || !isSharedProfileImageWithCurrentUser(item.userId)"
+                            class="image-search rounded w-100"
+                            [src]="backendURL + udcFolder + item.userId?.gender?.name +'/' + item.userId.randomNumber + '.jpg'"/>
+
+                    <img
+                            *ngIf="!isCurrentUserBlockList(item.userId) && isSharedProfileImageWithCurrentUser(item.userId)"
+                            class="image-search rounded w-100"
+                            [src]="backendURL + udcFolder + item.userId?.gender?.name +'/' + item.userId.randomNumber + '.jpg'"/>
+
+                </div>
+
+            </div>
+            <div (click)="goToUserProfile(item?.userId?.profileName)" class="col-3">
+                <p class="font-weight-bold">{{ item?.userId?.profileName }}, {{ calculateAge(item) }}</p>
+                <p style="font-size: 10px;">{{ item?.userId?.searchArea?.name }}</p>
+            </div>
+            <div *ngIf="item?.isProfile" class="col-7">
+                - Hat dein Profil besucht
+            </div>
+            <div *ngIf="item?.isLike" class="col-7">
+                - Mag dein Bild
+            </div>
+            <div *ngIf="item?.isPlay" class="col-7">
+                - Spiel gespielt
+            </div>
+        </div>
+    </div>
+</div>

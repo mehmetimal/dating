@@ -1,0 +1,37 @@
+<div class="modal-body">
+  <div class="modal-header">
+    <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="closeModal()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <h5 class="text-center">
+    {{ "Are You Sure You Want to Delete" | translate }} ?
+  </h5>
+
+  <div class="row">
+    <div class="col-12 text-center">
+      <button
+              autofocus
+              type="button"
+              class="btn btn-outline-secondary mt-3"
+              (click)="deleteValue('Yes')"
+      >
+        {{ "Yes" | translate }}
+      </button>
+
+      <button
+              autofocus
+              type="button"
+              class="btn btn-outline-secondary mt-3 ml-2"
+              (click)="closeModal()"
+      >
+        {{ "No" | translate }}
+      </button>
+    </div>
+  </div>
+</div>

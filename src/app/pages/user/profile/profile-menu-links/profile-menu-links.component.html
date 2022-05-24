@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-center-image" style="justify-content: flex-end">
+    <div class="float-right text-right">
+        <button class="btn vip-button" routerLink="/preise" *ngIf="!this.isPremium">
+            <img width="13" src="../../../../../assets/img/Logo.png"/> VIP werden
+        </button>
+        <p class="p-0 mb-0 mr-2" style="margin-top: 8px;" *ngIf="this.isPremium">VIP
+            User</p>
+    </div>
+
+    <div class="text-right" style="margin-top: 8px;">
+        <i (click)="openClubStatisticsModal()" class="fas fa-chart-line cursor-pointer mr-2"></i>
+        <i (click)="openStatisticsModal()" class="far fa-chart-bar cursor-pointer mr-2"></i>
+        <i id="navbarDropdownMenuLink2" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+           class="fas fa-bars dropdown-toggle cursor-pointer custom-dropdown-toggle"></i>
+
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+            <a *ngIf="false" class="dropdown-item" href="#">Bilderfreigabe</a>
+            <a class="dropdown-item cursor-pointer" (click)="openFavoriteModal(content)">Merkliste</a>
+        </div>
+    </div>
+</div>
+<!-- First Modal -->
+<ng-template #firstDropModal let-modal>
+    <app-profile-statistics-modal [ngbModalRef]="profileStatisticsModal" [totalLikeCount]="totalLikeCount" [user]="user"
+                                  [messageCount]="messageCount"></app-profile-statistics-modal>
+</ng-template>
+
+<ng-template #clubstatisticsModal let-modal>
+    <app-profile-club-statistics-modal [ngbModalRef]="profileClubStatisticsModal" [totalLikeCount]="totalLikeCount"
+                                       [user]="user" [messageCount]="messageCount"></app-profile-club-statistics-modal>
+</ng-template>
+
+<ng-template #content let-modal>
+    <app-profile-visitor-modal [bsModalRef]="bsModalRef" [isFavoriteModal]="true"
+                               [isLastVisitorModal]="false"></app-profile-visitor-modal>
+</ng-template>

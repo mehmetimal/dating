@@ -1,0 +1,124 @@
+<div class="container-fluid p-0 ml-0 mr-0 mb-0 mt-5 border-top">
+    <div class="container">
+        <div *ngIf="youtubeLink?.isActive && (router.url === '/start' || router.url === '/' || router.url === '/registrierung')"
+             class="text-center mt-5">
+            <div class="col-md-12 custom-iframe p-0 m-0">
+                <div [innerHtml]="yt_iframe_html" class="text-center"></div>
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-5">
+            <div class="col-sm-1 col-md-1 col-lg-1"></div>
+
+            <div class="col-sm-2 col-md-2 col-lg-2">
+                <ul style="padding: 0px; word-break: break-all">
+                    <li class="list-group">
+                        <a [routerLink]="['/faq']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >FAQ</a>
+                    </li>
+                    <li *ngFor="let item of footerlink" class="list-group">
+                        <a *ngIf="item.title === 'preise' && item.column === '1' && checkFooterIsLogin(item.isLogin)"
+                           [routerLink]="['/preise']" class="text-secondary text-decoration-none cursor-pointer mb-3">
+                            {{ checkPremium() ? 'Preisübersicht' : 'Preise' }}</a>
+
+                        <a *ngIf="item.title === 'kontaktformular' && item.column === '1' && checkFooterIsLogin(item.isLogin)"
+                           [routerLink]="['/kontaktformular']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3">Kontakt</a>
+
+                        <a *ngIf="item.title === 'neuigkeiten' && item.column === '1'"
+                           [routerLink]="['/neuigkeiten']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3">Neuigkeiten</a>
+
+                        <a *ngIf="item.column === '1' && checkFooterIsLogin(item.isLogin)"
+                           [hidden]="item.title === 'kontaktformular' || item.title === 'preise' || item.title === 'neuigkeiten'"
+                           [routerLink]="[item.title === 'Datenschutzerklärung' ? 'Datenschutzerklaerung' : item.title]"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3">{{ item.title }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <ul style="padding: 0px; word-break: break-all">
+                    <li *ngFor="let item of footerlink" class="list-group">
+                        <a *ngIf="item.title === 'preise' && item.column === '2' && checkFooterIsLogin(item.isLogin)"
+                           [routerLink]="['/preise']" class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >{{ checkPremium() ? 'Preisübersicht' : 'Preise' }}</a>
+
+                        <a *ngIf="item.title === 'kontaktformular' && item.column === '2' && checkFooterIsLogin(item.isLogin)"
+                           [routerLink]="['/kontaktformular']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >Kontakt</a>
+
+                        <a *ngIf="item.title === 'neuigkeiten' && item.column === '2'"
+                           [routerLink]="['/neuigkeiten']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >Neuigkeiten</a>
+
+                        <a *ngIf="item.column === '2' && checkFooterIsLogin(item.isLogin)"
+                           [hidden]="item.title === 'kontaktformular' || item.title === 'preise' || item.title === 'neuigkeiten'"
+                           [routerLink]="[item.title === 'Datenschutzerklärung' ? 'Datenschutzerklaerung' : item.title]"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >{{ item.title }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <ul style="padding: 0px; word-break: break-all">
+                    <li *ngFor="let item of footerlink" class="list-group">
+                        <a *ngIf="item.title === 'preise' && item.column === '3' && checkFooterIsLogin(item.isLogin)"
+                           [routerLink]="['/preise']" class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >{{ checkPremium() ? 'Preisübersicht' : 'Preise' }}</a>
+
+                        <a *ngIf="item.title === 'kontaktformular' && item.column === '3' && checkFooterIsLogin(item.isLogin)"
+                           [routerLink]="['/kontaktformular']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >Kontakt</a>
+
+                        <a *ngIf="item.title === 'neuigkeiten' && item.column === '3'"
+                           [routerLink]="['/neuigkeiten']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >Neuigkeiten</a>
+
+                        <a *ngIf="item.column === '3' && checkFooterIsLogin(item.isLogin)"
+                           [hidden]="item.title === 'kontaktformular' || item.title === 'preise' || item.title === 'neuigkeiten'"
+                           [routerLink]="[item.title === 'Datenschutzerklärung' ? 'Datenschutzerklaerung' : item.title]"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >{{ item.title }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <ul style="padding: 0px; word-break: break-all">
+                    <li *ngFor="let item of footerlink" class="list-group">
+                        <a *ngIf="item.title === 'preise' && item.column === '4' && checkFooterIsLogin(item.isLogin)"
+                           [routerLink]="['/preise']" class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >{{ checkPremium() ? 'Preisübersicht' : 'Preise' }}</a>
+
+                        <a *ngIf="item.title === 'kontaktformular' && item.column === '4' && checkFooterIsLogin(item.isLogin)"
+                           [routerLink]="['/kontaktformular']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >Kontakt</a>
+
+                        <a *ngIf="item.title === 'neuigkeiten' && item.column === '4'"
+                           [routerLink]="['/neuigkeiten']"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >Neuigkeiten</a>
+
+                        <a *ngIf="item.column === '4' && checkFooterIsLogin(item.isLogin)"
+                           [hidden]="item.title === 'kontaktformular' || item.title === 'preise' || item.title === 'neuigkeiten'"
+                           [routerLink]="[item.title === 'Datenschutzerklärung' ? 'Datenschutzerklaerung' : item.title]"
+                           class="text-secondary text-decoration-none cursor-pointer mb-3"
+                           >{{ item.title }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--
+                        <div class="col-sm-2 col-md-2 col-lg-2"></div>
+            -->
+        </div>
+    </div>
+</div>

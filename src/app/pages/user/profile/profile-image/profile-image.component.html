@@ -1,0 +1,146 @@
+<div class="row">
+    <div class="col-1 col-sm-1 col-md-1 col-xl-3 col-lg-3"></div>
+    <div class="col-10 col-sm-10 col-md-10 col-xl-6 col-lg-6">
+        <image-cropper (imageCropped)="imageCropped($event)" [imageChangedEvent]="imageChangedEvent"
+                       [maintainAspectRatio]="true"
+                       [onlyScaleDown]="true"
+                       [resizeToWidth]="600"
+                       format="png"
+                       id="croppedImage"
+                       outputType="file">
+        </image-cropper>
+        <img *ngIf="profileImage && !croppedImage && !imageChangedEvent && !galleryProfileImage && !profileImage?.isBlurRemoved"
+             [src]="backendURL + profileImage?.imageBlurURL"
+             class="w-100 rounded"/>
+
+        <img *ngIf="profileImage && !croppedImage && !imageChangedEvent && !galleryProfileImage && profileImage?.isBlurRemoved"
+             [src]="backendURL + profileImage?.imageURL"
+             class="w-100 rounded"/>
+
+        <img *ngIf="!profileImage && !fileInput.value && !imageChangedEvent && !galleryProfileImage"
+             class="w-100 rounded"
+             src="../../../../assets/img/imagePlaceholder.png"/>
+
+        <img *ngIf="galleryProfileImage && !croppedImage" [src]="backendURL + galleryProfileImage?.imageURL"
+             class="w-100 rounded"/>
+
+        <div class="row">
+            <div class="col-3 col-sm-3 col-md-4 col-xl-3 col-lg-3" *ngIf="!profileImage && !galleryProfileImage"></div>
+            <div class="col-3 col-sm-3 col-md-4 col-xl-3 col-lg-3 d-flex" *ngIf="(profileImage || galleryProfileImage)">
+                <i *ngIf="(!galleryProfileImage || galleryProfileImage?._id === profileImage?._id) && !croppedImage && !imageChangedEvent"
+                   class="fas fa-heart float-left theme-color p-1"></i>
+                <b *ngIf="(!galleryProfileImage || galleryProfileImage?._id === profileImage?._id) && !croppedImage && !imageChangedEvent"
+                   class="text-white">{{profileImage?.totalLikes}}</b>
+
+                <i *ngIf="(galleryProfileImage && galleryProfileImage?._id !== profileImage?._id) && !croppedImage && !imageChangedEvent"
+                   class="fas fa-heart float-left theme-color p-1"></i>
+                <b *ngIf="(galleryProfileImage && galleryProfileImage?._id !== profileImage?._id) && !croppedImage && !imageChangedEvent"
+                   class="text-white">{{galleryProfileImage?.totalLikes}}</b>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-6 col-xl-6 col-lg-6 p-0">
+                <div *ngIf="profileImage && !croppedImage && !galleryProfileImage" class="form-check">
+                    <img class="cursor-pointer" *ngIf="profileImage?.isBlurRemoved"
+                         style="margin-bottom: 3px;width: 16px; height: 16px" (click)="show(true)"
+                         src="../../../../../assets/img/gallery/opened.svg"/>
+                    <img class="cursor-pointer" *ngIf="!profileImage?.isBlurRemoved"
+                         style="margin-bottom: 3px;width: 16px; height: 16px" (click)="show(false)"
+                         src="../../../../../assets/img/gallery/closed.svg"/>
+                    <label class="form-check-label text-white pl-1" style="font-size: 12px;">
+                        <span *ngIf="profileImage?.isBlurRemoved">Bild verpixeln</span>
+                        <span *ngIf="!profileImage?.isBlurRemoved">Bild verpixelt</span>
+                    </label>
+                </div>
+
+                <div *ngIf="profileImage && !croppedImage && galleryProfileImage" class="form-check">
+                    <img class="cursor-pointer" *ngIf="galleryProfileImage?.isBlurRemoved"
+                         style="margin-bottom: 3px;width: 16px; height: 16px" (click)="show(true)"
+                         src="../../../../../assets/img/gallery/opened.svg"/>
+                    <img class="cursor-pointer" *ngIf="!galleryProfileImage?.isBlurRemoved"
+                         style="margin-bottom: 3px;width: 16px; height: 16px" (click)="show(false)"
+                         src="../../../../../assets/img/gallery/closed.svg"/>
+                    <label class="form-check-label text-white pl-1" style="font-size: 12px;">
+                        <span *ngIf="galleryProfileImage?.isBlurRemoved">Bild verpixeln</span>
+                        <span *ngIf="!galleryProfileImage?.isBlurRemoved">Bild verpixelt</span>
+                    </label>
+                </div>
+
+
+                <div *ngIf="!profileImage && galleryProfileImage && !croppedImage" class="form-check">
+                    <img class="cursor-pointer" *ngIf="galleryProfileImage?.isBlurRemoved"
+                         style="margin-bottom: 3px;width: 16px; height: 16px" (click)="show(true)"
+                         src="../../../../../assets/img/gallery/opened.svg"/>
+                    <img class="cursor-pointer" *ngIf="!galleryProfileImage?.isBlurRemoved"
+                         style="margin-bottom: 3px;width: 16px; height: 16px" (click)="show(false)"
+                         src="../../../../../assets/img/gallery/closed.svg"/>
+                    <label class="form-check-label text-white pl-1" style="font-size: 12px;">
+                        <span *ngIf="galleryProfileImage?.isBlurRemoved">Bild verpixeln</span>
+                        <span *ngIf="!galleryProfileImage?.isBlurRemoved">Bild verpixelt</span>
+                    </label>
+                </div>
+
+            </div>
+            <div class="col-2 col-sm-3 col-md-2 col-xl-3 col-lg-3 d-flex trash-upload-profile-image">
+                <i (click)="saveImage(galleryProfileImage ? 'galleryProfileImage' : 'croppedImage')"
+                   *ngIf="croppedImage"
+                   class="fas fa-check p-1 text-white float-right cursor-pointer"></i>
+                <i (click)="fileInput.click()" class="fas fa-upload p-1 text-white float-right"></i>
+                <i (click)="saveImage(galleryProfileImage ? 'galleryProfileImage' : 'croppedImage')"
+                   *ngIf="galleryProfileImage && (!profileImage || (profileImage && profileImage._id !== galleryProfileImage._id)) && !croppedImage"
+                   class="fas fa-user-circle p-1 text-white float-right cursor-pointer"></i>
+                <i (click)="deleteProfileImage()"
+                   *ngIf="profileImage && !croppedImage && (!galleryProfileImage || galleryProfileImage?._id === profileImage?._id)"
+                   class="fas fa-trash-alt p-1 text-white float-right cursor-pointer"></i>
+            </div>
+        </div>
+        <input #fileInput (change)="fileChangeEvent($event)" accept="image/*"
+               class="text-white d-none form-control-file" type="file"/>
+        <br>
+    </div>
+    <div class="col-10 col-sm-10 col-md-10 mb-4 col-lg-3 col-xl-3 m-auto">
+        <div class="theme-background p-2 w-100 text-center rounded-top">
+            FREIGEBEN
+        </div>
+        <div class="bg-white p-1">
+            <form>
+                <div class="form-group">
+                    <ng-select (change)="shareProfileImage(selectedPerson)" [(ngModel)]="selectedPerson"
+                               [addTag]="false"
+                               [hideSelected]="true"
+                               [items]="people3$ | async"
+                               [loadingText]="'Beladung'"
+                               [loading]="people3Loading"
+                               [multiple]="false"
+                               [notFoundText]="'Kein Benutzer'"
+                               [placeholder]="'Clubnummer'"
+                               [typeToSearchText]="'Tippe um zu suchen'"
+                               [typeahead]="people3input$"
+                               bindLabel="profileName"
+                               class="customNgSelect border-bottom pb-1"
+                               name="clubNumberSearch">
+                    </ng-select>
+                </div>
+            </form>
+            <ul class="list-group" style="list-style-type: none;">
+                <li *ngFor="let person of sharedPersons" class="p-2 person-list">
+                    <a>{{ person.profileName}}<i (click)="unShareProfileImage(person)"
+                                                 class="fa fa-close user-select-delete"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- image gallery list -->
+<!-- image gallery list -->
+<div class="row">
+    <div class="col-1 d-none d-lg-block d-xl-block"></div>
+    <div *ngFor="let image of imageGallery" class="col-3 col-md-3 col-sm-4 col-lg-2 col-xl-2 mt-4 mt-md-4">
+        <img (click)="updateProfileImage(image)"
+             [ngClass]="[image.acceptState === notApproved ? 'notApprovedImage' : 'galleryImage']"
+             [src]="backendURL + image?.imageURL"
+             class="rounded img-thumbnail galleryImage cursor-pointer">
+        <i *ngIf="profileImage?._id === image?._id" class="fas fa-user-circle float-right text-white" style="position: absolute;bottom: 5px;right: 20px;"></i>
+    </div>
+    <div class="col-1 d-none d-lg-block d-xl-block"></div>
+</div>

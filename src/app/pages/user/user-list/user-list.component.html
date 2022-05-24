@@ -1,0 +1,107 @@
+<ng-sidebar-container (onBackdropClicked)="toggleSidebar()">
+
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="isOpen"
+                [mode]="'over'"
+                [showBackdrop]="true"
+                [closeOnClickBackdrop]="true">
+        <button class="btn themeSecond-background w-100" (click)="toggleSidebar()">Filter ausschalten</button>
+
+        <app-detail-search-modal [bsModalRef]="bsModalRef"
+                                 [featureOptions]="featureOptions"></app-detail-search-modal>
+    </ng-sidebar>
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+        <div class="container-fluid" style="margin-top: 15px">
+
+            <div class="container">
+                <div class="row">
+                    <button (click)="toggleSidebar()" class="w-100 btn theme-background mb-2 d-xl-none d-lg-none d-sm-block d-md-block">Filter öffnen</button>
+                    <div class="col-3 col-lg-3 col-xl-3 d-none d-sm-none d-md-none d-xl-block d-lg-block m-0 p-0">
+                        <app-detail-search-modal [bsModalRef]="bsModalRef"
+                                                 [featureOptions]="featureOptions"></app-detail-search-modal>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 m-0 p-0">
+                        <div class="tc-sheet-main">
+                            <div class="card bg-light tc-sheet-main-card">
+                                <div class="card-header tc-sheet-main-header" style="border-radius: 0px !important;">
+                                    PROFILSUCHE
+                                </div>
+                                <div *ngIf="!searchError" class="card-header bg-transparent border-0 mb-0 pb-0">
+                                    <h5 class="text-center" style="font-family: 'Noto Sans SC'">Deine heißen
+                                        Treffer:</h5>
+                                </div>
+                                <div *ngIf="!searchError" class="card-body bg-light">
+                                    <div class="row">
+                                        <div *ngFor="let user of users | slice: 0:page * 12"
+                                             class="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-3 cursor-pointer m-0 rounded">
+                                            <div class="mb-3">
+                                                <div *ngIf="(!user.profileImage || user?.profileImage.acceptState !== approved)"
+                                                     class="w-100 rounded"
+                                                     [routerLink]="['/view', user.profileName]">
+                                                    <img
+                                                            *ngIf="isCurrentUserBlockList(user) || !isSharedProfileImageWithCurrentUser(user)"
+                                                            class="image-search w-100 rounded"
+                                                            [src]="backendURL + udcFolder + user?.gender?.name +'/' + user.randomNumber + '.jpg'"/>
+
+                                                    <img
+                                                            *ngIf="!isCurrentUserBlockList(user) && isSharedProfileImageWithCurrentUser(user)"
+                                                            class="image-search w-100 rounded"
+                                                            [src]="backendURL + udcFolder + user?.gender?.name +'/' + user.randomNumber + '.jpg'"/>
+                                                </div>
+
+                                                <div *ngIf="user?.profileImage && user?.profileImage.acceptState === approved"
+                                                     class="w-100 rounded"
+                                                     [routerLink]="['/view', user.profileName]">
+                                                    <img *ngIf="!isCurrentUserBlockList(user) && isSharedProfileImageWithCurrentUser(user) && userService.isCurrentUserHasRole('ROLE_PREMIUM')"
+                                                         [src]="backendURL + (user?.profileImage?._id | getImageById: false | async)"
+                                                         class="image-search w-100 rounded">
+
+                                                    <img *ngIf="!(!isCurrentUserBlockList(user) && isSharedProfileImageWithCurrentUser(user) && userService.isCurrentUserHasRole('ROLE_PREMIUM'))"
+                                                         [src]="backendURL + (user?.profileImage?._id | getImageById: true | async)"
+                                                         class="image-search w-100 rounded">
+
+                                                </div>
+
+                                                <div class="bg-white p-2 rounded">
+                                                    <div class="row m-0 p-0">
+                                                        <div class="col-10 p-0"
+                                                             [routerLink]="['/view', user.profileName]">
+                                                            <div class="result-profileName"> {{ user.profileName }}</div>
+                                                            <div class="result-alter-plz">Alter: {{user.birthday + ' '}}
+                                                                <span [ngStyle]="{'filter' : !userService.isCurrentUserHasRole('ROLE_PREMIUM') ? 'blur(4px)' : ' blur(0px)', 'pointer-events': !userService.isCurrentUserHasRole('ROLE_PREMIUM') ? 'none' : ''}">PLZ: {{user.postCode | replaceWithStar}} </span></div>
+                                                        </div>
+                                                        <div *ngIf="false" (click)="goToMessage(user)"
+                                                             class="col-2 d-flex align-items-center text-right p-0 m-0">
+                                                            <img src="../../../../../assets/svg/envelope_magenta.svg"
+                                                                 class="rounded"
+                                                                 style="width: 26px; height: 21px;"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="searchError" class="col-sm-12">
+                                    <h3 class="text-center mt-5 text-danger">{{ errorMessage }}</h3>
+                                </div>
+                                <div class="card-footer bg-light border-0">
+                                    <button *ngIf="(userTotal > page * 12)" (click)="nextPage()"
+                                            class="btn tc-sheet-main-reload-button">Weitere laden
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-sidebar-container>
+
+<button class="scroll-button" *ngIf="isShow" (click)="gotoTop()">
+    <i class="fas fa-arrow-up"></i>
+</button>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<age-declaration>
+  <ageblock-basic>
+    <age-issuer>www.fsm.de</age-issuer>
+    <last-change>2019-10-24</last-change>
+    <country>de</country>
+    <label-version>1.0</label-version>
+    <revisit-after>always</revisit-after>
+    <custom info="fsm-hash_https://t35t.u-dating.club">7e5b2442dac6abecacee26d71a488848f35f9820</custom>
+  </ageblock-basic>
+  <ageblock-labeltype>
+    <httpheader>false</httpheader>
+    <htmlmeta>false</htmlmeta>
+    <xmlfile>true</xmlfile>
+    <label-z>false</label-z>
+    <default-age>18</default-age>
+  </ageblock-labeltype>
+  <ageblock-labeltype-definition>
+    <labeltype-xmlfile>
+      <label class="default">
+        <min-age>0</min-age>
+        <default-age>18</default-age>
+      </label>
+      <label class="https://t35t.u-dating.club">
+        <age>18</age>
+        <min-age>0</min-age>
+        <default-age>18</default-age>
+        <scope>t35t.u-dating.club/</scope>
+        <custom info="fsm-hash">7e5b2442dac6abecacee26d71a488848f35f9820</custom>
+      </label>
+    </labeltype-xmlfile>
+  </ageblock-labeltype-definition>
+</age-declaration>

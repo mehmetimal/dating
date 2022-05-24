@@ -1,0 +1,611 @@
+<form name="profileSettingForm" role="form" [formGroup]="profileSettingForm">
+    <div style="margin-top: 60px;"></div>
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mb-4 mt-md-5 mt-5 mt-lg-0">
+                <h5>Account Einstellungen</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row border mx-auto" style="border-radius: 10px;">
+            <div class="col-12 col-sm-12 col-md-6 col-xl-2 col-lg-2 pt-3 border-right border-none-box-phone vertical-middle">
+                <p>Details</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 border-right border-none-box">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <td id="profileNameWidth">Profilname:</td>
+                        <td *ngIf="!profileNameEdit">{{user?.profileName}}</td>
+                        <td *ngIf="profileNameEdit">
+                            <input type="text" placeholder="Profilname" id="profileName" name="profileName"
+                                   class="form-control dating-custom-input-border-radius"
+                                   formControlName="profileName">
+
+                            <div [hidden]="!(profileSettingForm.controls.profileName?.dirty && profileSettingForm.controls.profileName?.invalid)">
+                                <small class="form-text text-danger"
+                                       [hidden]="!profileSettingForm.controls.profileName?.errors?.required">
+                                    {{'This field is required' | translate}}
+                                </small>
+                            </div>
+
+                            <div *ngIf="profileSettingForm.controls['profileName'].dirty && profileSettingForm.controls['profileName'].invalid">
+                                <small class="form-text text-danger"
+                                       *ngIf="profileSettingForm.controls['profileName'].errors['pattern']">
+                                    {{ "Please Enter Only alphanumeric values" | translate }}.
+                                </small>
+                            </div>
+                        </td>
+
+                        <td *ngIf="!profileNameEdit" class="text-right">
+                            <button style="border: none; background-color: transparent"
+                                    class="themeSecond-color cursor-pointer p-0 fa fa-pencil-alt"
+                                    (click)="editable('profileName')"></button>
+                        </td>
+
+                        <td *ngIf="profileNameEdit" class="text-right">
+                            <button
+                                    [ngClass]="{'cursor-pointer': profileSettingForm.controls?.profileName?.valid}"
+                                    [disabled]="profileSettingForm.controls?.profileName?.invalid"
+                                    [ngbPopover]="profileNamePopup" triggers="manual" [autoClose]="false"
+                                    #profileNamePopover="ngbPopover"
+                                    (click)="profileNamePopover.open()"
+                                    class="themeSecond-color far fa-check-circle custom-verify-btn"></button>
+                            <ng-template #profileNamePopup>
+                                <div class="w-100">
+                                    <p>Bitte bestätige dein Auswahl</p>
+                                    <hr/>
+                                    <div class="row p-0 m-0">
+                                        <div class="col-6 pl-0">
+                                            <button class="btn border w-100"
+                                                    [disabled]="profileSettingForm.controls?.profileName?.invalid"
+                                                    (click)="changeProfileInfo('profileName'); profileNamePopover.close();">
+                                                Ja
+                                            </button>
+                                        </div>
+                                        <div class="col-6 pr-0">
+                                            <button class="btn border w-100"
+                                                    (click)="profileNamePopover.close();editableFalse('profileName')">
+                                                Nein
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr *ngIf="user?.oldProfileName">
+                        <td>Alter Profilname:</td>
+                        <td>{{user?.oldProfileName}}</td>
+                    </tr>
+                    <tr class="mt-0" *ngIf="existOldProfileNameErrMessage">
+                        <td colspan="2" class="pt-0">
+                            <small class="form-text text-danger">
+                                {{existOldProfileNameErrMessage}}
+                            </small>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>Emailadresse:</td>
+                        <td *ngIf="!emailAdressEdit">{{user?.email}}</td>
+                        <td *ngIf="emailAdressEdit">
+                            <input type="text" placeholder="email" id="email" name="email"
+                                   class="form-control dating-custom-input-border-radius"
+                                   formControlName="email">
+                            <div
+                                    [hidden]="!(profileSettingForm.controls.email?.dirty && profileSettingForm.controls.email?.invalid)">
+                                <small class="form-text text-danger"
+                                       [hidden]="!profileSettingForm.controls.email?.errors?.required">
+                                    {{'This field is required' | translate}}
+
+                                </small>
+                                <small class="form-text text-danger"
+                                       [hidden]="!profileSettingForm.controls.email?.errors?.email">
+                                    {{'Your e-mail address is invalid' | translate}}
+                                </small>
+                            </div>
+                        </td>
+                        <td *ngIf="!emailAdressEdit" class="text-right">
+                            <button style="border: none; background-color: transparent"
+                                    class="themeSecond-color cursor-pointer p-0 fa fa-pencil-alt"
+                                    (click)="editable('email')"></button>
+                        </td>
+                        <td *ngIf="emailAdressEdit" class="text-right">
+                            <button [disabled]="profileSettingForm.controls?.email?.invalid"
+
+                                    [ngbPopover]="emailPopup" triggers="manual"
+                                    [autoClose]="false" #emailPopover="ngbPopover"
+                                    (click)="emailPopover.open()"
+                                    class="themeSecond-color cursor-pointer far fa-check-circle custom-verify-btn"></button>
+
+                            <ng-template #emailPopup>
+                                <p>Bitte bestätige dein Auswahl</p>
+                                <hr/>
+                                <div class="row p-0 m-0">
+                                    <div class="col-6 pl-0">
+                                        <button class="btn border w-100"
+                                                (click)="changeProfileInfo('email'); emailPopover.close();">Ja
+                                        </button>
+                                    </div>
+                                    <div class="col-6 pr-0">
+                                        <button class="btn border w-100"
+                                                (click)="emailPopover.close();editableFalse('email')">Nein
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Passwort</td>
+                        <td *ngIf="!passwordEdit">*******</td>
+                        <td *ngIf="passwordEdit">
+                            <div class="input-group">
+                                <input placeholder="Passwort" id="password" name="password"
+                                       formControlName="password" class="form-control dating-custom-input-border-radius"
+                                       type="{{ showPassword ? 'text' : 'password' }}"/>
+                                <span class="input-group-append dating-custom-input-border-radius"
+                                      style="border-top: 1px solid #ced4da; border-bottom: 1px solid #ced4da; height: 38px; margin-left: -5px;border-right: 1px solid #ced4da">
+                                            <button (click)="typeFnc()" class="btn bg-white button-icon" type="button">
+                                              <i [ngClass]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                                            </button>
+                                        </span>
+                            </div>
+
+                            <div
+                                    *ngIf="profileSettingForm.controls['password'].dirty && profileSettingForm.controls['password'].invalid">
+                                <small class="form-text text-danger"
+                                       *ngIf="profileSettingForm.controls['password'].errors['required']">
+                                    {{ "This field is required" | translate }}.
+                                </small>
+
+                                <div *ngIf="profileSettingForm.controls['password'].dirty && profileSettingForm.controls['password'].invalid">
+                                    <small class="form-text text-danger">
+                                        Bitte benutze mindestens 8 Zeichen, Zahlen, große wie kleine Buchstaben.
+                                    </small>
+                                </div>
+                            </div>
+                        </td>
+                        <td *ngIf="!passwordEdit" class="text-right">
+                            <button style="border: none;background-color: transparent"
+                                    class="themeSecond-color cursor-pointer p-0 fa fa-pencil-alt"
+                                    (click)="user.password=null;editable('password')"></button>
+                        </td>
+                        <td *ngIf="passwordEdit" class="text-right">
+                            <button
+                                    [ngClass]="{'cursor-pointer': profileSettingForm.controls['password'].valid}"
+                                    [disabled]="(profileSettingForm.controls['password'].invalid) || (profileSettingForm.controls['rePassword'].invalid) || (profileSettingForm.controls['rePassword']?.errors?.mustMatch)"
+                                    [ngbPopover]="passwordPopup" triggers="manual"
+                                    [autoClose]="false" #passwordPopover="ngbPopover"
+                                    (click)="passwordPopover.open()"
+                                    class="themeSecond-color far fa-check-circle custom-verify-btn"></button>
+
+                            <ng-template #passwordPopup>
+                                <p>Bitte bestätige dein Auswahl</p>
+                                <hr/>
+                                <div class="row p-0 m-0">
+                                    <div class="col-6 pl-0">
+                                        <button [disabled]="profileSettingForm.controls?.password?.invalid"
+                                                class="btn border w-100"
+                                                (click)="changePassword(); passwordPopover.close();">Ja
+                                        </button>
+                                    </div>
+                                    <div class="col-6 pr-0">
+                                        <button class="btn border w-100"
+                                                (click)="passwordPopover.close();editableFalse('password')">Nein
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </td>
+                    </tr>
+                    <tr *ngIf="passwordEdit">
+                        <td>Re-Passwort</td>
+                        <td *ngIf="passwordEdit">
+                            <div class="input-group">
+                                <input placeholder="Re-Passwort" id="rePassword" name="rePassword"
+                                       formControlName="rePassword"
+                                       class="form-control dating-custom-input-border-radius"
+                                       type="{{ showRePassword ? 'text' : 'password' }}"/>
+                                <span class="input-group-append dating-custom-input-border-radius"
+                                      style="border-top: 1px solid #ced4da; border-bottom: 1px solid #ced4da; height: 38px; margin-left: -5px;border-right: 1px solid #ced4da">
+                                            <button (click)="typeFncRePassword()" class="btn bg-white button-icon"
+                                                    type="button">
+                                              <i [ngClass]="showRePassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                                            </button>
+                                        </span>
+                            </div>
+                            <div
+                                    *ngIf="profileSettingForm.controls['rePassword'].dirty && profileSettingForm.controls['rePassword'].invalid">
+                                <small class="form-text text-danger"
+                                       *ngIf="profileSettingForm.controls['rePassword'].errors['required']">
+                                    {{ "This field is required" | translate }}.
+                                </small>
+
+                                <div *ngIf="profileSettingForm.controls['rePassword'].dirty && profileSettingForm.controls['rePassword'].invalid">
+                                    <small class="form-text text-danger">
+                                        Bitte benutze mindestens 8 Zeichen, Zahlen, große wie kleine Buchstaben.
+                                    </small>
+                                </div>
+
+                                <div *ngIf="profileSettingForm.controls['rePassword'].dirty && profileSettingForm.controls['rePassword']?.errors?.mustMatch">
+                                    <small class="form-text text-danger">
+                                        Passwort und Re-Passwort stimmen nicht überein
+                                    </small>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td>Geburtsdatum:</td>
+                        <td *ngIf="!dateEdit">{{day}}.{{month}}.{{year}}</td>
+                        <td *ngIf="dateEdit">
+                            <div class="row">
+                                <div class="col">
+                                    <select name="day" id="day" formControlName="day"
+                                            class="form-control dating-custom-input-border-radius">
+                                        <option value="">{{'Day' | translate}}</option>
+                                        <option *ngFor="let v of days" [value]="v">{{v}}</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select name="month" id="month" formControlName="month"
+                                            class="form-control dating-custom-input-border-radius">
+                                        <option value="">{{'Month' | translate}}</option>
+                                        <option *ngFor="let v of months" [value]="v">{{v}}</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select name="year" id="year" formControlName="year"
+                                            class="form-control dating-custom-input-border-radius">
+                                        <option value="">{{'Year' | translate}}</option>
+                                        <option *ngFor="let v of years" [value]="v">{{v}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row col-md-12" *ngIf="!validateDate()">
+                                <small class="form-text text-danger">
+                                    {{'Please Enter Valid Date' | translate}}
+                                </small>
+                            </div>
+                        </td>
+
+                        <td class="text-right">
+                            <button style="border: none; background-color: transparent" [hidden]="true"
+                                    [disabled]="true" class="themeSecond-color cursor-pointer p-0 fa fa-pencil-alt"
+                                    (click)="editable('date')"></button>
+                        </td>
+                        <td *ngIf="dateEdit" class="text-right">
+                            <button (click)="changeProfileInfo('birthday')" [disabled]="!validateDate()"
+                                    class="themeSecond-color cursor-pointer far fa-check-circle custom-verify-btn"></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 p-3 border-tablets-and-phone-bottom">
+                <p class="text-justify"
+                   style="font-size: small; white-space: pre-line;">
+                    {{settings?.detailsText}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row mx-auto border" style="border-radius: 10px;">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2 pt-3 border-right border-none-box-phone vertical-middle">
+                <p class="text-break">Mitgliedschaft:</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 border-right border-none-box">
+                <table class="table table-borderless">
+                    <tbody>
+                    <tr>
+                        <td>Status:</td>
+                        <td class="themeSecond-color text-right">
+                            {{showDatingUserRole(user)}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Registriert seit:</td>
+                        <td class="text-right">{{user?.createdDate | date: 'dd.MM.yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td>Upgrade:</td>
+                        <td class="text-right">
+                            <p *ngIf="!isActiveBuyButton">bezahlter Account</p>
+                            <button class="btn vip-button" routerLink="/preise" *ngIf="isActiveBuyButton">
+                                <img width="10" src="../../../../../assets/img/Logo.png"/> VIP werden
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Konto Löschen:</td>
+                        <td class="text-right">
+                            <button class="btn vip-button" (click)="openDeleteAccountModal(deleteAccountModal)">
+                                Löschen
+                            </button>
+                        </td>
+                    </tr>
+                   <tr *ngIf="user?.gender?.name !== 'Female' && user?.isPaidMembership && isPremium">
+                        <td>Unsubscribe:</td>
+                        <td class="text-right">
+                            <button class="btn vip-button" [disabled]="isUnsubscribe"
+                                    (click)="unSubscribeStarted()">
+                                Unsubscribe
+                            </button>
+                        </td>
+                    </tr>
+<!--                    <tr *ngIf="user?.gender?.name !== 'Female' && !isPremium">
+                        <td>Premium for 1 week:</td>
+                        <td class="text-right">
+                            <button class="btn vip-button" [disabled]="isOneWeekPremium"
+                                    (click)="startOneWeekPremium()">
+                                <img width="10" src="../../../../../assets/img/Logo.png"/> Started
+                            </button>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <td>Account deaktivieren:</td>
+                        <td class="text-right">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="isAccountDisabled"
+                                       formControlName="isAccountDisabled"
+                                       (change)="changeProfileInfo('isAccountDisabled')">
+                                <label class="custom-control-label" for="isAccountDisabled">Im Urlaub</label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 p-3 border-tablets-and-phone-bottom">
+                <p class="text-justify"
+                   style="font-size: small; white-space: pre-line;">
+                    {{settings?.memberShipText}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!--
+        <div class="container mt-5">
+            <div class="row border mx-auto" style="border-radius: 10px;">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-2 col-xl-2 pt-3 border-right border-none-box-phone vertical-middle">
+                    <p>Mails:</p>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 border-right border-none-box">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <td>Umfragen per Email erhalten:</td>
+                            <td>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="isEmailNotifyRequired"
+                                           formControlName="isEmailNotifyRequired"
+                                           (change)="changeProfileInfo('isEmailNotifyRequired')">
+                                    <label class="custom-control-label" for="isEmailNotifyRequired"></label>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Newsletter mit Partner angeboten:</td>
+                            <td>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="isWantPartnerOffer"
+                                           formControlName="isWantPartnerOffer"
+                                           (change)="changeProfileInfo('isWantPartnerOffer')">
+                                    <label class="custom-control-label" for="isWantPartnerOffer"></label>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>wöchentliche Accountstatistiken:</td>
+                            <td>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="isWeeklyAccountStatics"
+                                           formControlName="isWeeklyAccountStatics"
+                                           (change)="changeProfileInfo('isWeeklyAccountStatics')">
+                                    <label class="custom-control-label" for="isWeeklyAccountStatics"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nachrichten von Usern per Email weiterleiten:
+                            </td>
+                            <td>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="isEmailNotifyForReceipt"
+                                           formControlName="isEmailNotifyForReceipt"
+                                           (change)="changeProfileInfo('isEmailNotifyForReceipt')">
+                                    <label class="custom-control-label" for="isEmailNotifyForReceipt"></label>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 p-3 border-tablets-and-phone-bottom">
+                    <p class="text-justify text-left text-md-center text-lg-left"
+                       style="font-size: small; white-space: pre-line;">
+                        {{settings?.mailText}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    -->
+
+    <div class="container mt-5">
+        <div class="row border mx-auto" style="border-radius: 10px;">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-2 col-xl-2 pt-3 border-right border-none-box-phone vertical-middle">
+                <p>System:</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-7 col-lg-6 col-xl-6 border-right border-none-box">
+                <table class="table table-borderless">
+                    <tbody>
+                    <!--                    <tr>
+                                            <td>Automatische Videos starten:</td>
+                                            <td class="float-right" style="margin-right: -45px;">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="isAcceptAutoStartVideo"
+                                                           formControlName="isAcceptAutoStartVideo"
+                                                           (change)="changeProfileInfo('isAcceptAutoStartVideo')">
+                                                    <label class="custom-control-label" for="isAcceptAutoStartVideo"></label>
+                                                </div>
+                                            </td>
+                                        </tr>-->
+                    <tr>
+                        <td>Urlaubsmodus</td>
+                        <td></td>
+                        <td class="text-right">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="isHolidaysMode"
+                                       formControlName="isHolidaysMode" (change)="changeProfileInfo('isHolidaysMode')">
+                                <label class="custom-control-label custom-checkbox-responsive"
+                                       for="isHolidaysMode"></label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Statistiken beim Start:</td>
+                        <td></td>
+                        <td class="text-right">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="isAutoStatics"
+                                       formControlName="isAutoStatics" (change)="changeProfileInfo('isAutoStatics')">
+                                <label class="custom-control-label custom-checkbox-responsive"
+                                       for="isAutoStatics"></label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Wer ist online:</td>
+                        <td></td>
+                        <td class="text-right">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="isShowWhoIsOnline"
+                                       formControlName="isShowWhoIsOnline"
+                                       (change)="changeProfileInfo('isShowWhoIsOnline')">
+                                <label class="custom-control-label custom-checkbox-responsive"
+                                       for="isShowWhoIsOnline"></label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email erhalten, wenn Chatnachricht eingeht:</td>
+                        <td></td>
+                        <td class="text-right">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="isMessageEmail"
+                                       formControlName="isMessageEmail"
+                                       (change)="changeProfileInfo('isMessageEmail')">
+                                <label class="custom-control-label custom-checkbox-responsive"
+                                       for="isMessageEmail"></label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="border-top">
+                        <td [style.width.px]="dynamicwidth ? dynamicwidth : null">User blocken:</td>
+
+                        <td>
+                            <ng-select class="customNgSelect" name="blockListSearch" [items]="users$ | async"
+                                       [placeholder]="'Clubnummer'" bindLabel="profileName" [addTag]="false"
+                                       [multiple]="false" [notFoundText]="'Kein Benutzer'"
+                                       [typeToSearchText]="'Tippe um zu suchen'"
+                                       [ngModelOptions]="{ standalone : true }"
+                                       [loadingText]="'Beladung'" [hideSelected]="true" [loading]="userLoading"
+                                       [typeahead]="userListInput$" [(ngModel)]="selectedUser">
+                            </ng-select>
+
+                        </td>
+                        <td class="text-right">
+                            <button (click)="addUserToBlockList(selectedUser)" [disabled]="!selectedUser"
+                                    class="themeSecond-color p-0 cursor-pointer border-0 bg-white"
+                                    style="vertical-align: sub">
+                                <i class="far fa-plus-square default-icon-color add-icon vertical-middle cursor-pointer"></i>
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr class="border-top" *ngIf="blockListUsers && blockListUsers.length > 0">
+                        <td></td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    Blockierte Benutzer
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu scrollable-menu" role="menu">
+                                    <li *ngFor="let user of blockListUsers" class="p-2 person-list">
+                                        <a>{{user.profileName}}<i (click)="removeUserBlockList(user)"
+                                                                  class="fas fa-times user-select-delete"></i></a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 p-3 border-tablets-and-phone-bottom">
+                <p class="text-justify" style="font-size: small; white-space: pre-line;">
+                    {{settings?.systemTextFirst}}
+                </p>
+
+                <p class="text-justify border-top pt-2"
+                   style="margin-top: -10px; font-size: small; white-space: pre-line;">
+                    {{settings?.systemTextSecond}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <br>
+</form>
+
+<ng-template #deleteAccountModal let-modal>
+    <div class="tc-sheet-detail-modal-header">
+        <div class="row">
+            <div class="col-10 col-lg-10 col-xl-10 d-flex">
+                <div class="tc-sheet-detail-modal-header-title mt-auto">
+                    Kontowarnung löschen
+                </div>
+            </div>
+            <div class="col-2 col-lg-2 col-xl-2 d-flex justify-content-end">
+                <div class="tc-sheet-detail-modal-header-close mt-auto">
+                    <i (click)="closeModal(deleteAccountModal)"
+                       aria-label="Close"
+                       class="fas fa-times cursor-pointer"
+                       style="color: #000"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 mb-2">
+                Sind Sie sicher, dass Sie Ihr Konto löschen? Wenn Sie Ihr Konto löschen, gehen alle Ihre Daten dauerhaft verloren.
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="deleteAccountConfirm()" class="btn theme-background" type="button">
+            Bestätigen
+        </button>
+    </div>
+</ng-template>

@@ -1,0 +1,9 @@
+.custom-list-group-item {
+  padding: 0.50rem 0.50rem;
+  border-radius: 0.25rem !important;
+  margin-bottom: 2px !important;
+}
+.custom-list-group-item:first-child {
+  border-right: none;
+}
+

@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <image-cropper (imageCropped)="backImageCropped($event)"
+                       [alignImage]="'center'"
+
+                       [aspectRatio]="5.519"
+                       [imageChangedEvent]="backImageChangedEvent"
+                       [imageQuality]="100"
+                       [maintainAspectRatio]="true"
+                       [onlyScaleDown]="true"
+                       [resizeToHeight]="350"
+                       format="png"
+                       id="backCroppedImage"
+                       outputType="file">
+        </image-cropper>
+        <img *ngIf="!profileBackgroundImage && !backFileInput.value && !backImageChangedEvent"
+             class="w-100" src="../../../../../assets/img/imagePlaceholder.png"/>
+        <img *ngIf="profileBackgroundImage && !backCroppedImage && !backImageChangedEvent"
+             [src]="backendURL + profileBackgroundImage?.imageURL" class="w-100"/>
+
+        <div class="row">
+            <div class="col-3">
+                <i *ngIf="profileBackgroundImage" class="fas fa-heart float-left theme-color p-1"></i>
+                <b *ngIf="profileBackgroundImage" class="text-white">{{profileBackgroundImage?.totalLikes}}</b>
+            </div>
+            <div class="text-center col-6">
+                <small *ngIf="profileBackgroundImage && profileBackgroundImage?.acceptState === pending" class="themeSecond-color">wird noch geprüft</small>
+            </div>
+            <div class="col-3">
+                <i (click)="backSaveImage()" *ngIf="backCroppedImage"
+                   class="fas fa-check p-1 float-right themeSecond-color cursor-pointer"></i>
+                <i (click)="backFileInput.click()"
+                   class="fas fa-upload p-1 float-right text-white cursor-pointer"></i>
+
+                <i (click)="deleteProfileBackgroundImage()" *ngIf="profileBackgroundImage"
+                   class="fas fa-trash-alt p-1 float-right text-white cursor-pointer"></i>
+            </div>
+        </div>
+        <input
+            #backFileInput
+            (change)="backFileChangeEvent($event)"
+            accept="image/*"
+            class="text-white d-none form-control-file"
+            type="file"
+        />
+        <br>
+        <br>
+    </div>
+    <div class="col-3"></div>
+</div>

@@ -1,0 +1,69 @@
+.settings-list {
+  list-style-type: none;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #FF3366 !important;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  border-color: #FF3366 !important;
+  background-color: #FF3366 !important;
+}
+
+.font8 {
+  font-size: 8px;
+}
+
+@media (min-width: 0px) and (max-width: 992px) {
+  .border-none-box {
+    border-right: none !important;
+  }
+  .border-tablets-and-phone-bottom {
+    border-top: solid 1px #DEE2E6 !important;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 576px) {
+  .border-none-box-phone {
+    border-right: none !important;
+  }
+}
+
+.vip-button {
+  border: 1.5px solid #ff3366;
+  border-radius: 3px;
+  padding: 5px 20px;
+  font-size: x-small !important;
+}
+
+.custom-checkbox-responsive:after {
+  left: -16px !important;
+}
+
+.custom-checkbox-responsive:before {
+  left: -16px !important;
+}
+
+.custom-verify-btn {
+  paddind: 5px;
+}
+
+
+.tc-sheet-detail-modal-header {
+  padding: 15px 15px 15px 15px !important;
+  border-bottom: 1px solid #dee2e6;
+
+  &-icon-list {
+    i {
+      font-size: 16px;
+    }
+  }
+
+  &-close {
+    i {
+      font-size: 16px;
+    }
+  }
+}
+

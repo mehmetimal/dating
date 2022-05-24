@@ -1,0 +1,169 @@
+<div style="margin-top: 60px;"></div>
+<br>
+
+
+<div class="container" *ngIf="!messageSuccess">
+    <div class="row">
+
+        <div class="col-1 col-sm-1 col-md-2 col-xl-3 col-lg-3"></div>
+
+        <div class="col-10 col-sm-10 col-md-8 col-xl-6 col-lg-6">
+            <div class="row">
+                <form [formGroup]="contactForm">
+                    <div class="form-row form-design">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>CLUBNUMMER:</label>
+                                <input formControlName="clubNumber" maxlength="8" name="clubNumber" type="number"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>ANREDE:*</label>
+                                <select formControlName="andre" name="andre" class="form-control">
+                                    <option [ngValue]="null"></option>
+                                    <option value="Herr">Herr</option>
+                                    <option value="Frau">Frau</option>
+                                </select>
+                                <div *ngIf="contactForm.controls['andre'].dirty && contactForm.controls['andre'].invalid">
+                                    <small class="form-text text-danger" *ngIf="contactForm.controls['andre'].errors">
+                                        {{'This field is required' | translate}}.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>VORNAME:*</label>
+                                <input formControlName="vorname" name="vorname" type="text" class="form-control">
+                                <div *ngIf="contactForm.controls['vorname'].dirty && contactForm.controls['vorname'].invalid">
+                                    <small class="form-text text-danger"
+                                           *ngIf="contactForm.controls['vorname'].errors['required']">
+                                        {{'This field is required' | translate}}.
+                                    </small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>NACHNAME:*</label>
+                                <input formControlName="nachname" name="nachname" type="text" class="form-control">
+                                <div *ngIf="contactForm.controls['nachname'].dirty && contactForm.controls['nachname'].invalid">
+                                    <small class="form-text text-danger"
+                                           *ngIf="contactForm.controls['nachname'].errors['required']">
+                                        {{'This field is required' | translate}}.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>E-MAİL:*</label>
+                                <input formControlName="email" name="email" type="email" class="form-control">
+                                <div *ngIf="contactForm.controls['email'].dirty && contactForm.controls['email'].invalid">
+                                    <small class="form-text text-danger"
+                                           *ngIf="contactForm.controls['email'].errors['required']">
+                                        {{'This field is required' | translate}}.
+                                    </small>
+
+                                    <small class="form-text text-danger"
+                                           *ngIf="contactForm.controls['email'].errors['email']">
+                                        {{'Your e-mail address is invalid' | translate}}.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>TELEFON</label>
+                                <input formControlName="phone" name="phone" type="text" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>PROFILNAME</label>
+                                <input formControlName="profileName" name="profileName" type="text"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>BETREFF:*</label>
+                                <input formControlName="betreff" name="betreff" type="text" class="form-control">
+                                <div *ngIf="contactForm.controls['betreff'].dirty && contactForm.controls['betreff'].invalid">
+                                    <small class="form-text text-danger"
+                                           *ngIf="contactForm.controls['betreff'].errors['required']">
+                                        {{'This field is required' | translate}}.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group" [formGroup]="contactForm">
+                                <label>NACHRICHT:*</label>
+                                <textarea formControlName="nachricht" name="nachricht" class="form-control h-100"
+                                          cols="65"
+                                          rows="5"></textarea>
+                                <div *ngIf="contactForm.controls['nachricht'].dirty && contactForm.controls['nachricht'].invalid">
+                                    <small class="form-text text-danger"
+                                           *ngIf="contactForm.controls['nachricht'].errors['required']">
+                                        {{'This field is required' | translate}}.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <input type="checkbox" name="checkBoxConfirm" formControlName="checkBoxConfirm">
+                            <label class="ml-2 mt-1 kontakt-text">Ich habe die <a href="{{redirectUrl}}" target="_blank">Datenschutzerklärung</a>
+                                zur Kenntnis genommen
+                            </label>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <strong class="kontakt-title">Hinweis:</strong>
+                            <label
+                                    class="ml-2 mt-1 kontakt-text">Felder
+                                mit * müssen
+                                ausgefüllt werden.</label>
+                        </div>
+
+                        <div class="col-12">
+                            <re-captcha formControlName="recaptchaReactive"></re-captcha>
+                        </div>
+
+                        <div class="col-12 mt-3 mb-3">
+                            <button (click)="saveForm()" [disabled]="contactForm.invalid" class="btn btn-dark w-100">
+                                SENDEN
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+        <div class="col-1 col-sm-1 col-md-2 col-xl-3 col-lg-3"></div>
+
+    </div>
+</div>
+
+<div class="container" *ngIf="messageSuccess">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3>Vielen Dank. Deine Nachricht wurde erfolgreich übermittelt. </h3>
+        </div>
+    </div>
+</div>

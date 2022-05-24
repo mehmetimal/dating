@@ -1,0 +1,121 @@
+@import "~@swimlane/ngx-charts/release/bar-chart/bar-label.component.css";
+
+.modal-body p {
+  font-size: 12px;
+}
+
+.custom-text {
+  color: #6c757d;
+}
+
+.bilder-gallery-plus-icon {
+  line-height: 0.7 !important;
+}
+
+.bilder-gallery-plus-icon::before {
+  background-color: white !important;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+  .custom-profile-image {
+    width: 200px;
+    margin-top: 130px;
+    margin-left: 15px;
+  }
+  .profile-image-border {
+    border: 6px solid white;
+  }
+  .profile-image-bottom {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 188px;
+    z-index: 100;
+    position: absolute;
+    top: 400px;
+    border-radius: .25rem !important;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  .custom-profile-image {
+    width: 200px;
+    margin-top: 130px;
+    margin-left: 15px;
+  }
+  .profile-image-border {
+    border: 6px solid white;
+  }
+  .profile-image-bottom {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 188px;
+    z-index: 100;
+    position: absolute;
+    top: 400px;
+    border-radius: .25rem !important;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .custom-profile-image {
+    width: 200px;
+    margin-top: 130px;
+    margin-left: 15px;
+  }
+  .profile-image-border {
+    border: 6px solid white;
+  }
+  .profile-image-bottom {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 188px;
+    z-index: 100;
+    position: absolute;
+    top: 400px;
+    border-radius: .25rem !important;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .custom-profile-image {
+    width: 300px;
+    margin-top: 40px;
+    margin-left: 15px;
+  }
+  .profile-image-border {
+    border: 6px solid white;
+  }
+  .profile-image-bottom {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 288px;
+    z-index: 100;
+    position: absolute;
+    top: 410px;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .custom-profile-image {
+    width: 300px;
+    margin-top: 40px;
+    margin-left: 15px;
+  }
+  .profile-image-border {
+    border: 6px solid white;
+  }
+  .profile-image-bottom {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 288px;
+    z-index: 100;
+    position: absolute;
+    top: 410px;
+  }
+
+}

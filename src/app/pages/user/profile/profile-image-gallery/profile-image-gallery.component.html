@@ -1,0 +1,62 @@
+<div class="card mb-3 profile-shadow">
+    <div class="card-header text-center bg-white">
+        BILDERGALERIE
+    </div>
+    <div class="card-body">
+        <div class="row">
+
+            <div *ngFor="let image of sortedArray | slice: 0:4; let i=index"
+                 class="col-6 col-sm-6 col-md-4 col-lg-6 col-xl-6 mobile-screen-resize mobile-screen-design mb-4">
+
+                <!-- image right top icon -->
+                <span *ngIf="image?.acceptState === approved"
+                      class="fa fa-check-circle position-absolute bg-white rounded-circle cursor-pointer"
+                      ngbTooltip="Der Support hat dein bild freigegeben. Bitte überprüfe deine Einstellung zur Sichtbarkeit. Du kannst dein Bild auch einzelnen Usern freigeben oder allen gleichzeitig." style="color: #66cccc;right: 0.875rem;top: -0.125rem;"
+                      aria-hidden="true"></span>
+                <span *ngIf="image?.acceptState === notApproved"
+                      class="fa fa-times-circle position-absolute bg-white rounded-circle cursor-pointer"
+                      ngbTooltip="Der Support hat dein Bild abgelehnt. Es entspricht nicht unseren Richtlinien." style="color: #ff3366;right: 0.875rem;top: -0.125rem;"
+                      aria-hidden="true"></span>
+
+
+                <!-- image -->
+
+                <div class="w-100 rounded gallery-image-div">
+                    <img (click)="openLightBox(image)"
+                         data-target="#exampleModalScrollableOne" data-toggle="modal"
+                         [ngClass]="[image.acceptState === notApproved ? 'notApprovedImage' : 'gallery-image-custom']"
+                         [src]="backendURL + image.imageURL"
+                         class="img-thumbnail cursor-pointer"/>
+                    <!-- black div -->
+                    <div class="image-bottom-gallery text-white">
+                        <img *ngIf="!image.isBlurRemoved" class="float-right"
+                             [ngClass]="{'image-bottom-gallery-icon': profileImage?._id !== image?._id, 'image-bottom-gallery-icon-second': profileImage?._id === image?._id}"
+                             src="../../../../../assets/img/gallery/closed.svg"/>
+                        <img *ngIf="image.isBlurRemoved" class="float-right"
+                             [ngClass]="{'image-bottom-gallery-icon': profileImage?._id !== image?._id, 'image-bottom-gallery-icon-second': profileImage?._id === image?._id}"
+                             src="../../../../../assets/img/gallery/opened.svg"/>
+                        <i *ngIf="profileImage?._id === image?._id"
+                           class="fas fa-user-circle mr-1 mt-1 float-right text-white"></i>
+                    </div>
+                </div>
+
+
+                <button *ngIf="false" (click)="deleteGalleryImageById(image)" type="button" class="close"
+                        aria-label="Close">
+                    <small>
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </small>
+                </button>
+            </div>
+
+            <div class="col-md-4 col-lg-6 col-xl-6 col-5 col-sm-5"
+                 [ngClass]="{'col-sm-12': imageGallery ? imageGallery.length <= 0 : false, 'col-sm-4': imageGallery ? imageGallery.length > 0 : false}">
+                <i *ngIf="imageGallery?.length < 5" class="far fa-plus-square default-icon-color add-icon vertical-middle cursor-pointer"
+                   (click)="openProfileGalleryModal()"
+                   data-target="#exampleModalScrollableOne" data-toggle="modal"
+                   style="height: 150px;"></i>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+.spielwieseHeader {
+  background-image: url("../../../../assets/img/profile-backgorund.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+}
+.headerBox {
+  border: 4px solid #fff;
+  border-radius: 10px;
+  // z-index: 999999;
+  background-color: rgba(0, 0, 0, 0.8);
+  margin-top: -330px;
+  position: relative;
+}
+/* .headerBox:after {
+   content: "";
+   position: absolute;
+   bottom: -25px;
+   right: 25px;
+   border-top: 25px solid rgba(0, 0, 0, 0.8);
+   border-left: 25px solid transparent;
+   border-right: 25px solid transparent;
+ } */
+
+.headerBox p {
+  font-weight: bold;
+  font-size: 26px;
+  padding-top: 15px;
+}

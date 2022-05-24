@@ -1,0 +1,66 @@
+<div class="container-fluid mt-5 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card bg-light">
+                    <div class="card-header themeSecond-background text-center border-0 mt-3" style="border-radius: 0px !important;">
+                        {{ 'Online Users' | translate }}
+                    </div>
+                    <div class="card-body bg-light">
+                        <h5 class="text-center"></h5>
+                        <div class="row">
+                            <div *ngFor="let user of users"
+                                 class="col-3 cursor-pointer"
+                                 style="max-width: 250px;">
+
+                                <div *ngIf="(!user.profileImage || user?.profileImage.acceptState !== approved)"
+                                     class="w-100 rounded">
+                                    <img
+                                            [routerLink]="['/view', user.profileName]"
+                                            *ngIf="isCurrentUserBlockList(user) || !isSharedProfileImageWithCurrentUser(user)"
+                                            class="image-search w-100"
+                                            [src]="backendURL + udcFolder + user?.gender?.name +'/' + user.randomNumber + '.jpg'"/>
+
+                                    <img
+                                            [routerLink]="['/view', user.profileName]"
+                                            *ngIf="!isCurrentUserBlockList(user) && isSharedProfileImageWithCurrentUser(user)"
+                                            class="image-search w-100"
+                                            [src]="backendURL + udcFolder + user?.gender?.name +'/' + user.randomNumber + '.jpg'"/>
+
+                                </div>
+
+                                <img [routerLink]="['/view', user.profileName]"
+                                     *ngIf="user.profileImage && user?.profileImage.acceptState === approved && !isCurrentUserBlockList(user) && isSharedProfileImageWithCurrentUser(user)"
+                                     [src]="backendURL + (user?.profileImage?._id | getImageById: false | async)" class="image-search w-100 rounded">
+
+                                <img [routerLink]="['/view', user.profileName]"
+                                     *ngIf="user.profileImage && user?.profileImage.acceptState === approved && !(!isCurrentUserBlockList(user) && isSharedProfileImageWithCurrentUser(user))"
+                                     [src]="backendURL + (user?.profileImage?._id | getImageById: true | async)" class="image-search w-100">
+
+                                <div class="bg-white p-2 rounded">
+                                    <div class="row m-0 p-0">
+                                        <div class="col-10" [routerLink]="['/view', user?.profileName]">
+                                            <span class="font-weight-bold"> {{ user?.profileName }}
+                                                , {{user?.birthday}} </span> <br>
+                                            <span>{{user?.searchArea?.name}}</span>
+                                        </div>
+                                        <div class="col-2 text-right p-0 m-0" (click)="goToMessage(user)">
+                                            <i class="pt-2 theme-color cursor-pointer far fa-envelope-open"
+                                               style="font-size: 28px;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+version: '3'
+services:
+  dating-front:
+    image: registry.gitlab.com/info.udating/dating-frontend
+    command: npm run serve:ssr
+    container_name: dating-frontend
+    restart: always
+    environment:
+      - VIRTUAL_HOST=u-dating.club
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=u-dating.club,www.u-dating.club
+      - LETSENCRYPT_EMAIL=mail@u-dating.club
+      - PROXY_ADDRESS_FORWARDING=true
+    depends_on:
+      - dating-backend
+    networks:
+      - dating-frontend-prod
+
+  dating-admin:
+    image: registry.gitlab.com/info.udating/dating-admin
+    environment:
+      - VIRTUAL_HOST=a00x.u-dating.club
+      - VIRTUAL_PORT=5000
+      - LETSENCRYPT_HOST=a00x.u-dating.club
+      - LETSENCRYPT_EMAIL=mail@u-dating.club
+      - PROXY_ADDRESS_FORWARDING=true
+    depends_on:
+      - dating-backend
+    restart: always
+    volumes:
+      - ~/volumes/ssl_certs/:/ssl_certs/
+    networks:
+      - dating-frontend-prod
+
+  dating-backend:
+    image: registry.gitlab.com/info.udating/dating-backend
+    restart: always
+    environment:
+      - VIRTUAL_HOST=pronode.u-dating.club
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=pronode.u-dating.club
+      - LETSENCRYPT_EMAIL=mail@u-dating.club
+      - PROXY_ADDRESS_FORWARDING=true
+    volumes:
+      - ~/volumes/dating/photos/:/photos/
+      - ~/volumes/dating/photos/profile/:/photos/profile
+      - ~/volumes/dating/photos/profile/background:/photos/profile/background
+      - ~/volumes/dating/photos/profile/gallery:/photos/profile/gallery
+      - ~/volumes/dating/photos/udc/:/photos/udc
+      - ~/volumes/dating/sitemap/:/sitemap
+      - ~/volumes/dating/robots/:/robots
+    networks:
+      - dating-frontend-prod
+
+
+networks:
+  dating-frontend-prod:

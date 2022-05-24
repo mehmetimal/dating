@@ -1,0 +1,26 @@
+<div class="container-fluid p-0 m-0 mb-4 border-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4 mt-3">
+        <p style="font-size: x-small"><i class="fa fa-copyright"></i> {{(currentYear$ | async)?.body}} u-dating.club. Alle Rechte vorbehalten</p>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 mt-3">
+        <img class="d-block m-auto" style="cursor: pointer" [routerLink]="['/']"  width="125px" src="assets/img/darkLogo.png">
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 mt-3 text-right" *ngIf="(footer$ | async)?.body?.response as footer ">
+
+          <a *ngIf="footer?.twitter" target="_blank" href="{{footer?.twitter}}">
+            <i class="fab fa-twitter mr-2" style="color: gray"></i>
+          </a>
+
+        <a *ngIf="footer?.instagram" target="_blank" href="{{footer?.instagram}}">
+          <i class="fab fa-instagram mr-2" style="color: gray"></i>
+        </a>
+
+        <a *ngIf="footer?.facebook" target="_blank" href="{{footer?.facebook}}">
+          <i class="fab fa-facebook mr-2" style="color: gray"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

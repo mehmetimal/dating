@@ -1,0 +1,65 @@
+<div class="container-fluid pt-5 pb-5 bg-light">
+    <div class="container p-3 bg-white box-shadow">
+        <div class="row">
+            <div class="col-10">
+                <h4 class="theme-color">{{news?.title}}</h4>
+                <small class="text-muted">erstellt am: <b>{{news?.created | date: 'dd.MM.yyyy'}}</b> | Author: <b>{{news?.author}}</b></small>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-outline-secondary btn-sm" routerLink="/neuigkeiten">zurück zur Übersicht</button>
+            </div>
+            <div class="col-12 mt-5">
+                <img *ngIf="!news?.imageLink"  style="width: 100%" height="400" src="http://via.placeholder.com/1920x400">
+                <img *ngIf="news?.imageLink"  style="width: 100%" height="400" [src]="news?.imageLink">
+
+                <div class="mt-5 border-bottom pb-5">
+                    <div [innerHTML]="news?.content | safeHtmlPipe"></div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="row pt-2">
+                    <div class="col-6">
+                        <button class="btn mr-2 theme-outline-button-sm theme-outline-button" (click)="likeNews(news)">
+                            {{ news.likes ? news?.likes.length : 0 }} <i class="fas fa-heart"></i>
+                        </button>
+                        <small class="text-muted">Diesen Beitrag liken</small>
+                    </div>
+                    <div class="col-6 text-right" *ngIf="news.categories && news.categories.length > 0">
+                        <p class="text-muted category-list"><small>Katagorie: </small>
+                            <button *ngFor="let categorie of news.categories" class="btn mr-2 theme-second-outline-button theme-second-outline-button-sm btn-sm">
+                                {{categorie}}
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12" style="background-color: #F3F3F3;">
+                <div class="row p-4">
+
+                    <div [ngClass]="{'disableDiv': !backNews}" [routerLink]="'/neuigkeiten/' + backNews?._id" class="col-1 p-0 cursor-pointer">
+                        <i class="fa fa-angle-left" style="font-size: 48px;"></i>
+                    </div>
+                    <div [ngClass]="{'disableDiv': !backNews}" [routerLink]="'/neuigkeiten/' + backNews?._id" class="col-5 pr-0 border-right cursor-pointer">
+                        <small class="text-muted">Ein vorheriger Artikel</small>
+                        <h5>vorheriger Artikel Back</h5>
+                    </div>
+
+                    <div [ngClass]="{'disableDiv': !nextNews}" [routerLink]="'/neuigkeiten/' + nextNews?._id" class="col-5 pr-0 border-left text-right cursor-pointer">
+                        <small class="text-muted">Ein vorheriger Artikel</small>
+                        <h5>vorheriger Artikel</h5>
+                    </div>
+                    <div [ngClass]="{'disableDiv': !nextNews}" [routerLink]="'/neuigkeiten/' + nextNews?._id" class="col-1 text-right p-0 cursor-pointer">
+                        <i class="fa fa-angle-right" style="font-size: 48px;"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

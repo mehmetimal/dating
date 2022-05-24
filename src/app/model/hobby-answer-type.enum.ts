@@ -1,0 +1,7 @@
+export enum HobbyAnswerType {
+    JA = 'JA',
+    NEIN = 'NEIN',
+    VIELLEICHT = 'VIELLEICHT',
+    VIDEOCHATZEIGEN = 'VIDEOCHATZEIGEN',
+    KEINEANGABE = 'KEINEANGABE'
+}

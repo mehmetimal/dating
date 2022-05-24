@@ -1,0 +1,177 @@
+<div class="tc-sheet-detail-modal-header">
+    <div class="row">
+        <div class="col-10 col-lg-10 col-xl-10 d-flex">
+            <div class="tc-sheet-detail-modal-header-icon-list mt-auto">
+                <a href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    <i class="fas fa-bars" style="color: #000"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                    <a class="dropdown-item cursor-pointer" (click)="openFavoriteModal(content)">Merkliste</a>
+                    <a class="dropdown-item cursor-pointer" (click)="createPostReport(detailCard[0])">Date melden</a>
+                </div>
+
+                <i *ngIf="(currentUser && currentUser._id) === (detailCard[0] && detailCard[0]?.user && detailCard[0]?.user._id)" (click)="editCard()"
+                   class="fas fa-pencil-alt cursor-pointer ml-2" style="color: #66cccc"></i>
+            </div>
+
+            <div class="tc-sheet-detail-modal-header-title ml-2 mt-auto">
+
+                <div *ngIf="(currentUser && currentUser._id) === (detailCard[0] && detailCard[0]?.user && detailCard[0]?.user._id); then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock><h5  class="p-0 m-0">Date bearbeiten</h5></ng-template>
+                <ng-template #elseBlock><h5  class="p-0 m-0">Dateanfrage von {{detailCard[0]?.user.profileName}}</h5></ng-template>
+            </div>
+        </div>
+        <div class="col-2 col-lg-2 col-xl-2 d-flex justify-content-end">
+            <div class="tc-sheet-detail-modal-header-close mt-auto">
+                <i (click)="updatePostModalRef.dismiss('Cross click')" aria-label="Close"
+                   class="fas fa-times cursor-pointer"
+                   style="color: #000"></i>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-body pb-0 tc-sheet-detail-modal-content">
+    <!-- *ngFor="let card of detailCard | slice: -1" -->
+    <div class="row">
+        <div class="col-4">
+            <img (click)="openImageGallery(image)" *ngIf="detailCard[0].image"
+                 [src]="selectedImage ? backendURL + selectedImage?.imageURL : backendURL + detailCard[0]?.image?.imageURL"
+                 class="img-thumbnail mb-2"/>
+
+            <img (click)="openImageGallery(image)"
+                 *ngIf="!detailCard[0].image ||(detailCard[0].image === null || detailCard[0].image === undefined)"
+                 [src]="selectedImage? backendURL + selectedImage?.imageURL: '/assets/img/add-image.png'"
+                 class="img-thumbnail mb-2"/>
+
+            <div *ngIf="!textTitle" class="word-wrap tc-sheet-detail-modal-content-user-info">
+                <div class="tc-sheet-detail-modal-content-user-info-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="tc-sheet-detail-modal-content-user-info-username">
+                    <a (click)="updatePostModalRef.close()" class="themeSecond-color"
+                       [routerLink]="['/view', detailCard[0]?.user?.profileName]">{{detailCard[0]?.user?.profileName}} </a>
+                </div>
+                <div class="tc-sheet-detail-modal-content-user-info-detail">
+                    vom: {{ detailCard[0]?.createdAt | date: "dd.MM.yyyy" }} <br>
+                    endet in: {{calcuateEndDate > 0 ? calcuateEndDate + ' Tagen' : ''}} <br>
+                    PLZ: {{detailCard[0]?.postCode | replaceWithStar}} <br>
+                    <div class="tc-sheet-detail-modal-content-user-info-detail-katagorie">
+                        {{detailCard[0]?.postMainCategory?.name}} <br>
+                        {{detailCard[0]?.postSubCategory?.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-8" *ngIf="textTitle"></div>
+        <div class="col-8" *ngIf="!textTitle">
+            <div class="text-center">
+                <h3 class="border-bottom p-1 themeSecond-color">
+                    {{ detailCard[0]?.title }}
+                </h3>
+            </div>
+            <p style="font-size: small; height: 230px; overflow: auto">
+                {{ detailCard[0]?.post}}
+            </p>
+            <div style="margin-bottom: 10px; text-align: right;">
+                <button (click)="goToMessageOfPost(detailCard[0]?.user)"
+                        *ngIf="(currentUser && currentUser._id) !== (detailCard[0] && detailCard[0]?.user && detailCard[0]?.user._id)" class="btn theme-background mr-2">Antworten
+                </button>
+                <button (click)="deletePost(deletePostModal)" *ngIf="(currentUser && currentUser._id) === (detailCard[0] && detailCard[0]?.user && detailCard[0]?.user._id)"
+                        class="btn" style="background-color: #999999; color: #DCDCDC;">deaktivieren
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="textTitle" class="col-md-12">
+            <select (change)="changeMainCategory()" [(ngModel)]="detailCard[0].postMainCategory"
+                    class="form-control dating-custom-input-border-radius custom-select-icon">
+                <option [ngValue]="null" selected>{{ "Main Category" | translate }}...</option>
+                <option *ngFor="let postMainCategory of postMainCategoryOptions"
+                        [ngValue]="postMainCategory._id === detailCard[0].postMainCategory?._id ? detailCard[0].postMainCategory : postMainCategory">
+                    {{ postMainCategory.name | translate }}
+                </option>
+            </select>
+        </div>
+        <!--
+        <div *ngIf="textTitle" class="col-md-6">
+            <select [(ngModel)]="detailCard[0].postSubCategory"
+                    class="form-control dating-custom-input-border-radius custom-select-icon">
+                <option [ngValue]="null" selected>{{ "Sub Category" | translate }}...</option>
+                <option *ngFor="let postSubCategory of postSubCategoryOptions;"
+                        [ngValue]="postSubCategory._id === detailCard[0].postSubCategory?._id ? detailCard[0].postSubCategory : postSubCategory">
+                    {{ postSubCategory.name | translate }}
+                </option>
+            </select>
+        </div>
+        -->
+        <div *ngIf="textTitle" class="col-md-12 mt-2 mb-2">
+            <input [(ngModel)]="detailCard[0].postCode"
+                   class="form-control dating-custom-input-border-radius border-bottom mt-1"
+                   numeric
+                   [maxLength]="5"
+                   id="postCode" name="postCode"
+                   placeholder="{{ 'Post Code' | translate }}"
+                   type="text"
+            />
+        </div>
+
+        <div class="col-12 text-center">
+            <input *ngIf="textTitle" [(ngModel)]="detailCard[0].title"
+                   class="form-control dating-custom-input-border-radius border-bottom mb-1 mt-1"
+                   maxlength="50" type="text"/>
+            <p *ngIf="textTitle" class="text-right" style="font-size: xx-small">
+                {{ detailCard[0].title.length }} / 50
+            </p>
+            <textarea
+                    *ngIf="textContent"
+                    [(ngModel)]="detailCard[0].post"
+                    class="float-left mb-1 dating-custom-textarea-border-radius form-control"
+                    cols="55"
+                    maxlength="480"
+                    rows="5"
+            ></textarea>
+            <p *ngIf="textContent" class="text-right" style="font-size: xx-small">
+                {{ detailCard[0].post.length }} / 480
+            </p>
+        </div>
+
+        <div class="col-sm pt-2 pb-2 text-right">
+            <button
+                    (click)="updatePostModalRef.close()"
+                    *ngIf="textTitle"
+                    class="btn mr-2 border rounded"
+                    type="button"
+            >
+                Abbrechen
+            </button>
+            <button
+                    *ngIf="textTitle"
+                    (click)="update(detailCard[0])"
+                    class="btn theme-background"
+                    type="button"
+            >
+                {{ "Save" | translate }}
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- image modal -->
+<ng-template #image let-modal>
+    <app-post-image-modal [imageModalRef]="imageModalRef" [selectedImage]="selectedImage"
+                          [udcImagesNameList]="udcImagesNameList"></app-post-image-modal>
+</ng-template>
+
+<!-- delete post modal -->
+<ng-template #deletePostModal let-modal>
+    <app-delete-post-modal [cards]="cards" [ngbModalRef]="deletePostModalRef" [post]="detailCard[0]"
+                           [updatePostModalRef]="updatePostModalRef"></app-delete-post-modal>
+</ng-template>
+
+<ng-template #content let-modal>
+    <app-profile-visitor-modal [bsModalRef]="bsModalRef" [isFavoriteModal]="true"
+                               [isLastVisitorModal]="false"></app-profile-visitor-modal>
+</ng-template>

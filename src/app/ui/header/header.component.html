@@ -1,0 +1,14 @@
+<div *ngIf="router.url !== '/start'" style="height: 60px !important;"></div>
+
+<div *ngIf="!isAuthenticated()"
+     [ngClass]="{'card-bg-white': cardBackgroundColor === 'white','card-bg-dark': cardBackgroundColor === 'black'}"
+     class="container-fluid fixed-top m-0 p-0" style="z-index: 9999999 !important;">
+    <div class="container">
+        <app-login [cardBackgroundColor]="cardBackgroundColor" [isAuthenticated]="isAuthenticated()"></app-login>
+    </div>
+</div>
+
+<div *ngIf="isAuthenticated()" class="bg-dark fixed-top container-fluid m-0 p-0" style="padding: 2px 0px !important;">
+    <app-header-link [isAuthenticated]="isAuthenticated()"></app-header-link>
+</div>
+

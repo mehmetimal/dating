@@ -1,0 +1,105 @@
+<ngb-carousel *ngIf="images" interval="{{slideIntervalValue}}" [pauseOnHover]="false"
+              [showNavigationIndicators]="images.length>1" class="isDesktop">
+    <ng-template ngbSlide *ngFor="let img of images | registerSlide: 'DESKTOP'">
+        <div class="picsum-img-wrapper text-center">
+            <img [src]="resourceUrl + img?.imageURL" class="w-100" style="max-width: 1920px; min-height: 950px; max-height: 1200px">
+        </div>
+    </ng-template>
+</ngb-carousel>
+
+<ngb-carousel *ngIf="images" interval="{{slideIntervalValue}}" [pauseOnHover]="false"
+              [showNavigationIndicators]="images.length>1" class="isTablet">
+    <ng-template ngbSlide *ngFor="let img of images | registerSlide: 'TABLET'">
+        <div class="picsum-img-wrapper text-center">
+            <img [src]="resourceUrl + img?.imageURL" class="w-100 h-100" style="min-height: 950px; max-height: 1200px">
+        </div>
+    </ng-template>
+</ngb-carousel>
+
+<ngb-carousel *ngIf="images" interval="{{slideIntervalValue}}" [pauseOnHover]="false"
+              [showNavigationIndicators]="images.length>1" class="isMobile">
+    <ng-template ngbSlide *ngFor="let img of images | registerSlide: 'MOBILE'">
+        <div class="picsum-img-wrapper text-center">
+            <img [src]="resourceUrl + img?.imageURL" class="w-100 h-100" style="min-height: 950px; max-height: 1200px">
+        </div>
+    </ng-template>
+</ngb-carousel>
+
+<div [ngClass]="{'wizard': cardPosition !== 'down', 'wizard-down': cardPosition === 'down'}"
+     (mouseenter)="changeIntervalOfSlides(0)"
+     (mouseleave)="changeIntervalOfSlides(defaultSlideIntervalValue)">
+    <div class="container">
+        <div class="row">
+            <div [ngClass]="{'mr-auto': cardPosition === 'left', 'ml-auto': cardPosition === 'right', 'm-auto': cardPosition === 'center'}"
+                 class="col-md-12 col-sm-12 col-lg-6 col-xl-6">
+                <!-- //m-auto => center // ml-auto => right // mr-auto => left -->
+                <div class="register-step-background h-100 w-100">
+                    <div [ngClass]="{'card-bg-white': cardBackgroundColor === 'white', 'card-bg-dark': cardBackgroundColor === 'black'}"
+                         class="register-content w-100 p-3">
+                        <div class="mb-4 text-center">
+
+                            <img class="w-50" src="assets/img/Logotext.png">
+
+                        </div>
+                        <form [formGroup]="registerForm">
+                            <div *ngIf="state === 'registerOne'" id="form-total-t-0">
+                                <app-register-first-step (stateChange)="stateChangeListener($event)"
+                                                         [parentForm]="registerForm">
+                                </app-register-first-step>
+                            </div>
+                            <div *ngIf="state === 'registerTwo'" id="form-total-t-1">
+                                <app-register-second-step [profileQuestions]="profileQuestions"
+                                                          [isFacebookLoginActive]="isFacebookLoginActive"
+                                                          (stateChangeListener)="stateChangeListener($event)"
+                                                          [parentForm]="registerForm">
+                                </app-register-second-step>
+                            </div>
+
+                            <div *ngIf="state === 'registerThree'">
+                                <app-register-third-step [profileQuestions]="profileQuestions"
+                                                         (saveChangeListener)="stateChangeListener($event)"
+                                                         [parentForm]="registerForm">
+                                </app-register-third-step>
+                            </div>
+
+                        </form>
+                        <div *ngIf="state === 'registerSuccess'">
+                            <app-register-success [parentForm]="registerForm"></app-register-success>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xl-9 col-lg-8 col-md-9 col-sm-8">
+
+                            </div>
+                            <div class="col-xl-3 pl-xl-2 col-lg-4 pl-lg-4 col-md-3 pl-md-5 col-sm-4 pl-sm-5">
+                                <div class="form-register-stepper">
+                                    <div class="steps">
+                                        <ul role="tablist">
+                                            <!-- first done -->
+                                            <li (click)="wizardStep('registerOne')"
+                                                [ngClass]="{'first done': state == 'registerOne'}">
+                                                <a><span class="title"></span></a>
+                                            </li>
+                                            <!-- current done -->
+                                            <li (click)="wizardStep('registerTwo')"
+                                                [ngClass]="{'current done': state == 'registerTwo'}">
+                                                <a><span class="title"></span></a>
+                                            </li>
+                                            <!-- last done -->
+                                            <li (click)="wizardStep('registerThree')"
+                                                disabled="disabled"
+                                                [ngClass]="{'done': state == 'registerThree', '': !validateSecondRegisterForm()}"
+                                                class="last">
+                                                <a><span class="title"></span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

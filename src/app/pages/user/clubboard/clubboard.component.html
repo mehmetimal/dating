@@ -1,0 +1,99 @@
+<!-- Filter Start -->
+<app-post-filter (valueChange)="addPost(addClubboard, $event)"></app-post-filter>
+<!-- Filter End -->
+
+<!-- List -->
+<div class="container-fluid bg-light scrollable-element" style="padding-top: 1rem">
+    <div class="container pl-4 pr-2 card-left-and-right">
+        <div class="row card-top">
+            <!--            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <div class="card mb-3 cursor-pointer" (click)="addPost(addClubboard)">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4 p-1 text-center m-auto">
+                                        <i class="clubboard-add-icon themeSecond-color fas fa-plus-circle"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title"
+                                                style="margin-top: 0.7rem">{{ "Create a New Pin" | translate }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+            <div *ngFor="let card of cards" class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                <div (click)="cardDetail(card, cardDetailModal)" class="card mb-3 card-height"
+                     style="cursor: pointer;">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-4 pr-0 text-center">
+                            <img *ngIf="card.image" [src]="backendURL + card.image?.imageURL"
+                                 class="card-img img-card mt-4"/>
+                            <img *ngIf="!card.image || (card.image === null || card.image === undefined)"
+                                 class="card-img img-thumbnail mt-4 border" src="/assets/img/add-image.png"/>
+                            <div class="m-auto">
+                                <p class="mb-0" style="font-size: small">
+                                    {{ card.createdAt | date: "dd.MM.yyyy" }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body pr-1 pb-0">
+                                <p class="card-title small text-ellipsis">{{ card.title }}</p>
+                                <p class="card-title text-ellipsis" style="font-size: small;">
+                                    {{ card.user?.profileName }}
+                                </p>
+                                <p class="card-text small mb-0">{{ card.post | truncate : 146 : " ..." }}</p>
+
+                                <div class="text-right">
+                                    <p class="mb-0" style="font-size: x-small">
+                                        {{card.postMainCategory?.name}} <!--/ {{card.postSubCategory?.name}} -->
+                                    </p>
+                                    <p style="font-size: x-small;">{{card.postCode | replaceWithStar}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-light">
+    <div class="row">
+        <div *ngIf="totalPosts > cards.length" class="col-12 col-sm-8 col-md-8 col-lg-4 col-xl-4 mx-auto text-center">
+            <button [disabled]="!('ROLE_PREMIUM' | isCurrentUserHasRolePipe) || totalPosts <= cards.length"
+                    (click)="loadMore()"
+                    class="btn tc-sheet-main-reload-button w-100 mb-2">
+                Weitere laden
+            </button>
+        </div>
+    </div>
+</div>
+<!-- List End -->
+
+<!-- Add Clubboard -->
+<ng-template #addClubboard let-modal>
+    <app-post-add-modal [addPostModalRef]="addPostModalRef"
+                        [currentDate]="currentDate"
+                        [currentUserProfileName]="currentUserProfileName"
+                        [newPost]="newPost"
+                        [selectedImage]="selectedImage"
+                        [udcImagesNameList]="udcImagesNameList"></app-post-add-modal>
+</ng-template>
+
+<!-- Modal Detail-->
+<ng-template #cardDetailModal let-modal>
+    <app-post-detail-modal [cards]="cards"
+                           [viewCount]="viewCount"
+                           [detailCard]="detailCard"
+                           [post]="detailCard[0]"
+                           [selectedImage]="selectedImage"
+                           [udcImagesNameList]="udcImagesNameList"
+                           [updatePostModalRef]="updatePostModalRef"></app-post-detail-modal>
+</ng-template>
+
+<button class="scroll-button" *ngIf="isShow" (click)="gotoTop()">
+    <i class="fas fa-arrow-up"></i>
+</button>

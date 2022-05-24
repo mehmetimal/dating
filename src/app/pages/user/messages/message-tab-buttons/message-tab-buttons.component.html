@@ -1,0 +1,40 @@
+<div class="new-design-theme-left-box-info-box text-center mb-2">
+
+    <span [ngClass]="{'bg-tab-color-gray': isBlack}" class="d-flex align-items-center p-1"
+          (click)="messageUserCollapse('black')">
+        <img src="../../../../../assets/svg/envelope_grau.svg" class="rounded mr-1"
+             style="width: 16px"/>
+        <!-- <i class="new-design-theme-left-box-icon mr-2 fs-11 far fa-envelope bg-color-light-gray text-white rounded"></i> -->
+        <span *ngIf="countOfBlackUnReadMessage() <= 99" class="fs-11 font-weight-bold color-gray cursor-pointer">
+        {{countOfBlackUnReadMessage()}} Anfragen
+        </span>
+
+        <span *ngIf="countOfBlackUnReadMessage() > 99" class="s-11 font-weight-bold color-gray cursor-pointer">
+        +99 Anfragen
+        </span>
+
+    </span>
+
+    <!--
+    <span [ngClass]="{'bg-tab-color-gray': isBlue}" class="d-flex align-items-center p-1" (click)="messageUserCollapse('blue')">
+        <img src="../../../../../assets/svg/envelope_cyan.svg" class="rounded mr-1"
+             style="width: 16px"/>
+
+        <span *ngIf="countOfBlueUnReadMessage() <= 99"
+              class="fs-11 font-weight-bold color-gray cursor-pointer">
+        {{countOfBlueUnReadMessage()}} passende Anfragen </span>
+
+        <span *ngIf="countOfBlueUnReadMessage() > 99"
+              class="fs-11 font-weight-bold color-gray cursor-pointer">
+       +99 passende Anfragen </span>
+    </span>
+
+    <span [ngClass]="{'bg-tab-color-gray': isPink}" class="d-flex align-items-center p-1"
+          (click)="messageUserCollapse('pink')">
+        <img src="../../../../../assets/svg/envelope_magenta.svg" class="rounded mr-1"
+             style="width: 16px"/>
+        <span class="fs-11 font-weight-bold color-gray cursor-pointer"> 0 Chats </span>
+    </span>
+    -->
+</div>
+

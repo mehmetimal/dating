@@ -1,0 +1,31 @@
+version: '3'
+services:
+  dating-front:
+    image: registry.gitlab.com/info.udating/dating-frontend
+    command: npm run serve:ssr
+    container_name: dating-frontend
+    ports:
+      - "4200:80"
+    restart: always
+    depends_on:
+      - dating-backend
+    networks:
+      - dating-frontend-prod
+
+  dating-backend:
+    image: registry.gitlab.com/info.udating/dating-backend
+    restart: always
+    volumes:
+      - ~/volumes/dating/photos/:/photos/
+      - ~/volumes/dating/photos/profile/:/photos/profile
+      - ~/volumes/dating/photos/profile/background:/photos/profile/background
+      - ~/volumes/dating/photos/profile/gallery:/photos/profile/gallery
+      - ~/volumes/dating/photos/udc/:/photos/udc
+      - ~/volumes/dating/sitemap/:/sitemap
+      - ~/volumes/dating/robots/:/robots
+    networks:
+      - dating-frontend-prod
+
+
+networks:
+  dating-frontend-prod:

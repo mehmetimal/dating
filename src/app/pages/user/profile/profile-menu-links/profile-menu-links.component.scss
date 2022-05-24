@@ -1,0 +1,26 @@
+.custom-dropdown-toggle::after {
+  display: none !important;
+}
+
+.custom-dropdown-toggle {
+  color: #000;
+}
+
+.profile-graph-menu {
+  li {
+    text-decoration: none;
+    float: right;
+    list-style-type: none !important;
+  }
+}
+
+.dropleft .dropdown-toggle::before {
+  display: none !important;
+}
+
+.vip-button {
+  border: 1.5px solid #ff3366;
+  border-radius: 3px;
+  padding: 5px 20px;
+  margin-right: 22px;
+}

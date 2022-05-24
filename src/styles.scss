@@ -1,0 +1,821 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: "Noto Sans SC", sans-serif;
+  outline: none !important;
+}
+
+.modal-top-off {
+  z-index: 9999999999999999;
+}
+
+.is-err {
+  border: 1px solid #ff3366 !important;
+  border-radius: 5px;
+}
+
+#lottie{
+  background-color:#fff;
+  width:100%;
+  height:100%;
+  display:block;
+  overflow: hidden;
+  transform: translate3d(0,0,0);
+  text-align: center;
+  opacity: 1;
+}
+
+i {
+  outline: none !important;
+}
+
+.ng-sidebar__content {
+  position: relative !important;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.dropdown-item:active {
+  background: transparent;
+  background-color: transparent;
+}
+
+.dropdown-item:focus {
+  outline: none;
+}
+
+$cardBgWhite: rgba(255, 255, 255, 0.5);
+$cardBgDark: rgba(0, 0, 0, 0.5);
+
+$themecolor: #ff3366;
+$themeSecondColor: #66cccc;
+
+// TOOLTİP TOP BACKGROUND
+$tooltipArrowColorDark: rgba(0, 0, 0, 0.3);
+$tooltipArrowColorWhite: rgba(255, 255, 255, 0.3);
+
+body .ui-button {
+  border-color: $themecolor;
+}
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  background-color: $themecolor;
+  color: #ffffff;
+}
+
+body .ui-selectbutton .ui-button.ui-state-active {
+  background-color: $themecolor;
+  border-color: $themecolor;
+  color: $themecolor;
+}
+
+// İNPUT PLACEHOLDER COLOR
+$inputPlaceholder: #495057;
+.form-control::-webkit-input-placeholder {
+  color: $inputPlaceholder;
+}
+
+/* WebKit, Blink, Edge */
+.form-control:-moz-placeholder {
+  color: $inputPlaceholder;
+}
+
+/* Mozilla Firefox 4 to 18 */
+.form-control::-moz-placeholder {
+  color: $inputPlaceholder;
+}
+
+/* Mozilla Firefox 19+ */
+.form-control:-ms-input-placeholder {
+  color: $inputPlaceholder;
+}
+
+/* Internet Explorer 10-11 */
+.form-control::-ms-input-placeholder {
+  color: $inputPlaceholder;
+}
+
+/* Microsoft Edge */
+// input placeholder end
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(assets/img/arrowBottom.png) 98% / 12px no-repeat;
+}
+
+.custom-select-icon {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background: url(assets/img/arrowBottom.png) 96% / 12px no-repeat !important;
+  background-color: #fff !important;
+}
+
+.custom-select-icon-two {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background: url(assets/img/arrowBottom.png) 93% / 12px no-repeat !important;
+  background-color: #fff !important;
+}
+
+.maintenance {
+  text-align: center;
+}
+
+.ngx-charts {
+  margin-left: -14px !important;
+}
+
+.legend-labels {
+  margin-left: -10px !important;
+}
+
+.customProfileTable tr td {
+  text-align: right !important;
+  font-size: 14px !important;
+  padding-top: -10px !important;
+}
+
+.customProfileTable tr td:last-child {
+  text-align: left !important;
+}
+
+select::-ms-expand {
+  display: none; /* remove default arrow on ie10 and ie11 */
+}
+
+@media screen and (min-width: 0 \0
+) {
+  select {
+    background: none \9
+  ;
+    padding: 5px \9
+  ;
+  }
+}
+
+// input [i] icon settings
+.tooltip-inner {
+  background-color: $cardBgDark;
+}
+
+.tooltip {
+  width: 200px;
+  margin-left: 15px !important;
+}
+
+.tooltip .arrow::before {
+  border-right-color: $cardBgDark;
+}
+
+// input [i] icon settings end
+
+.ng5-slider .ng5-slider-pointer {
+  background-color: $themecolor !important;
+}
+
+.ng5-slider .ng5-slider-pointer:after {
+  background: $themecolor !important;
+}
+
+// CARD, HEADER
+.card-bg-white {
+  background-color: $cardBgWhite !important;
+}
+
+.card-bg-dark {
+  background-color: $cardBgDark !important;
+}
+
+// CARD, HEADER CSS END
+
+// LOGİN SCREEN BACKGORUND
+.login-card-white .tooltips .popover {
+  background-color: $cardBgWhite;
+  // top: 65px !important;
+  // left: 800px !important;
+  top: 25px !important;
+  left: -88px !important;
+  width: 100%;
+  border: none !important;
+}
+
+@media (max-width: 500px) {
+  .login-card-dark-isLogin .tooltips .popover {
+    display: none !important;
+  }
+}
+
+.login-card-dark .tooltips .popover {
+  background-color: $cardBgDark;
+  // top: 65px !important;
+  // left: 800px !important;
+  top: 25px !important;
+  left: -88px !important;
+  width: 100%;
+  border: none !important;
+}
+
+// dark
+.login-card-dark .tooltips .bs-popover-bottom .arrow::after,
+.bs-popover-auto[x-placement^="bottom"] .arrow::after {
+  border-bottom-color: $tooltipArrowColorDark !important;
+  left: 88px;
+}
+
+.login-card-dark .tooltips .bs-popover-bottom .arrow::before,
+.bs-popover-auto[x-placement^="bottom"] .arrow::before {
+  border-bottom-color: $tooltipArrowColorDark !important;
+  left: 88px;
+}
+
+// dark end
+
+// white
+.login-card-white .tooltips .bs-popover-bottom .arrow::before,
+.bs-popover-auto[x-placement^="bottom"] .arrow::before {
+  border-bottom-color: $tooltipArrowColorWhite !important;
+  left: 88px;
+}
+
+.login-card-white .tooltips .bs-popover-bottom .arrow::after,
+.bs-popover-auto[x-placement^="bottom"] .arrow::after {
+  border-bottom-color: $tooltipArrowColorWhite !important;
+  left: 88px;
+}
+
+// white end
+
+// LOGİN SCREEN CSS END
+
+.custom-button {
+  background-color: $themecolor !important;
+  border-radius: 10px !important;
+  padding: 10px 30px 10px 30px;
+  color: white;
+  border: none;
+  width: inherit;
+}
+
+.custom-button-disabled {
+  background-color: gray !important;
+  border-radius: 10px !important;
+  padding: 10px 30px 10px 30px;
+  color: white;
+  border: none;
+  width: inherit;
+}
+
+.form-control {
+  border-radius: 10px;
+}
+
+.button-icon:active:focus {
+  box-shadow: none;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+.custom-button:active:focus {
+  box-shadow: none !important;
+}
+
+.custom-icon {
+  color: #9b9b9b;
+}
+
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+
+/* style glyph */
+.inner-addon .fas {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align glyph */
+.left-addon .fas {
+  left: 0px;
+}
+
+.right-addon .fas {
+  right: 0px;
+}
+
+/* add padding  */
+.left-addon input {
+  padding-left: 30px;
+}
+
+.right-addon input {
+  padding-right: 30px;
+}
+
+.card-options {
+  padding: 30px;
+}
+
+.custom-input {
+  border-radius: 10px;
+}
+
+.ab {
+  z-index: 9999999999999999999999999;
+  position: absolute;
+  margin-top: -600px;
+}
+
+/* WİZARD CSS */
+.form-register-stepper .steps ul {
+  display: flex;
+  display: -webkit-flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+.form-register-stepper .steps li,
+.form-register-stepper .steps li.current {
+  outline: none;
+  -o-outline: none;
+  -ms-outline: none;
+  -moz-outline: none;
+  -webkit-outline: none;
+}
+
+.form-register-stepper .steps li a {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border: 2px solid #fff;
+  margin-right: 30px;
+  position: relative;
+  outline: none;
+}
+
+.form-register-stepper .steps li a::before {
+  position: absolute;
+  content: "";
+  background: #fff;
+  width: 30px;
+  height: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  left: 100%;
+}
+
+.form-register-stepper .steps li.last a::before {
+  content: none;
+}
+
+.form-register-stepper .steps li.current a,
+.form-register-stepper .steps li.current a:active,
+.form-register-stepper .steps li.done a,
+.form-register-stepper .steps li.done a,
+.form-register-stepper .steps li.done a:active {
+  background: $themecolor;
+}
+
+.form-register-stepper .steps li .current-info {
+  display: none;
+}
+
+.form-register-stepper .steps li .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: muli, sans-serif;
+}
+
+/* WİZARD CSS END */
+
+/* profile page css */
+
+.profile-background {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 350px;
+}
+
+.profile-image {
+  padding-top: 110px !important;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.profile-menu {
+  text-decoration: none;
+  margin: 5px 0px 0px 0px;
+  padding: 0px;
+}
+
+.profile-menu li {
+  list-style-type: none;
+  display: initial;
+  margin-right: 15px;
+}
+
+.profile-menu li a {
+  color: #000;
+}
+
+textarea {
+  resize: none;
+}
+
+/* profile page css end */
+
+.theme-background {
+  background-color: $themecolor !important;
+  color: #fff !important;
+}
+
+.themeSecond-background {
+  background-color: $themeSecondColor !important;
+  color: #fff !important;
+}
+
+.themeSecond-color {
+  color: $themeSecondColor !important;
+}
+
+.theme-color {
+  color: $themecolor !important;
+}
+
+.image-blur {
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.nav-settings {
+  z-index: 99999999;
+  position: absolute;
+}
+
+.default-icon-color {
+  color: #66cccc;
+}
+
+.add-icon {
+  font-size: 32px;
+}
+
+@media (min-width: 987px) {
+  .right-card {
+    margin-top: -245px;
+  }
+}
+
+.image {
+  height: 287px;
+  border: 6px solid white;
+  position: absolute;
+  z-index: 99999;
+}
+
+.image-bottom {
+  position: absolute;
+  bottom: 4px;
+  // border-radius: 10px;
+  right: 4px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 97%;
+}
+
+.profile-shadow {
+  -webkit-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -4px rgba(0, 0, 0, 0.75);
+}
+
+.search-icon-custom {
+  z-index: 99999999999999999;
+  position: absolute;
+  cursor: pointer;
+  top: 3px;
+}
+
+.ppp-1 {
+  padding: 1px !important;
+}
+
+.ppp-1 select option {
+  font-size: 14px;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: transparent !important;
+  color: #212121;
+}
+
+.modal-menu .nav-link {
+  font-size: 18px;
+  color: #5f5f5f;
+  border-radius: 0%;
+  padding: 15px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.modal-menu .nav-link:last-child {
+  border: none;
+}
+
+.modal-cont {
+  background-color: #3e3e3e;
+  padding: 20px 50px 50px 50px;
+}
+
+.modal-drop .dropdown-toggle::after {
+  float: right;
+  margin: 10px 0px 0px 0px;
+}
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  display: none !important;
+}
+
+.ng-select .ng-select-container {
+  background-color: #f8f9fa !important;
+}
+
+.back-item button {
+  opacity: 0;
+}
+
+.profile-backgorund:hover .back-item button {
+  opacity: 1;
+  transition: 0.5s ease;
+}
+
+.drag-scroll-content {
+  overflow: hidden !important;
+}
+
+@media (min-width: 1200px) {
+  .profileImagePadding {
+    padding: 100px 0px 0px 0px;
+  }
+}
+
+table td {
+  border: none !important;
+  vertical-align: unset !important;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container {
+  background-color: #f8f9fa !important;
+}
+
+.user-select-delete {
+  color: #5f5f5f;
+  float: right;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.user-select-delete:hover {
+  color: #ff3366;
+}
+
+.person-list:hover {
+  background-color: #e6e6e6;
+}
+
+.galleryImage {
+  border: 2px solid #cccccc !important;
+  padding: 0px;
+  min-height: 90px;
+}
+
+.notApprovedImage {
+  border: 2px solid #cccccc !important;
+  padding: 0px;
+  min-height: 90px;
+}
+
+.selectProfileImage {
+  border: none !important;
+  padding: 0px;
+  width: 115px;
+  max-width: 115px;
+  min-width: 115px;
+  max-height: 100%;
+  min-height: 100%;
+  margin-right: 5px;
+}
+
+.headerMenu {
+  position: absolute;
+  z-index: 99999999999;
+}
+
+.vertical-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.carousel-indicators li {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+}
+
+.carousel-indicators .active {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: none !important;
+}
+
+.ng5-slider .ng5-slider-selection {
+  background: #ff3366 !important;
+}
+
+.word-wrap {
+  word-wrap: break-word;
+}
+
+.input-group-prepend {
+  margin-right: -3px !important;
+}
+
+.custom-modal-content {
+  background-color: rgba(105, 105, 105, 0.9) !important;
+}
+
+.custom-box-shadow:hover {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  transition: all 0.15s ease-in-out;
+}
+
+.custom-click-shadow {
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.custom-price-card-bg {
+  background-color: #999999 !important;
+  border-style: inset !important;
+  border-color: black !important;
+}
+
+.custom-price-card-bg:hover {
+  background-color: #999999 !important;
+  border-style: inset !important;
+  border-width: 1px !important;
+  border-color: black !important;
+  height: calc(100% + 1rem) !important;
+  margin-top: 0 !important;
+}
+
+.offline {
+  color: #ff0033;
+}
+
+.custom-iframe > div > iframe {
+  width: 75% !important;
+}
+
+@media (max-width: 400px) {
+  html {
+    width: fit-content;
+  }
+}
+
+// text area
+.dating-custom-textarea-border-radius {
+  border-radius: 3px !important;
+}
+
+.dating-custom-textarea-left-border-radius {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+
+.dating-custom-textarea-right-border-radius {
+  border-top-right-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+}
+
+// input
+.dating-custom-input-border-radius {
+  border-radius: 3px !important;
+}
+
+.dating-custom-input-left-border-radius {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}
+
+.dating-custom-input-right-border-radius {
+  border-top-right-radius: 3px !important;
+  border-bottom-right-radius: 3px !important;
+}
+
+.profile-card-dark .bs-popover-bottom .arrow::after,
+.bs-popover-auto[x-placement^="bottom"] .arrow::after {
+  border-bottom-color: $tooltipArrowColorDark !important;
+}
+
+.profile-card-dark .bs-popover-bottom .arrow::before,
+.bs-popover-auto[x-placement^="bottom"] .arrow::before {
+  border-bottom-color: $tooltipArrowColorDark !important;
+}
+
+.profile-card-dark .popover {
+  background-color: $cardBgDark;
+  top: 10px !important;
+  border: none !important;
+}
+
+.vip-error-modal-header-margin {
+  margin-top: 64px;
+  z-index: 99998989898989898989898998;
+}
+
+.loading-modal-backdrop {
+  background-color: rgba(255,255,255, 0.8);
+  z-index: 99998989898989898989898998;
+}
+
+.loading-modal-backdrop .modal-content{
+  border: 0px !important;
+  background: transparent !important;
+}
+
+.vip-error-modal-background-color .modal-content {
+  background-color: transparent !important;;
+}
+
+.forgot-password-text {
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+
+.forgot-password-text:hover {
+  border-bottom: 1px solid #fff;
+}
+
+@media (max-width: 576px) {
+  .justify-content-center-image {
+    justify-content: center !important;
+  }
+  .m-auto-icon {
+    margin: auto;
+  }
+}
+
+ngb-modal-window {
+  z-index: 99999999999999999999999 !important;
+}

@@ -1,0 +1,31 @@
+:host {
+  .breadcrumb {
+    margin: 0px !important;
+  }
+  .breadcrumb-item + .breadcrumb-item::before {
+    display: inline-block;
+    color: #B5B5B5;
+    content: ">";
+    font-size: 12px;
+  }
+  .breadcrumb-item {
+    padding: 0px !important;
+  }
+  .breadcrumb-item a {
+    color: #B5B5B5 !important;
+    text-decoration: none !important;
+    font-size: 14px;
+  }
+
+  .breadcrumb-item:last-child  a {
+    color: #818181 !important;
+    text-decoration: none !important;
+    font-size: 14px;
+  }
+
+  .bread-crumb-start-page {
+    //position: absolute;
+    //z-index: 999999;
+    top: 56px;
+  }
+}

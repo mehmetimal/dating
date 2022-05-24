@@ -1,0 +1,122 @@
+<div class="row">
+    <div class="col-1 col-sm-1 col-md-1 col-xl-3 col-lg-3"></div>
+    <div class="col-10 col-sm-10 col-md-10 col-xl-6 col-lg-6">
+        <image-cropper outputType="file" id="croppedImage"
+                       [imageChangedEvent]="imageChangedEvent"
+                       [maintainAspectRatio]="true"
+                       [resizeToWidth]="600"
+                       [onlyScaleDown]="true"
+                       format="png"
+                       (imageCropped)="imageCropped($event)">
+        </image-cropper>
+
+        <img *ngIf="!croppedImage && !selectedImageFromGallery" class="w-100 rounded"
+             src="../../../../../assets/img/imagePlaceholder.png">
+
+        <img *ngIf="selectedImageFromGallery && !croppedImage && !selectedImageBlur"
+             [src]="backendURL + selectedImageFromGallery?.imageURL"
+             class="w-100 rounded"/>
+        <img *ngIf="selectedImageFromGallery && !croppedImage && selectedImageBlur"
+             [src]="backendURL + selectedImageFromGallery?.imageBlurURL"
+             class="w-100 rounded"/>
+        <i *ngIf="selectedImageFromGallery && profileImage && profileImage._id === selectedImageFromGallery._id"
+           class="fas fa-user-circle float-right text-white"
+           style="position: absolute; bottom: 55px; right: 20px;"></i>
+
+
+        <div class="row">
+            <div class="col-2 d-flex">
+                <i *ngIf="selectedImageFromGallery" class="fas fa-heart float-left theme-color p-1"></i>
+                <b *ngIf="selectedImageFromGallery" class="text-white">{{selectedImageFromGallery?.totalLikes}}</b>
+            </div>
+
+            <div class="p-0 text-center"
+                 [ngClass]="{'col-7': selectedImageFromGallery && selectedImageFromGallery.acceptState === pending ,
+                 'col-6': selectedImageFromGallery && selectedImageFromGallery.acceptState !== pending,
+                 'col-8': croppedImage}">
+                <div *ngIf="selectedImageFromGallery" class="form-check">
+                    <img class="cursor-pointer" *ngIf="!selectedImageBlur"
+                         style="margin-bottom: 3px;width: 16px; height: 16px" (click)="show(true)"
+                         src="../../../../../assets/img/gallery/opened.svg"/>
+                    <img class="cursor-pointer" *ngIf="selectedImageBlur"
+                         style="margin-bottom: 3px;width: 16px; height: 16px" (click)="show(false)"
+                         src="../../../../../assets/img/gallery/closed.svg"/>
+                    <label class="form-check-label text-white pl-1" style="font-size: 12px;">
+                        <span *ngIf="!selectedImageBlur">Bild verpixeln</span>
+                        <span *ngIf="selectedImageBlur">Bild verpixelt</span>
+
+                        <span class="themeSecond-color ml-2"
+                              *ngIf="selectedImageFromGallery && selectedImageFromGallery.acceptState === pending"> wird noch geprüft</span>
+                    </label>
+                </div>
+            </div>
+
+            <div [ngClass]="{'col-3': selectedImageFromGallery && selectedImageFromGallery.acceptState === pending , 'col-4': selectedImageFromGallery && selectedImageFromGallery.acceptState !== pending}">
+                <i *ngIf="croppedImage && (imageGallery && imageGallery.length < 5)"
+                   class="fas fa-check p-1 themeSecond-color float-right"
+                   (click)="saveImage()"></i>
+                <i *ngIf="(imageGallery && imageGallery.length < 5)" class="fas fa-upload p-1 text-white float-right"
+                   (click)="fileInput.click()"></i>
+                <i (click)="updateProfileImageFromSelectedGalleryImage()"
+                   *ngIf="selectedImageFromGallery && selectedImageFromGallery.acceptState === approved && (!profileImage || (profileImage && profileImage._id !== selectedImageFromGallery._id) )"
+                   class="fas fa-user-circle p-1 text-white float-right cursor-pointer"></i>
+                <i (click)="deleteGalleryImageById()" *ngIf="selectedImageFromGallery"
+                   class="fas fa-trash-alt p-1 text-white float-right cursor-pointer"></i>
+            </div>
+
+        </div>
+
+        <input type="file" class="text-white form-control-file" #fileInput (change)="fileChangeEvent($event)"
+               accept="image/*"
+               style="display: none"/>
+        <br>
+
+    </div>
+    <div class="col-10 col-sm-10 col-md-10 mb-4 col-lg-3 col-xl-3 m-auto">
+        <div class="p-2 w-100 text-center rounded-top" style="background-color: #cccccc !important;color: #666666 !important;">
+            FREIGEBEN
+        </div>
+        <div class="bg-white p-1">
+            <form>
+                <div class="form-group">
+                    <ng-select (change)="shareImage(selectedPerson)" [(ngModel)]="selectedPerson"
+                               [addTag]="false"
+                               [hideSelected]="true"
+                               [items]="people3$ | async"
+                               [loadingText]="'Beladung'"
+                               [loading]="people3Loading"
+                               [multiple]="false"
+                               [notFoundText]="'Kein Benutzer'"
+                               [placeholder]="'Clubnummer'"
+                               [typeToSearchText]="'Tippe um zu suchen'"
+                               [typeahead]="people3input$"
+                               bindLabel="profileName"
+                               class="customNgSelect border-bottom pb-1"
+                               name="clubNumberSearch">
+                    </ng-select>
+                </div>
+            </form>
+            <ul class="list-group" style="list-style-type: none;">
+                <li *ngFor="let person of sharedPersons" class="p-2 person-list">
+                    <a>{{ person.profileName}}<i (click)="unShareImage(person)"
+                                                 class="fas fa-times user-select-delete"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- image gallery list -->
+<div class="row">
+    <div class="col-1 d-none d-lg-block d-xl-block"></div>
+    <div *ngFor="let image of imageGallery" class="col-3 col-md-3 col-sm-4 col-lg-2 col-xl-2 mt-4">
+        <img
+                (click)="selectImageFromGallery(image)"
+                [ngClass]="[image.acceptState === notApproved ? 'notApprovedImage' : 'galleryImage']"
+                [src]="backendURL + image?.imageURL"
+                class="rounded img-thumbnail galleryImage cursor-pointer">
+        <i *ngIf="checkProfileImage(image)" class="fas fa-user-circle float-right text-white" style="position: absolute;
+    bottom: 5px;
+    right: 20px;"></i></div>
+    <div class="col-1 d-none d-lg-block d-xl-block"></div>
+</div>

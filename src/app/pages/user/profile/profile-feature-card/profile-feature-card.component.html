@@ -1,0 +1,40 @@
+<div class="card mb-3 profile-shadow">
+    <div class="card-header text-center bg-white">
+        INTERESSE AN
+        <i
+                (click)="aboutEditable()"
+                *ngIf="!aboutEdit"
+                class="fa fa-pencil-alt default-icon-color ml-2 cursor-pointer"
+        ></i>
+        <i
+                (click)="aboutEditCancel()"
+                *ngIf="aboutEdit"
+                class="fa fa-check default-icon-color cursor-pointer"
+        ></i>
+        <i
+                (click)="aboutEditCancel()"
+                *ngIf="aboutEdit"
+                class="fa fa-times default-icon-color ml-1 cursor-pointer"
+        ></i>
+
+    </div>
+    <div class="card-body" *ngIf="aboutEdit">
+        <div class="row mx-auto">
+            <ul class="list-group list-group-horizontal" style="display: contents!important;">
+                <li class="list-group-item custom-list-group-item col-6" *ngFor="let item of featureOptions">
+                    <input [disabled]="!aboutEdit || checkDisabledCheckBox(item)" type="checkbox"
+                           [checked]="checkedControl(item._id)" (change)="changeFeature($event, item)">
+                    <span style="padding-left: 5px" class="small">{{item.name}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card-body" *ngIf="!aboutEdit">
+        <div class="row mx-auto" style="margin-left: 5px!important;">
+            <span style="margin-bottom: 4px" class="small" *ngFor="let item of features;let i = index">{{item.name}}
+                <span *ngIf="i !== features.length - 1">, </span></span>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,57 @@
+.tc-sheet-detail-modal-header {
+  padding: 15px 15px 15px 15px !important;
+  border-bottom: 1px solid #dee2e6;
+
+  &-icon-list {
+    i {
+      font-size: 16px;
+    }
+  }
+
+  &-close {
+    i {
+      font-size: 16px;
+    }
+  }
+}
+
+.tc-sheet-detail-modal-content {
+  padding: 15px 15px 0px 15px !important;
+
+  &-user-info {
+    display: flex;
+    flex-wrap: wrap;
+    word-break: break-word;
+
+    &-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 5px;
+      text-align: center;
+      background-color: #fff;
+
+      i {
+        color: #000;
+      }
+    }
+
+    &-username {
+      color: #79D1D1;
+      font-size: small;
+      width: 105px;
+      margin-bottom: 5px;
+    }
+
+    &-detail {
+      padding-left: 29px;
+      font-size: small;
+      @media (max-width: 567px) {
+        padding-left: 0px;
+      }
+
+      &-katagorie {
+        margin-top: 5px;
+      }
+    }
+  }
+}

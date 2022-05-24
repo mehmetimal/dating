@@ -1,0 +1,9 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" *ngIf="data">
+                <div [innerHTML]="data | safeHtmlPipe"></div>
+            </div>
+        </div>
+    </div>
+</div>

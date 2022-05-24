@@ -1,0 +1,108 @@
+<div class="tc-sheet-detail-modal-header">
+    <div class="row">
+        <div class="col-10 col-lg-10 col-xl-10 d-flex">
+            <div class="tc-sheet-detail-modal-header-title mt-auto">
+                <h5 class="p-0 m-0">{{ "Add New Post" | translate }}</h5>
+            </div>
+        </div>
+        <div class="col-2 col-lg-2 col-xl-2 d-flex justify-content-end">
+            <div class="tc-sheet-detail-modal-header-close mt-auto">
+                <i (click)="closeModal()"
+                   aria-label="Close"
+                   class="fas fa-times cursor-pointer"
+                   style="color: #000"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+        <div class="col-4 mb-2">
+            <img (click)="openImageGallery(image)"
+                 [src]="selectedImage ? backendURL + selectedImage?.imageURL: '/assets/img/add-image.png'"
+                 class="img-thumbnail"/>
+        </div>
+        <div class="col-8">
+            <div class="text-center">
+                <h6 class="border-bottom p-1" style="font-size: small">
+                    {{ currentUserProfileName }}
+                </h6>
+                <h6 style="font-size: small">
+                    Erstellt am: {{ currentDate | date: "dd.MM.yyyy" }}
+                </h6>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <select (change)="changeMainCategory()"
+                    [(ngModel)]="newPost.postMainCategory"
+                    class="form-control dating-custom-input-border-radius">
+                <option [ngValue]="null" disabled selected>{{ "Main Category" | translate }}...</option>
+                <option *ngFor="let postMainCategory of postMainCategoryOptions; " value="{{ postMainCategory._id }}">
+                    {{ postMainCategory.name | translate }}
+                </option>
+            </select>
+        </div>
+<!--        <div class="col-md-6">
+            <select [(ngModel)]="newPost.postSubCategory"
+                    class="form-control dating-custom-input-border-radius custom-select-icon">
+                <option [ngValue]="null" disabled selected>{{ "Sub Category" | translate }}...</option>
+                <option *ngFor="let postSubCategory of postSubCategoryOptions" value="{{ postSubCategory._id }}">
+                    {{ postSubCategory.name | translate }}
+                </option>
+            </select>
+        </div>-->
+
+        <div class="col-md-12 mt-2">
+            <select [(ngModel)]="newPost.postPeriod" class="form-control dating-custom-input-border-radius">
+                <option [ngValue]="null" disabled selected>{{ "Laufzeit" | translate }}...</option>
+                <option *ngFor="let postPeriod of postPeriodOptions" value="{{ postPeriod._id }}">
+                    {{ postPeriod.period}} Tage
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-12 mt-2 mb-2">
+            <input [(ngModel)]="newPost.postCode" numeric
+                   [maxLength]="5"
+                   class="form-control dating-custom-input-border-radius border-bottom mt-1" type="text"
+                   id="postCode" name="postCode" placeholder="{{ 'Post Code' | translate }}"/>
+            <small class="form-text text-danger ml-1" *ngIf="isPostCodeError">
+                {{ 'Post Code is incorrect' | translate }}.
+            </small>
+        </div>
+
+        <div class="col text-center">
+            <input (keyup)="titleInputLength(newPost.title)" [(ngModel)]="newPost.title"
+                   class="form-control dating-custom-input-border-radius mt-1"
+                   maxlength="50"
+                   placeholder="{{ 'Title' | translate }}" type="text"/>
+            <p class="text-right" style="font-size: xx-small">
+                {{ titleLength }} / 50
+            </p>
+            <textarea
+                    (keyup)="textAreaLength(newPost.post)"
+                    [(ngModel)]="newPost.post"
+                    class="mt-1 dating-custom-textarea-border-radius form-control"
+                    cols="55"
+                    maxlength="480"
+                    placeholder="{{ 'Content' | translate }}"
+                    rows="5"
+            ></textarea>
+            <p class="text-right" style="font-size: xx-small">
+                {{ textLength }} / 480
+            </p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button (click)="getAddressFromCode()" class="btn theme-background" type="button">
+        {{ "Save" | translate }}
+    </button>
+</div>
+
+<!-- image modal -->
+<ng-template #image let-modal>
+    <app-post-image-modal [imageModalRef]="imageModalRef" [selectedImage]="selectedImage"
+                          [udcImagesNameList]="udcImagesNameList"></app-post-image-modal>
+</ng-template>

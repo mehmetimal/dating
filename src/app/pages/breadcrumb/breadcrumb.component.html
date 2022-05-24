@@ -1,0 +1,19 @@
+<div *ngIf="!(router.url === '/404')"
+     class="container-fluid bg-white fixed-top" [ngClass]="{'bread-crumb-start-page': router.url === '/start'
+     || router.url === '/'
+     || router.url === '/registrierung'
+     || router.url === '/tv'
+     || router.url === '/socialmedia'
+     || !isAuthenticated()
+     }">
+    <div class="container bg-white">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-white">
+                <li class="breadcrumb-item"><a routerLink="">{{'Home' | translate}}</a></li>
+                <li *ngFor="let breadcrumb of breadcrumbs" class="breadcrumb-item"><a
+                        [routerLink]="[breadcrumb.url]">{{breadcrumb.label}} {{ breadcrumb.params?.profileName }} {{ breadcrumb.params?.title }} </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>

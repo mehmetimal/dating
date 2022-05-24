@@ -1,0 +1,84 @@
+<ng-sidebar-container (onBackdropClicked)="toggleSidebar()">
+    <ng-sidebar [(opened)]="isOpen"
+                [mode]="'over'"
+                [showBackdrop]="true"
+                [closeOnClickBackdrop]="true">
+        <button class="btn themeSecond-background w-100" (click)="toggleSidebar()">Filter ausschalten</button>
+
+        <div class="card">
+            <div class="card-body">
+                <app-news-sidemenu [title]="title" [popularNewsCard]="popularNewsCard"
+                                   [archiveCard]="archiveCard"></app-news-sidemenu>
+            </div>
+        </div>
+
+    </ng-sidebar>
+
+    <div ng-sidebar-content>
+        <div class="container-fluid pt-5 pb-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <button (click)="toggleSidebar()" class="w-100 btn theme-background mb-2 d-xl-none d-lg-none d-sm-block d-md-block">Filter öffnen</button>
+
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 p-sm-3 p-md-3 p-lg-5 p-xl-5 bg-white border-right">
+                        <h2 class="theme-color">Aktuelle Neuigkeiten</h2>
+                        <div class="card border-0 mb-3 news-card cursor-pointer" *ngFor="let card of newsCard" (click)="detailPage($event, card._id)">
+                            <div class="card-horizontal">
+                                <div class="img-square-wrapper pr-1">
+                                    <img *ngIf="!card?.imageThumbLink" height="100" width="100"
+                                         src="http://via.placeholder.com/100x100">
+                                    <img *ngIf="card?.imageThumbLink" height="100" width="100" [src]="card?.imageThumbLink">
+                                </div>
+                                <div class="card-body pl-1">
+                                    <h1 class="h6"><b>{{ card?.title }}</b></h1>
+                                    <div *ngIf="card.categories && card.categories.length > 0">
+                                        <p class="text-muted"><small>Katagorie: </small>
+                                            <button *ngFor="let item of card?.categories"
+                                                    class="btn mr-1 theme-second-outline-button theme-second-outline-button-sm btn-sm">
+                                                {{ item }}
+                                            </button>
+                                        </p>
+                                    </div>
+                                    <div class="border-top">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                                                <small class="text-muted">Create:
+                                                    <b>{{ card?.created | date: 'dd.MM.yyyy' }}</b></small>
+                                            </div>
+                                            <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+                                                <small class="text-muted">Author: <b>{{ card?.author }}</b></small>
+                                            </div>
+                                            <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 text-right theme-color" id="likeContent">
+                                                <small id="likeContentTwo">{{ card?.likes ? card?.likes.length : 0 }} <i (click)="likeNews(card)"
+                                                                                                     class="fas fa-heart"></i></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xl-4 d-none d-lg-block d-xl-block">
+                        <app-news-sidemenu [title]="title" [popularNewsCard]="popularNewsCard"
+                                           [archiveCard]="archiveCard"></app-news-sidemenu>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-sidebar-container>
+
+
+<ng-template #detailModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{'News Detail' | translate}}</h4>
+        <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div *ngFor="let a of selected" class="modal-body">
+        <h3> {{ a.title }} </h3>
+        <p [innerHTML]="a.content | safeHtmlPipe"></p>
+    </div>
+</ng-template>

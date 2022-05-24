@@ -1,0 +1,31 @@
+<div class="card mb-3 profile-shadow">
+    <div class="card-header text-center bg-white">
+        ÜBER MICH
+        <i (click)="aboutEditable()" *ngIf="!aboutEdit"
+           class="fa fa-pencil-alt default-icon-color ml-2 cursor-pointer"></i>
+        <i (click)="aboutEditSave(about)" *ngIf="aboutEdit" class="fa fa-check default-icon-color cursor-pointer"></i>
+        <i (click)="aboutEditCancel()" *ngIf="aboutEdit" class="fa fa-times default-icon-color ml-1 cursor-pointer"></i>
+    </div>
+    <div class="card-body text-center">
+        <p *ngIf="!aboutEdit && !readMore" style="text-align: left;">{{ about | truncate : 340 : " " }}</p>
+        <p *ngIf="!aboutEdit && readMore" style="text-align: left;">{{ about}}</p>
+
+        <button (click)="clickReadMore(!readMore)" *ngIf="!readMore && !aboutEdit && (about && about.length > 340)"
+                class="btn tc-sheet-left-jetzt-button">
+            Mehr anzeigen
+        </button>
+        <button (click)="clickReadMore(false)" *ngIf="readMore && !aboutEdit" class="btn tc-sheet-left-jetzt-button">
+            Weniger Anzeigen
+        </button>
+
+        <textarea (blur)="aboutEditSave(about)"
+                  *ngIf="aboutEdit"
+                  [(ngModel)]="about"
+                  [maxLength]="1500"
+                  cols="35"
+                  class="dating-custom-textarea-border-radius"
+                  style="width: 100%"
+                  rows="10">
+        </textarea>
+    </div>
+</div>

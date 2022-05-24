@@ -1,0 +1,10 @@
+
+:host {
+  display: flex;
+}
+:host > div {
+  flex: 1;
+}
+#callScreen {
+  height: 400px;
+}

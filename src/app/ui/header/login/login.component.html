@@ -1,0 +1,178 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <nav class="navbar navbar-expand-lg">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <img [routerLink]="['/']" src="../../../assets/img/Logotext.png"
+                         style="cursor: pointer;"
+                         width="150px"/>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li [ngClass]="{'login-card-white': cardBackgroundColor === 'white', 'login-card-dark': cardBackgroundColor === 'black'}"
+                    class="nav-item">
+                    <div class="tooltips custom-login-tooltips" (mouseenter)="changeSliderPauseHover('stop')"
+                         (mouseleave)="changeSliderPauseHover('continue')">
+                        <div class="row">
+                            <a *ngIf="router.url === '/tv' || router.url === '/socialmedia'"
+                               [routerLink]="['/']"
+                               class="nav-link text-white cursor-pointer"
+                               placement="bottom">{{ "Registrieren" | translate }}</a>
+                            <a [autoClose]="'outside'" [ngbPopover]="popContent"
+                               class="nav-link text-white cursor-pointer"
+                               placement="bottom">{{ "LOG IN" | translate }}</a>
+                        </div>
+
+                        <ng-template #popContent>
+                            <br/>
+                            <form [formGroup]="loginForm">
+                                <div *ngIf="!isAuthenticated" class="form-group">
+                                    <div class="input-group"
+                                         [ngClass]="{'is-err': loginForm.controls['email'].dirty && loginForm.controls['email'].invalid}">
+                                        <input class="form-control dating-custom-input-border-radius"
+                                               formControlName="email"
+                                               placeholder="{{ 'E-mail Address' | translate }}"
+                                               type="text"/>
+                                    </div>
+                                </div>
+                                <div *ngIf="!isAuthenticated" class="form-group">
+                                    <div class="input-group"
+                                         [ngClass]="{'is-err': loginForm.controls['password'].dirty && loginForm.controls['password'].invalid}">
+                                        <input class="form-control dating-custom-input-left-border-radius"
+                                               formControlName="password"
+                                               placeholder="{{ 'Password' | translate }}"
+                                               type="{{ show ? 'text' : 'password' }}"/>
+                                        <span class="input-group-append"
+                                              style="border-top: 1px solid #ced4da; border-bottom: 1px solid #ced4da; height: 38px;">
+                                            <button (click)="typeFnc()" class="btn bg-white button-icon" type="button">
+                                              <i [ngClass]="show ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                                            </button>
+                                        </span>
+                                        <span class="input-group-append dating-custom-input-right-border-radius"
+                                              style="border-top: 1px solid #ced4da; border-bottom: 1px solid #ced4da; border-right: 1px solid #ced4da; height: 38px;">
+                                            <button class="btn bg-white button-icon"
+                                                    style="border-radius: 2px"
+                                                    type="button">
+                                              <i class="fa fa-info custom-icon"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+
+                                    <div class="text-right">
+                                        <span (click)="forgetPasswordModalToggle(forgetPassoword)"
+                                              class="text-white forgot-password-text">Passwort Vergessen</span>
+                                    </div>
+
+                                    <div *ngIf="!isAuthenticated && loginState === 'error'">
+                                        <small [ngClass]="{
+                              'text-black': cardBackgroundColor === 'white',
+                              'text-white': cardBackgroundColor === 'black'
+                            }" class="form-text font-weight-bold">{{ "Email or password is incorrect" | translate }}
+                                        </small>
+                                    </div>
+
+                                    <div *ngIf="!isAuthenticated && loginState === 'userLocked'">
+                                        <small [ngClass]="{
+                              'text-black': cardBackgroundColor === 'white',
+                              'text-white': cardBackgroundColor === 'black'
+                            }" class="form-text font-weight-bold">{{ "User is locked" | translate }}
+                                        </small>
+                                    </div>
+                                    <div *ngIf="!isAuthenticated && loginState === 'userNotActivated'">
+                                        <small [ngClass]="{'text-black': cardBackgroundColor === 'white','text-white': cardBackgroundColor === 'black' }"
+                                               class="form-text font-weight-bold">{{ "User not activated" | translate }}
+                                        </small>
+                                    </div>
+                                    <div *ngIf="!isAuthenticated && loginState === 'userDeleted'">
+                                        <small [ngClass]="{'text-black': cardBackgroundColor === 'white','text-white': cardBackgroundColor === 'black' }"
+                                               class="form-text font-weight-bold">User Deleted
+                                        </small>
+                                    </div>
+
+                                    <div *ngIf="!isAuthenticated && loginState === 'userTemporarySuspend'">
+                                        <small [ngClass]="{'text-black': cardBackgroundColor === 'white','text-white': cardBackgroundColor === 'black' }"
+                                               class="form-text font-weight-bold">User Temporary Suspend
+                                        </small>
+                                    </div>
+
+                                    <div *ngIf="!isAuthenticated && loginState === 'userPermanentSuspend'">
+                                        <small [ngClass]="{'text-black': cardBackgroundColor === 'white','text-white': cardBackgroundColor === 'black' }"
+                                               class="form-text font-weight-bold">User Permanent Suspend
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="isAuthenticated" class="form-group">
+                                    <div class="input-group">
+                                        <h6 class="m-auto" style="color: white">
+                                            {{ getUserProfileName() }}
+                                        </h6>
+                                    </div>
+                                </div>
+                                
+                                <div *ngIf="!isAuthenticated" class="row">
+                                    <div class="col text-right">
+                                        <button (click)="checkAgVersion()" class="btn btn-primary custom-button btn-sm">
+                                            {{ "LOG IN" | translate }}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="isAuthenticated === true" class="row">
+                                    <div class="col text-center">
+                                        <button (click)="logout()" class="btn btn-primary custom-button btn-sm">
+                                            {{ "LOGOUT" | translate }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </ng-template>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<app-user-activated-popup [userEmail]="loginForm.value?.email"></app-user-activated-popup>
+
+<ng-template #forgetPassoword let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Passwort anfordern</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="forgetPasswordForm">
+            <div *ngIf="!isSuccessForgetPassword" class="form-group">
+                <input id="email" class="form-control" placeholder="{{ 'E-mail Address' | translate }}" name="email"
+                       formControlName="email">
+                <div *ngIf="forgetPasswordForm.controls['email'].dirty && forgetPasswordForm.controls['email'].invalid">
+                    <small class="form-text text-danger"
+                           *ngIf="forgetPasswordForm.controls['email'].errors['required']">
+                        {{ "This field is required" | translate }}.
+                    </small>
+
+                    <small class="form-text text-danger"
+                           *ngIf="forgetPasswordForm.controls['email'].errors['pattern']">
+                        {{ "Your e-mail address is invalid" | translate }}.
+                    </small>
+
+                    <small class="form-text text-danger"
+                           *ngIf="forgetPasswordForm.controls['email'].errors['emailExist']">
+                        E-Mail Falsch
+                    </small>
+                </div>
+            </div>
+
+            <span *ngIf="isSuccessForgetPassword"> Ihr Passwort wurde an Ihre Mail gesendet.</span>
+        </form>
+    </div>
+    <div *ngIf="!isSuccessForgetPassword" class="modal-footer">
+        <button type="button" class="btn theme-background" (click)="sendResetPassword(modal)"
+                [disabled]="forgetPasswordForm.invalid">Ok
+        </button>
+        <button type="button" class="btn border" (click)="modal.close('Save click')">Abbrechen</button>
+    </div>
+</ng-template>

@@ -1,0 +1,64 @@
+stages:
+  - build
+  - containerize
+  - build-customer
+  - containerize-customer
+build:
+  stage: build
+  image: node:latest
+  script:
+    - npm install
+    - npm install -g @angular/cli@8.3.12
+    - npm install --save-dev typescript@3.5.3
+    - npm run build:ssr
+  only:
+    - master
+  artifacts:
+    paths:
+      - dist
+      - server.js
+    expire_in: 1 hour
+
+containerize:
+  stage: containerize
+  image: docker:git
+  services:
+    - docker:19.03.1-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build -t registry.gitlab.com/info.udating/dating-frontend .
+    - docker push registry.gitlab.com/info.udating/dating-frontend:latest
+  only:
+    - master
+    - test
+
+build-customer:
+  stage: build-customer
+  image: node:latest
+  script:
+    - npm install
+    - npm install -g @angular/cli@8.3.29
+    - npm install --save-dev typescript@3.5.3
+    - npm run build:ssr
+  only:
+    - customer
+  artifacts:
+    paths:
+      - dist
+      - server.js
+    expire_in: 1 hour
+
+containerize-customer:
+  stage: containerize-customer
+  image: docker:git
+  services:
+    - docker:19.03.1-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - export IMAGE_NAME=info.udating/dating-frontend
+    - docker build -t $IMAGE_NAME .
+    - docker tag $IMAGE_NAME registry.gitlab.com/info.udating/dating-frontend:customer
+    - docker push registry.gitlab.com/info.udating/dating-frontend:customer
+  only:
+    - customer
+

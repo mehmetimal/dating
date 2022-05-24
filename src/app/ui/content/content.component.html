@@ -1,0 +1,18 @@
+<div class="container-fluid p-0 m-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-white">
+                        <li class="breadcrumb-item"><a routerLink="/">{{'Home' | translate}}</a></li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 mt-5">
+                <div class="werktext-content p-3" *ngIf="marketingContent">
+                    <div [innerHTML]="marketingContent | safeHtmlPipe"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

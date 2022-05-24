@@ -1,0 +1,61 @@
+<div class="row align-items-center cursor-pointer mt-4"
+     [ngClass]="{'message-active-selected-border': messageUtilService.getSelectedFriend() != null && messageUtilService.getSelectedFriend()._id === friend._id}"
+     (click)="messageUtilService.selectReciever(friend)"
+     *ngFor="let friend of friendsBlackTab">
+    <div class="col-12 col-lg-7 pl-5" [ngClass]="{'err-premium-filter': !isPremium}">
+        <div class="row align-items-center">
+            <div class="col-1 col-sm-1 col-md-1 col-lg-6 text-right text-md-right text-sm-right text-lg-right p-0 pr-2">
+                <img *ngIf="friend?.profileImage && friend?.profileImage.acceptState === approved
+            && ( !messageUtilService.isCurrentUserBlockList(friend) && isSharedProfileImageWithCurrentUser(friend) )"
+                     [src]="backendURL + (friend?.profileImage?._id | getImageById: false | async)"
+                     class="cursor-pointer rounded new-design-theme-left-box-user-list-avatar-photo"/>
+
+                <img *ngIf="friend?.profileImage
+            && friend?.profileImage.acceptState === approved
+            && !( !messageUtilService.isCurrentUserBlockList(friend) && isSharedProfileImageWithCurrentUser(friend) )"
+                     [src]="backendURL + (friend?.profileImage?._id | getImageById: true | async)"
+                     class="rounded new-design-theme-left-box-user-list-avatar-photo"/>
+
+                <img
+                        *ngIf=" ( friend && (!friend?.profileImage || friend?.profileImage.acceptState !== approved)) && (messageUtilService.isCurrentUserBlockList(friend) || !isSharedProfileImageWithCurrentUser(friend))"
+                        class="rounded new-design-theme-left-box-user-list-avatar-photo"
+                        [src]="backendURL + udcFolder + friend?.gender?.name +'/' + friend?.randomNumber + '.jpg'"/>
+
+                <img
+                        *ngIf="( friend && (!friend?.profileImage || friend?.profileImage.acceptState !== approved)) &&(!messageUtilService.isCurrentUserBlockList(friend) && isSharedProfileImageWithCurrentUser(friend))"
+                        class="rounded new-design-theme-left-box-user-list-avatar-photo"
+                        [src]="backendURL + udcFolder + friend?.gender?.name +'/' + friend?.randomNumber + '.jpg'"/>
+            </div>
+
+
+            <div class="col-8 col-md-8 col-lg-6 p-0">
+                <h6 class="text-break fs-13 m-0 font-weight-bold pl-sm-3 pl-xl-0 pl-md-0 pl-4 text-lg-left cursor-pointer">{{ friend?.profileName }}</h6>
+                <span
+                        class="fs-10 d-block d-lg-inline mt-1 mt-lg-0 text-md-left pl-xl-0 pl-md-0 text-sm-left pl-sm-3 text-left pl-4 text-lg-left">PLZ:
+                    {{ friend?.postCode}} Alter: {{friend?.birthday}}</span>
+            </div>
+
+            <!--            <div class="col-2 col-md-2">-->
+            <!--                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"-->
+            <!--                     viewBox="0 0 240.823 240.823" style="fill:#cdcdcd; width:20px; enable-background:new 0 0 240.823 240.823; color:red;" xml:space="preserve">-->
+            <!--<g>-->
+            <!--	<path id="Chevron_Right_1_" d="M183.189,111.816L74.892,3.555c-4.752-4.74-12.451-4.74-17.215,0c-4.752,4.74-4.752,12.439,0,17.179-->
+            <!--		l99.707,99.671l-99.695,99.671c-4.752,4.74-4.752,12.439,0,17.191c4.752,4.74,12.463,4.74,17.215,0l108.297-108.261-->
+            <!--		C187.881,124.315,187.881,116.495,183.189,111.816z"/>-->
+            <!--</g>-->
+            <!--</svg>-->
+            <!--            </div>-->
+
+        </div>
+    </div>
+    <div class="col-12 col-lg-5" *ngIf="messageUtilService.isExistUnReadMessage(friend, allUnreadMessages, loggedUser)">
+        <span class="cursor-pointer fs-12 color-aqua d-flex align-items-center mt-1 mt-lg-0 font-weight-bold justify-content-center">
+            <!--<i class="fs-20 far fa-envelope color-aqua p-1 mr-2"></i>-->
+            <img width="28" class="p-1 mr-2"
+                 src="../../../../../assets/svg/envelope_cyan.svg"/>{{messageUtilService.unReadMessageLength(friend, allUnreadMessages, loggedUser)}}
+            neu</span>
+    </div>
+</div>
+
+
+

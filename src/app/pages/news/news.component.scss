@@ -1,0 +1,53 @@
+.card-horizontal {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.news-card {
+  background: #F3F3F3;
+}
+
+.img-square-wrapper {
+  padding: 1.25rem;
+}
+
+.accordion-item a {
+  color: #6c757d;
+}
+
+.accordion-item a:hover {
+  color: #000;
+  text-decoration: none !important;
+}
+
+.active {
+  color: #000 !important;
+}
+
+.theme-second-outline-button-sm {
+  padding:0px 10px;
+}
+
+.theme-second-outline-button {
+  border-color: #66cccc;
+  color: #66cccc;
+}
+.theme-second-outline-button:hover {
+  background-color: #66cccc;
+  color: #fff;
+  border-color: #66cccc;
+}
+
+.theme-outline-button-sm {
+  padding: 0px 10px;
+}
+
+.theme-outline-button {
+  border-color: #ff3366;
+  color: #ff3366;
+}
+.theme-outline-button:hover {
+  background-color: #ff3366;
+  color: #fff;
+  border-color: #ff3366;
+}

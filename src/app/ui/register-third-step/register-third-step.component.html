@@ -1,0 +1,349 @@
+<form [formGroup]="parentForm">
+    <p *ngIf="registerThirdPageTextState" class="text-white text-left">
+        {{ registerThirdPageText }}
+    </p>
+    <div class="form-group">
+        <div class="input-group" [ngClass]="{'is-err': parentForm.controls['profileName'].dirty && parentForm.controls['profileName'].invalid}">
+            <div class="input-group-prepend"
+                 *ngIf="parentForm.controls['profileName'].value !== null &&
+                        parentForm.controls['profileName'].value !== '' &&
+                        parentForm.controls['profileName'].value !== undefined">
+                <div class="input-group-text bg-white border-0 text-secondary">
+                    {{ "Profile Name" | translate }} :
+                </div>
+            </div>
+
+            <input formControlName="profileName"
+                   class="form-control rounded tooltips border-0"
+                   type="text" placeholder="{{ 'Profile Name' | translate }}"/>
+
+            <i class="fa fa-info p-2 search-icon-custom" placement="left"
+               ngbTooltip="Bitte verwende für den Passwort mindestens 8 Zeichen, Großbuchstaben, Kleinbuchstaben, Zahlen und ein Sonderzeichen."
+               style="color:#9B9B9B; right: 5px;"
+            ></i>
+        </div>
+
+        <div class="col col-md-12"
+             *ngIf="parentForm.controls['profileName'].dirty && parentForm.controls['profileName'].invalid">
+            <small class="form-text text-danger" *ngIf="parentForm.controls['profileName'].errors['maxlength']">
+                {{ "This field can be up to 15 characters" | translate }}.
+            </small>
+        </div>
+
+        <div class="col col-md-12"
+             *ngIf="parentForm.controls['profileName'].dirty && parentForm.controls['profileName'].invalid">
+            <small class="form-text text-danger" *ngIf="parentForm.controls['profileName'].errors['pattern']">
+                {{ "Please Enter Only alphanumeric values" | translate }}.
+            </small>
+        </div>
+
+        <div class="col col-md-12" *ngIf="parentForm.controls['profileName'].dirty && parentForm.controls['profileName'].invalid">
+            <small class="form-text text-danger" *ngIf="parentForm.controls['profileName'].errors['profileNameExist']">
+                {{ "Profilname existiert bereits" }}.
+            </small>
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="input-group">
+                <div class="input-group-prepend"
+                     *ngIf="parentForm.controls['eyeColour'].value !== null">
+                    <div
+                            class="input-group-text bg-white border-bottom text-secondary"
+                    >
+                        Augenfarbe :
+                    </div>
+                </div>
+                <select formControlName="eyeColour" class="form-control rounded border-left-0 custom-select-icon">
+                    <option [ngValue]="null" selected>{{ eyeColorTitle }}</option>
+                    <option
+                            *ngFor="let eyeColor of (eyeColorOptions$ | async)?.body?.response"
+                            value="{{ eyeColor._id }}"
+                    >
+                        {{ eyeColor.name | translate }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="parentForm.controls['eyeColour'].dirty && parentForm.controls['eyeColour'].invalid">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="input-group">
+                <div class="input-group-prepend"
+                     *ngIf="parentForm.controls['height'].value !== null">
+                    <div
+                            class="input-group-text bg-white border-bottom text-secondary"
+                    >
+                        Größe :
+                    </div>
+                </div>
+                <select formControlName="height" class="form-control rounded border-left-0 custom-select-icon">
+                    <option [ngValue]="null" selected>{{ heightTitle }}</option>
+                    <option *ngFor="let height of (heightOptions$ | async)?.body?.response | orderBy: '+name'"
+                            value="{{ height._id }}">
+                        {{ height.name | translate }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="parentForm.controls['height'].dirty && parentForm.controls['height'].invalid">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="input-group">
+                <div class="input-group-prepend"
+                     *ngIf="parentForm.controls['hairColour'].value !== null">
+                    <div
+                            class="input-group-text bg-white border-bottom text-secondary"
+                    >
+                        Haarfarbe :
+                    </div>
+                </div>
+                <select formControlName="hairColour" class="form-control rounded border-left-0 custom-select-icon">
+                    <option [ngValue]="null" selected>{{ hairColorTitle }}</option>
+                    <option
+                            *ngFor="let hairColor of (hairColorOptions$ | async)?.body?.response"
+                            value="{{ hairColor._id }}"
+                    >
+                        {{ hairColor.name | translate }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="parentForm.controls['hairColour'].dirty && parentForm.controls['hairColour'].invalid">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="input-group">
+                <div class="input-group-prepend"
+                     *ngIf="parentForm.controls['bodyBuild'].value !== null">
+                    <div
+                            class="input-group-text bg-white border-bottom text-secondary">
+                        Figuren :
+                    </div>
+                </div>
+                <select formControlName="bodyBuild" class="form-control rounded border-left-0 custom-select-icon">
+                    <option [ngValue]="null" selected>{{ bodyTypeTitle }}</option>
+                    <option
+                            *ngFor="let bodyType of (bodyTypesOptions$ | async)?.body?.response"
+                            value="{{ bodyType._id }}"
+                    >
+                        {{ bodyType.name | translate }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="parentForm.controls['bodyBuild'].dirty && parentForm.controls['bodyBuild'].invalid">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="input-group">
+                <div class="input-group-prepend"
+                     *ngIf="parentForm.controls['hairLength'].value !== null">
+                    <div
+                            class="input-group-text bg-white border-bottom text-secondary"
+                    >
+                        Haarlange :
+                    </div>
+                </div>
+                <select formControlName="hairLength" class="form-control rounded border-left-0 custom-select-icon">
+                    <option [ngValue]="null" selected>{{ hairLengthTitle }}</option>
+                    <option
+                            *ngFor="let hairLength of (hairLengthOptions$ | async)?.body?.response"
+                            value="{{ hairLength._id }}"
+                    >
+                        {{ hairLength.name | translate }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="parentForm.controls['hairLength'].dirty && parentForm.controls['hairLength'].invalid">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="input-group">
+                <div class="input-group-prepend"
+                     *ngIf="parentForm.controls['relationshipStatus'].value !== null">
+                    <div
+                            class="input-group-text bg-white border-bottom text-secondary"
+                    >
+                        Beziehungsstatus :
+                    </div>
+                </div>
+                <select
+                        formControlName="relationshipStatus"
+                        class="form-control pr-3 rounded border-left-0 custom-select-icon"
+                        [ngClass]="{'pl-1': parentForm.controls['relationshipStatus'].value !== null}"
+                >
+                    <option [ngValue]="null" selected>{{
+                        relationShipStatusTitle
+                        }}</option>
+                    <option
+                            *ngFor="let relationshipStatus of (relationshipStatusOptions$ | async)?.body?.response"
+                            value="{{ relationshipStatus._id }}"
+                    >
+                        {{ relationshipStatus.name | translate }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="
+      parentForm.controls['relationshipStatus'].dirty &&
+          parentForm.controls['relationshipStatus'].invalid">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div *ngIf="false" class="input-group">
+            <div class="input-group-prepend"
+                 *ngIf="parentForm.controls['searchArea'].value !== null">
+                <div
+                        class="input-group-text bg-white border-bottom text-secondary"
+                >
+                    Ort :
+                </div>
+            </div>
+            <select formControlName="searchArea" class="form-control rounded border-0 custom-select-icon">
+                <option [ngValue]="null" selected>{{ locationTitle }}</option>
+                <option
+                        *ngFor="let location of (locationOptions$ | async)?.body?.response"
+                        value="{{ location._id }}"
+                >
+                    {{ location.name | translate }}
+                </option>
+            </select>
+            <i
+                    class="fa fa-info p-2 search-icon-custom"
+                    placement="left"
+                    ngbTooltip="In deinem Profil kannst du später noch weitere Angaben zu Suchregion machen."
+                    style="color:#9B9B9B; right: 20px;"
+            ></i>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-xs-12 col-sm-7 col-md-7 col-lg-7">
+            <div class="input-group">
+                <select formControlName="howToFindUs" class="form-control rounded custom-select-icon">
+                    <option [ngValue]="null" selected>{{ howToFindUsTitle }}</option>
+                    <option
+                            *ngFor="let howToFindUs of (howToFindUsOptions$ | async)?.body?.response"
+                            value="{{ howToFindUs._id }}"
+                    >
+                        {{ howToFindUs.name | translate }}
+                    </option>
+                </select>
+                <i
+                        class="fa fa-info p-2 search-icon-custom"
+                        placement="left"
+                        ngbTooltip="Im Info i werden folgende Infos per Mouseover gegeben:
+                „Social Media, Internet, TV, Radio, Freunde oder andere?"
+                        style="color:#9B9B9B; right: 25px;"
+                ></i>
+            </div>
+            <div *ngIf="
+      parentForm.controls['howToFindUs'].dirty &&
+          parentForm.controls['howToFindUs'].invalid
+">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-5 col-md-5 col-lg-5 text-sm-center">
+            <button
+                    (click)="validateFieldWithBackend()"
+                    id="registerThirdNextButton"
+                    [disabled]="parentForm.invalid || parentForm.controls['profileName'].pending"
+                    [ngClass]="{
+          'custom-button': parentForm.valid && !parentForm.controls['profileName']?.errors?.profileNameExist,
+          'custom-button-disabled': parentForm.invalid || parentForm.controls['profileName'].pending
+        }"
+                    class="btn"
+                    type="submit"
+            >
+                {{ "REGISTER" | translate }}
+            </button>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="input-group">
+                <div class="form-check">
+                    <input
+                            class="form-check-input"
+                            type="checkbox"
+                            formControlName="agbButton"
+                            style="z-index: 999; margin-top: 6px !important;"
+                    />
+                    <label class="form-check-label text-white" style="font-size: 12px;">
+                        <b>
+                            <a class="text-white" href="/#/AGB" target="_blank">
+                                {{ "AGB" | translate }}
+                            </a>
+                        </b>
+                        <a class="text-white" href="/#/AGB" target="_blank">
+                            {{ agbText }}
+                        </a>
+                    </label>
+                </div>
+            </div>
+            <div *ngIf="
+        parentForm.controls['agbButton'].dirty &&
+          parentForm.controls['agbButton'].invalid
+
+">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="input-group">
+                <div class="form-check" style="z-index: 99999999">
+                    <input class="form-check-input" type="checkbox" style="margin-top: 6px !important;" formControlName="dseButton"/>
+                    <label class="form-check-label text-white" style="font-size: 12px;">
+                        <b>
+                            <a class="text-white" href="/#/Datenschutzerklaerung" target="_blank">
+                                {{ "DSE" | translate }}
+                            </a>
+                        </b>
+
+                        <a class="text-white" href="/#/Datenschutzerklaerung" target="_blank">
+                            {{ dseText }}
+                        </a>
+                    </label>
+                </div>
+            </div>
+            <div *ngIf="
+      parentForm.controls['dseButton'].dirty &&
+          parentForm.controls['dseButton'].invalid
+">
+                <small class="form-text text-danger">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+    </div>
+</form>

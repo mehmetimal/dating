@@ -1,0 +1,177 @@
+<div class="tc-sheet-left">
+    <div class="card tc-sheet-left-card w-100">
+        <div class="card-header tc-sheet-left-header text-center">
+            Einstellungen:
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label class="col-form-label tc-sheet-left-label">Alter: </label>
+                    </div>
+                    <div class="col-sm-4 d-flex">
+                        <input numeric [(ngModel)]="minAgeInput"
+                               style="padding: 0px 2px 0px 10px;
+                               border-right: 0px !important;
+                               border-top-right-radius: 0px !important;
+                               border-bottom-right-radius: 0px !important;
+                               width: 33px;"
+                               [ngModelOptions]="{standalone: true}"
+                               class="form-control tc-sheet-left-plz-alter-input" maxlength="2" type="text">
+                        <div style="background-color: white;
+                                border-top: 0.5px solid #999999;
+                                border-bottom: 0.5px solid #999999;
+                                height: 35px;"
+                             class="vertical-middle pr-1 pl-1">
+                            -
+                        </div>
+                        <input numeric [(ngModel)]="maxAgeInput"
+                               style="padding: 0px 2px 0px 5px;
+                               border-left: 0px !important;
+                               border-top-left-radius: 0px !important;
+                               border-bottom-left-radius: 0px !important;
+                               width: 33px;"
+                               [ngModelOptions]="{standalone: true}"
+                               class="form-control tc-sheet-left-plz-alter-input" maxlength="2" type="text">
+                    </div>
+                    <div class="col-sm-2 tc-sheet-left-label">PLZ:</div>
+                    <div class="col-sm-4">
+                        <input (keyup)="resetSelectedSearch()" (keydown)="plzChanged($event)"
+                               [(ngModel)]="search.postCode"
+                               class="form-control tc-sheet-left-plz-alter-input" numeric name="postCode" type="text">
+                    </div>
+
+                    <div class="col-sm-12">
+                        <small *ngIf="plzTimeoutErr" class="text-danger mr-3 float-right">
+                            PLZ Falsch
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label tc-sheet-left-label">Radius:</label>
+                    <div class="col-sm-8 custom-slider">
+                        <ng5-slider (valueChange)="resetSelectedSearch()" [(value)]="distance"
+                                    [manualRefresh]="manualRefresh"
+                                    [options]="options"></ng5-slider>
+                    </div>
+                </div>
+
+                <div class="form-group row justify-content-center mt-3">
+                    <div class="col-8 p-0 tc-sheet-left-checkbox-list-title mt-2 mb-1">weitere Optionen:</div>
+                    <div class="col-8 p-0 tc-sheet-left-weitere-options">
+
+                        <div class="tc-sheet-left-custom-input-group">
+                            <div *ngFor="let feature of featureOptions; let i = index"
+                                 class="tc-sheet-left-custom-input-group-item">
+                                <label class="tc-sheet-left-custom-input-group-item-text"
+                                       for="{{i}}checkbox">
+                                    {{feature.name}}
+                                </label>
+                                <div class="tc-sheet-left-custom-input-group-item-input">
+                                    <input (change)="changeFeature($event, feature)"
+                                           [checked]="checkedControl(feature._id)" class="form-check-input"
+                                           id="{{i}}checkbox"
+                                           type="checkbox">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="justify-content-center row mt-3">
+                    <div class="col-8 p-0 mt-2 mb-1 tc-sheet-left-checkbox-list-title">Suche Clubnummer:</div>
+                    <div class="col-8 p-0">
+                        <div class="input-group">
+                            <input (keyup)="resetSelectedSearch()" [(ngModel)]="search.clubNumber"
+                                   class="form-control tc-sheet-left-suche-input"
+                                   numeric
+                                   maxlength="8" name="savedClubNumber" placeholder=""
+                                   type="text">
+                            <div class="input-group-prepend tc-sheet-left-suche-input-text">
+                                <div class="input-group-text"><i [ngbPopover]="clubNumberInfo"
+                                                                 [openDelay]="0"
+                                                                 [closeDelay]="10"
+                                                                 triggers="mouseenter:mouseleave"
+                                                                 class="fa fa-info cursor-pointer"></i></div>
+                            </div>
+                            <ng-template #clubNumberInfo>
+                                <p class="text-center">Wenn du nach einer Clubnummer suchen möchtest, bitte alle anderen
+                                    Schriftattribute freilassen und nur die Clubnummer eingeben</p>
+                            </ng-template>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-12 mt-3 text-center" style="padding-left: 2rem; padding-right: 2rem">
+                    <button (click)="searchDetailUsers();" class="btn tc-sheet-left-jetzt-button">
+                        JETZT SUCHEN
+                    </button>
+                </div>
+
+                <div class="justify-content-center row mt-3">
+                    <div class="col-8 p-0 mt-2 mb-1 tc-sheet-left-checkbox-list-title">Suche speichern:</div>
+                    <div class="col-8 p-0">
+                        <div class="input-group">
+                            <input [(ngModel)]="search.searchFilterName"
+                                   class="form-control tc-sheet-left-suche-input" name="savedSearchName"
+                                   placeholder=""
+                                   type="text">
+                            <div class="input-group-prepend tc-sheet-left-suche-input-icon">
+                                <div class="input-group-text"><i [ngbPopover]="checkAvailableSearchCriteriaPopup"
+                                                                 triggers="manual"
+                                                                 [autoClose]="false"
+                                                                 #checkAvailableSearchCriteriaPopover="ngbPopover"
+                                                                 (click)="saveSearchData(checkAvailableSearchCriteriaPopover)"
+                                                                 class="fa fa-save cursor-pointer"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row justify-content-center mt-3">
+                    <div class="col-8 p-0 tc-sheet-left-checkbox-list-title mt-2 mb-1">gespeicherte Suchen:</div>
+                    <div class="col-8 p-0 tc-sheet-left-weitere-options"
+                         style="height: 70px !important;">
+
+                        <div class="tc-sheet-left-custom-input-group">
+                            <div *ngFor="let search of searchCriteria; let i = index"
+                                 class="tc-sheet-left-custom-input-group-item">
+                                <label class="tc-sheet-left-custom-input-group-item-text"
+                                       for="option{{i}}">
+                                    {{search.searchFilterName}}
+                                </label>
+                                <div class="tc-sheet-left-custom-input-group-item-input">
+
+                                    <input style="font-size:12px;" (click)="setFieldFromBackend(search)"
+                                           class="form-check-input"
+                                           id="option{{i}}" name="option"
+                                           type="radio" value="{{search}}">
+                                </div>
+
+                                <i style="font-size: 12px; margin-top: 6px;" (click)="deleteSearchCriteria(search)"
+                                   class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<ng-template #checkAvailableSearchCriteriaPopup>
+    <p>Bitte beachte, dass du nicht mehr als 3 Suchprofile gleichzeitig speichern darfst. Wenn du eine neue Suche
+        speichern möchtest, lösche bitte zuvor eine andere.</p>
+    <hr/>
+    <div class="border-0 text-center">
+        <button class="btn border" (click)="checkAvailableSearchCriteriaPopover.close();"> Abbrechen</button>
+    </div>
+</ng-template>
+

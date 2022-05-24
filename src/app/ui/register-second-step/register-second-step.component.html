@@ -1,0 +1,353 @@
+<form [formGroup]="parentForm">
+    <p *ngIf="registerSecondPageTextState" class="text-white text-left">
+        {{ registerSecondPageText }}
+    </p>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+            <div class="input-group" [ngClass]="{'is-err': parentForm.controls['gender'].dirty && parentForm.controls['gender'].invalid}">
+                <div class="input-group-prepend" *ngIf="parentForm.controls['gender'].value !== null">
+                    <div class="input-group-text bg-white border-bottom text-secondary">
+                        Ich bin :
+                    </div>
+                </div>
+                <select class="form-control rounded border-left-0 custom-select-icon"
+                        formControlName="gender">
+                    <option [ngValue]="null" selected>{{ "I am" | translate }}...</option>
+                    <option *ngFor="let quest of questOptions" value="{{ quest._id }}">
+                        {{ quest.name | translate }}
+                    </option>
+                </select>
+            </div>
+
+            <div *ngIf="parentForm.controls['gender'].dirty && parentForm.controls['gender'].invalid">
+                <small class="form-text text-danger" *ngIf="parentForm.controls['gender'].errors['required']">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+            <div class="input-group" [ngClass]="{'is-err': parentForm.controls['searchGender'].dirty && parentForm.controls['searchGender'].invalid}">
+                <div class="input-group-prepend"
+                     *ngIf="parentForm.controls['searchGender'].value !== null">
+                    <div class="input-group-text bg-white border-bottom text-secondary">
+                        Ich Suche :
+                    </div>
+                </div>
+                <select class="form-control rounded border-left-0 custom-select-icon" formControlName="searchGender">
+                    <option [ngValue]="null" selected
+                    >{{ "I'm looking for" | translate }}...
+                    </option>
+                    <option *ngFor="let quest of questOptions" value="{{ quest._id }}">
+                        {{ quest.name | translate }}
+                    </option>
+                </select>
+            </div>
+
+            <div *ngIf=" parentForm.controls['searchGender'].dirty && parentForm.controls['searchGender'].invalid">
+                <small class="form-text text-danger"
+                       *ngIf="parentForm.controls['searchGender'].errors['required']">
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="input-group" [ngClass]="{'is-err': parentForm.controls['email'].dirty && parentForm.controls['email'].invalid || isEmailExist}">
+            <div class="input-group-prepend"
+                 *ngIf="parentForm.controls['email'].value !== null">
+                <div class="input-group-text bg-white border-bottom text-secondary">
+                    E-Mail Adresse :
+                </div>
+            </div>
+            <input type="text" data-placement="bottom" title="{{ 'E-mail Address' | translate }}"
+                   class="form-control rounded border-left-0" id="inputAddress" formControlName="email"
+                   placeholder="{{ 'E-mail Address' | translate }}" (focusout)="outFocus()" (focus)="onFocus()"/>
+        </div>
+
+        <div *ngIf="!isFocus && parentForm.controls['email'].dirty && parentForm.controls['email'].invalid">
+            <small class="form-text text-danger" *ngIf="parentForm.controls['email'].errors['required']">
+                {{ "This field is required" | translate }}.
+            </small>
+
+            <small class="form-text text-danger"
+                   *ngIf="parentForm.controls['email'].errors['pattern']">
+                {{ "Your e-mail address is invalid" | translate }}.
+            </small>
+        </div>
+
+        <div *ngIf="!isFocus && isEmailExist">
+            <small class="form-text text-danger">
+                {{ "E-Mail name is exist" | translate }}.
+            </small>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="input-group" [ngClass]="{'is-err': parentForm.controls['password'].dirty && parentForm.controls['password'].invalid}">
+            <div class="input-group-prepend"
+                 *ngIf="parentForm.controls['password'].value !== null">
+                <div class="input-group-text bg-white border-bottom text-secondary">
+                    Passwort :
+                </div>
+            </div>
+            <input
+                    class="form-control rounded border-0"
+                    formControlName="password"
+                    placeholder="{{ 'Password' | translate }}"
+                    type="{{ show ? 'text' : 'password' }}"
+            />
+            <span class="input-group-append border-0" style="margin-left: -3px;">
+        <button
+                (click)="typeFnc()"
+                class="btn bg-white border-0 button-icon"
+                type="button"
+        >
+          <i [ngClass]="show ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+        </button>
+      </span>
+            <span class="input-group-append border-0">
+        <button
+                placement="left"
+                ngbTooltip="Bitte benutze für dein Passwort mindestens 8 Zeichen, Zahlen, große wie kleine Buchstaben."
+                class="btn bg-white border-0 button-icon"
+                type="button"
+        >
+          <i class="fa fa-info custom-icon"></i>
+        </button>
+      </span>
+        </div>
+
+        <div
+                *ngIf="
+        parentForm.controls['password'].dirty &&
+        parentForm.controls['password'].invalid
+      "
+        >
+            <small
+                    class="form-text text-danger"
+                    *ngIf="parentForm.controls['password'].errors['required']"
+            >
+                {{ "This field is required" | translate }}.
+            </small>
+        </div>
+
+        <div *ngIf="parentForm.controls['password'].dirty && parentForm.controls['password'].invalid">
+            <small class="form-text text-danger">
+                Bitte benutze für dein Passwort mindestens 8 Zeichen, Zahlen, große wie kleine Buchstaben.
+            </small>
+        </div>
+
+    </div>
+
+    <div class="form-group" *ngIf="isPinActive">
+        <div class="input-group" [ngClass]="{'is-err': parentForm.controls['pin'].dirty && parentForm.controls['pin'].invalid}">
+            <div class="input-group-prepend"
+                 *ngIf="parentForm.controls['pin'].value !== null">
+                <div
+                        class="input-group-text bg-white border-bottom text-secondary"
+                >
+                    Pin :
+                </div>
+            </div>
+            <input
+                    class="form-control rounded border-0"
+                    formControlName="pin"
+                    placeholder="{{ 'Pin' | translate }}"
+                    type="{{ showPin ? 'text' : 'password' }}"
+            />
+            <span class="input-group-append border-0" style="margin-left: -3px;">
+        <button
+                (click)="typeFncPin()"
+                class="btn bg-white border-0 button-icon"
+                type="button"
+        >
+          <i [ngClass]="showPin ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+        </button>
+      </span>
+            <span class="input-group-append border-0">
+        <button
+                placement="left"
+                ngbTooltip="Zur Registrierung muss ein PIN-Passwort eingegeben werden. Die PIN ist ein vom Anwendungsmanager festgelegtes Kennwort."
+                class="btn bg-white border-0 button-icon"
+                type="button"
+        >
+          <i class="fa fa-info custom-icon"></i>
+        </button>
+      </span>
+        </div>
+
+        <div
+                *ngIf="
+        parentForm.controls['pin'].dirty &&
+        parentForm.controls['pin'].invalid
+      "
+        >
+            <small
+                    class="form-text text-danger"
+                    *ngIf="parentForm.controls['pin'].errors['required']"
+            >
+                {{ "This field is required" | translate }}.
+            </small>
+        </div>
+
+        <div *ngIf="parentForm.controls['pin'].dirty && parentForm.controls['pin'].invalid">
+            <small class="form-text text-danger">
+                {{ "Pin is incorrect" | translate }}.
+            </small>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md">
+            <div class="input-group" [ngClass]="{'is-err': parentForm.controls['day'].dirty && parentForm.controls['day'].invalid}">
+                <div class="input-group-prepend" *ngIf="
+              parentForm.controls['day'].value !== null &&
+              parentForm.controls['day'].value !== '' &&
+              parentForm.controls['day'].value !== undefined
+            ">
+                    <div
+                            class="input-group-text bg-white border-bottom text-secondary"
+
+                    >
+                        Tag :
+                    </div>
+                </div>
+                <select formControlName="day" class="form-control rounded border-0 custom-select-icon-two">
+                    <option [ngValue]="null" selected>{{ "Day" | translate }}</option>
+                    <option *ngFor="let v of days" [value]="v">{{ v }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <div class="input-group" [ngClass]="{'is-err': parentForm.controls['month'].dirty && parentForm.controls['month'].invalid}">
+                <div class="input-group-prepend">
+                    <div
+                            class="input-group-text bg-white text-secondary"
+                            *ngIf="
+              parentForm.controls['month'].value !== null &&
+              parentForm.controls['month'].value !== '' &&
+              parentForm.controls['month'].value !== undefined
+            "
+                    >
+                        Monat :
+                    </div>
+                </div>
+                <select formControlName="month" class="form-control rounded border-0 custom-select-icon-two">
+                    <option [ngValue]="null" selected>{{ "Month" | translate }}</option>
+                    <option *ngFor="let v of months" [value]="v">{{ v }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md">
+            <div class="input-group" [ngClass]="{'is-err': parentForm.controls['year'].dirty && parentForm.controls['year'].invalid}">
+                <div class="input-group-prepend" *ngIf="
+              parentForm.controls['year'].value !== null &&
+              parentForm.controls['year'].value !== '' &&
+              parentForm.controls['year'].value !== undefined
+            ">
+                    <div
+                            class="input-group-text bg-white border-bottom text-secondary"
+
+                    >
+                        Jahr :
+                    </div>
+                </div>
+                <select formControlName="year" class="form-control rounded border-0 custom-select-icon-two">
+                    <option [ngValue]="null" selected>{{ "Year" | translate }}</option>
+                    <option *ngFor="let v of years | orderBy: '-'" [value]="v">{{ v }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-row mb-3" style="margin-top: -15px">
+        <div
+                class="col col-md-12"
+                *ngIf="
+        (parentForm.controls['day'].dirty &&
+          parentForm.controls['day'].invalid) ||
+        (parentForm.controls['month'].dirty &&
+          parentForm.controls['month'].invalid) ||
+        (parentForm.controls['year'].dirty &&
+          parentForm.controls['year'].invalid)
+      "
+        >
+            <small class="form-text text-danger">
+                {{ "Please Enter Valid Date" | translate }}
+            </small>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <div class="input-group" [ngClass]="{'is-err': parentForm.controls['postCode'].dirty && parentForm.controls['postCode'].errors}">
+                <div class="input-group-prepend"
+                     *ngIf="parentForm.controls['postCode'].value !== null">
+                    <div
+                            class="input-group-text bg-white border-0 text-secondary"
+                    >
+                        PLZ :
+                    </div>
+                </div>
+                <input
+                        formControlName="postCode"
+                        [maxLength]="5"
+                        class="form-control rounded border-0"
+                        type="text"
+                        numeric
+                        placeholder="{{ 'Post Code' | translate }}"
+                />
+                <span class="input-group-append border-0" style="margin-left: -3px;">
+        <button
+                placement="left"
+                ngbTooltip="Deine PLZ wird im System nirgends vollständig angezeigt. Sie dient zur Anzeige in einem größeren Radius, um ein besseres Sucherlebnis für alle zu ermöglichen."
+                class="btn bg-white border-0 button-icon"
+                type="button"
+        >
+          <i class="fa fa-info custom-icon"></i>
+        </button>
+      </span>
+            </div>
+
+            <div
+                    *ngIf="
+        parentForm.controls['postCode'].dirty &&
+        parentForm.controls['postCode'].invalid
+      "
+            >
+                <small
+                        class="form-text text-danger"
+                        *ngIf="parentForm.controls['postCode'].errors['required']"
+                >
+                    {{ "This field is required" | translate }}.
+                </small>
+            </div>
+
+            <div *ngIf="parentForm.controls['postCode'].dirty && parentForm.controls['postCode'].errors && parentForm.controls['postCode'].errors['incorrect']">
+                <small class="form-text text-danger">
+                    {{ "Post Code is incorrect" | translate }}.
+                </small>
+            </div>
+        </div>
+        <div class="form-group col-md"></div>
+        <div class="form-group col-md"></div>
+    </div>
+
+    <button *ngIf="isFacebookLoginActive" type="button" class="btn btn-outline-light facebook">
+        <i class="fab fa-facebook-square"></i>
+        {{ "WEITER MIT FACEBOOK" | translate }}*
+    </button>
+    <div *ngIf="!isFacebookLoginActive" class="btn facebook">
+        <i></i>
+    </div>
+    <button
+            (click)="changeStateForm()"
+            id="registerSecondNextButton"
+            class="btn btn-primary custom-button float-right"
+    >
+        {{ "WEITER" | translate }}
+    </button>
+</form>

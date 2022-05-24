@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Kreditkarteninformation</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="form">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="number">Kreditkartennummer</label>
+                <input  formControlName="number" class="form-control" id="number"
+                       [textMask]="{mask: cardMaskFunction, guide: false, showMask: true}">
+                <div *ngIf="form.controls['number'].dirty && form.controls['number'].invalid">
+                    <small class="form-text text-danger">
+                        {{ "This field is required" | translate }}.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="expireMonth">Monat Ablaufen</label>
+                <input numeric type="text"  formControlName="exp_month" class="form-control" id="expireMonth" [maxLength]="2">
+                <div *ngIf="form.controls['exp_month'].dirty && form.controls['exp_month'].invalid">
+                    <small class="form-text text-danger">
+                        {{ "This field is required" | translate }}.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="expireYear">Ablaufjahr</label>
+                <input type="text" [textMask]="{mask: yearMask}" formControlName="exp_year" class="form-control" id="expireYear">
+                <div *ngIf="form.controls['exp_year'].dirty && form.controls['exp_year'].invalid">
+                    <small class="form-text text-danger">
+                        {{ "This field is required" | translate }}.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="cvc">CVC</label>
+                <input type="tel" [textMask]="{mask: cvcMask}" formControlName="cvc" class="form-control" id="cvc">
+                <div *ngIf="form.controls['cvc'].dirty && form.controls['cvc'].invalid">
+                    <small class="form-text text-danger">
+                        {{ "This field is required" | translate }}.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="col-12 text-right">
+        <button class="btn w-25 theme-background" [disabled]="form.invalid" (click)="payment()">Pay</button>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="row modal-dialog-scrollable">
+    <div *ngFor="let item of favoriteUsers"
+         class="col-12 border-bottom mb-3 cursor-pointer">
+        <div class="row mb-2">
+            <div (click)="goToUserProfile(item?.user?.profileName)" class="col-2 m-auto">
+                <img *ngIf="item.user.profileImage && item.user.profileImage.acceptState === approved
+        && (!isCurrentUserBlockList(item.user) && isSharedProfileImageWithCurrentUser(item.user))"
+                     [src]="backendURL + (item?.user?.profileImage?._id | getImageById: false | async)" class="image-search rounded w-100"
+                     style="border: 2px solid #CCCCCC !important">
+
+                <img *ngIf="item.user.profileImage && item.user.profileImage.acceptState === approved
+        && !(!isCurrentUserBlockList(item.user) && isSharedProfileImageWithCurrentUser(item.user))"
+                     [src]="backendURL + (item?.user?.profileImage?._id | getImageById: true | async)" class="image-search rounded w-100"
+                     style="border: 2px solid #CCCCCC !important">
+
+                <div *ngIf="(!item.user?.profileImage || item.user?.profileImage.acceptState !== approved)">
+                    <img
+                            *ngIf="isCurrentUserBlockList(item.user) || !isSharedProfileImageWithCurrentUser(item.user)"
+                            class="image-search rounded w-100"
+                            [src]="backendURL + udcFolder + item.user?.gender?.name +'/' + item.user.randomNumber + '.jpg'"/>
+
+                    <img
+                            *ngIf="!isCurrentUserBlockList(item.user) && isSharedProfileImageWithCurrentUser(item.user)"
+                            class="image-search rounded w-100"
+                            [src]="backendURL + udcFolder + item.user?.gender?.name +'/' + item.user.randomNumber + '.jpg'"/>
+
+                </div>
+            </div>
+            <div (click)="goToUserProfile(item?.user?.profileName)" class="col-5 m-auto">
+                <div class="font-weight-bold">{{ item?.user?.profileName }}, {{ item?.user?.birthday }}</div>
+                <div style="font-size: 10px;">{{ item?.user?.searchArea?.name }}</div>
+            </div>
+            <div class="col-4 m-auto">
+                <button class="btn btn-outline-secondary" (click)="goToMessage(item?.user)">
+                    <img src="../../../../../../assets/svg/envelope_grau.svg" width="16px" class="mr-2" />Schreiben
+                </button>
+            </div>
+            <div class="col-1 m-auto">
+                <div class="dropdown">
+                    <i (click)="initFavorite(item?.user?._id)" aria-expanded="false"
+                       aria-haspopup="true"
+                       class="fas fa-bars" data-toggle="dropdown"
+                       id="dropdownMenuLink"></i>
+                    <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                        <a (click)="isFavorite ? favoriteUserDelete() : favoriteUserAdded(item.user)"
+                           class="dropdown-item">{{ isFavorite ? 'User vergessen' : 'Aus Merken' }}</a>
+                        <a class="dropdown-item">Bildfreigabe anfordern</a>
+                        <a class="dropdown-item">Bildfreigabe erteilen</a>
+                        <a class="dropdown-item">User blockieren</a>
+                        <a class="dropdown-item">User melden</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

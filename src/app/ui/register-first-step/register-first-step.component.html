@@ -1,0 +1,48 @@
+<form [formGroup]="parentForm" *ngIf="(questOptions$ | async)?.body?.response as questOptions">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend"
+                 *ngIf="parentForm.controls['gender'].value !== null">
+                <div class="input-group-text bg-white border-bottom text-secondary">
+                    Ich bin :
+                </div>
+            </div>
+            <select formControlName="gender" class="form-control dating-custom-input-border-radius border-left-0"
+                    id="exampleFormControlSelect1">
+                <option [ngValue]="null" selected>{{ "I am" | translate }}...</option>
+                <option *ngFor="let quest of questOptions" value="{{ quest._id }}">
+                    {{ quest.name | translate }}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend"
+                 *ngIf="parentForm.controls['searchGender'].value !== null">
+                <div class="input-group-text bg-white border-bottom text-secondary">
+                    Ich Suche :
+                </div>
+            </div>
+
+            <select formControlName="searchGender" class="form-control dating-custom-input-border-radius border-left-0"
+                    id="exampleFormControlSelect2">
+                <option [ngValue]="null" selected>{{ "I'm looking for" | translate }}...</option>
+                <option *ngFor="let quest of questOptions" value="{{ quest._id }}">
+                    {{ quest.name | translate }}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <p *ngIf="registerFirstPageTextState" class="text-white text-left">
+        {{ registerFirstPageText }}
+    </p>
+
+    <div class="text-center">
+        <button id="registerFirstNextButton" class="btn btn-primary custom-button" (click)="updateFormValues()">
+            {{ "JOIN NOW" | translate }}
+        </button>
+    </div>
+</form>

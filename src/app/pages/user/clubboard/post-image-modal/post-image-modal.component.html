@@ -1,0 +1,29 @@
+<div class="tc-sheet-detail-modal-header">
+    <div class="row">
+        <div class="col-10 col-lg-10 col-xl-10 d-flex">
+            <div class="tc-sheet-detail-modal-header-title mt-auto">
+                <h5 class="p-0 m-0">{{ "Image Gallery" | translate }}</h5>
+            </div>
+        </div>
+        <div class="col-2 col-lg-2 col-xl-2 d-flex justify-content-end">
+            <div class="tc-sheet-detail-modal-header-close mt-auto">
+                <i (click)="closeModal()"
+                   aria-label="Close"
+                   class="fas fa-times cursor-pointer"
+                   style="color: #000"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-body modal-options">
+    <div class="row">
+        <div class="col-sm-3" *ngFor="let image of udcImagesNameList">
+            <img
+                    (click)="selectPostImage(image); closeModal();"
+                    [src]="backendURL + image.imageURL"
+                    class="img-thumbnail cursor-pointer"
+            />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+:host {
+  .customBg {
+    background-image: url("../../../assets/img/bg-1.jpg");
+    width: 100% !important;
+    height: 100% !important;
+    background-size: cover !important;
+    min-height: -webkit-fill-available;
+  }
+  .customBgColor {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  .position-card {
+    position: absolute;
+    right: 25%;
+    top: 25%;
+  }
+}

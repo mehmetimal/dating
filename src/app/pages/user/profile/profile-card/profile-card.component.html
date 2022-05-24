@@ -1,0 +1,265 @@
+<div class="card right-card border-0 profile-shadow bg-white">
+    <div class="card-header text-center">Clubnummer: {{ clubNumber }}</div>
+    <div class="card-header text-center p-4 text-white bg-dark">
+        STECKBRIEF
+        <i
+                (click)="edit()"
+                *ngIf="!editable"
+                class="fa fa-pencil-alt default-icon-color ml-2 cursor-pointer"
+        ></i>
+        <i
+                (click)="getAddressFromCode()"
+                *ngIf="editable"
+                class=" fa fa-check default-icon-color cursor-pointer"
+        ></i>
+        <i
+                (click)="cancelSave()"
+                *ngIf="editable"
+                class="fa fa-times default-icon-color ml-1 cursor-pointer"
+        ></i>
+    </div>
+    <div *ngIf="false" class="card-header text-center p-0 m-0 mt-1 border-0">
+        <button class="btn theme-background w-100"
+                routerLink="/messages">{{ 'Nachrichten schreiben' | translate }}</button>
+    </div>
+    <div class="card-body p-1 pr-5 m-auto border-bottom">
+        <form [formGroup]="informationForm">
+            <table class="table customProfileTable">
+                <tbody>
+
+                <tr>
+                    <td>Alter:</td>
+                    <td *ngIf="!editable">{{ age }}</td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            {{ age }}
+                            <a class="bg-transparent vertical-middle ml-1 border-0 cursor-pointer"
+                               placement="left"
+                               [routerLink]="['/kontaktformular']"
+                               ngbPopover="Du kannst dein Alter nicht selbst abändern. Bitte wende dich mit einem gültigen Ausweisdokument an den Support."
+                               triggers="mouseenter:mouseleave"
+                            >
+                                <img src="../../../../../assets/svg/envelope_cyan_alter.svg" width="14"
+                                     class="cursor-pointer"/>
+                            </a>
+
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Geschlecht:</td>
+                    <td *ngIf="!editable">{{ user?.gender?.name  | translate}}</td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            {{ user?.gender?.name | translate}}
+                            <button class="bg-transparent vertical-middle ml-1 border-0"
+                                    placement="left"
+                                    ngbPopover="Du kannst dein Geschlecht nicht selbst abändern. Bitte wende dich mit einem gültigen Ausweisdokument an den Support."
+                                    triggers="mouseenter:mouseleave"
+                            >
+                                <img src="../../../../../assets/svg/envelope.svg" width="14" class="cursor-pointer"/>
+
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ich suche:</td>
+                    <td *ngIf="!editable">{{ user?.searchGender?.name | translate }}
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            {{ user?.searchGender?.name | translate }}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Größe:</td>
+                    <td *ngIf="!editable">{{ user?.height?.name }} <span *ngIf="user?.height">cm</span></td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            <select
+                                    class="form-control custom-select-icon"
+                                    formControlName="height"
+                            >
+                                <option [ngValue]="null" *ngIf="!informationForm?.value?.height" selected
+                                >{{ "I am" | translate }}...
+                                </option
+                                >
+                                <option
+                                        *ngFor="let height of heightOptions | orderBy: '+name'"
+                                        value="{{ height._id }}"
+                                >
+                                    {{ height.name | translate }} cm
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Haarfarbe:</td>
+                    <td *ngIf="!editable">{{ user?.hairColour?.name }}</td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            <select
+                                    class="form-control custom-select-icon"
+                                    formControlName="hairColour"
+                            >
+                                <option [ngValue]="null" *ngIf="!informationForm?.value?.hairColour" selected
+                                >{{ "I am" | translate }}...
+                                </option
+                                >
+                                <option
+                                        *ngFor="let hairColor of hairColorOptions"
+                                        value="{{ hairColor._id }}"
+                                >
+                                    {{ hairColor.name | translate }}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Augenfarbe:</td>
+                    <td *ngIf="!editable">{{ user?.eyeColour?.name }}</td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            <select
+                                    class="form-control custom-select-icon"
+                                    formControlName="eyeColour"
+                            >
+                                <option [ngValue]="null" *ngIf="!informationForm?.value?.eyeColour" selected
+                                >{{ "I am" | translate }}...
+                                </option
+                                >
+                                <option
+                                        *ngFor="let eyeColour of eyeColorOptions"
+                                        value="{{ eyeColour._id }}"
+                                >
+                                    {{ eyeColour.name | translate }}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Figur:</td>
+                    <td *ngIf="!editable">{{ user?.bodyBuild?.name }}</td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            <select
+                                    class="form-control custom-select-icon"
+                                    formControlName="bodyBuild"
+                            >
+                                <option [ngValue]="null" *ngIf="!informationForm?.value?.bodyBuild" selected
+                                >{{ "I am" | translate }}...
+                                </option
+                                >
+                                <option
+                                        *ngFor="let bodyBuild of bodyTypesOptions"
+                                        value="{{ bodyBuild._id }}"
+                                >
+                                    {{ bodyBuild.name | translate }}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Haarlänge:</td>
+                    <td *ngIf="!editable">{{ user?.hairLength?.name }}</td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            <select
+                                    class="form-control custom-select-icon"
+                                    formControlName="hairLength"
+                            >
+                                <option [ngValue]="null" *ngIf="!informationForm?.value?.hairLength" selected
+                                >{{ "I am" | translate }}...
+                                </option
+                                >
+                                <option
+                                        *ngFor="let hairLength of hairLengthOptions"
+                                        value="{{ hairLength._id }}"
+                                >
+                                    {{ hairLength.name | translate }}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ 'Post Code' | translate }}:</td>
+                    <td *ngIf="!editable">{{ user?.postCode | replaceWithStar }}</td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            <input
+                                    formControlName="postCode"
+                                    class="form-control custom-select-icon"
+                                    type="text"
+                                    numeric
+                                    [maxLength]="5"
+                                    placeholder="{{ 'Post Code' | translate }}"
+                            />
+                        </div>
+                        <div *ngIf="informationForm.controls['postCode'].dirty && informationForm.controls['postCode'].errors && informationForm.controls['postCode'].errors['incorrect']">
+                            <small class="form-text text-danger">
+                                {{ "Post Code is incorrect" | translate }}.
+                            </small>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Familienstand:</td>
+                    <td *ngIf="!editable">
+                        {{ user?.relationshipStatus?.name }}
+                    </td>
+                    <td *ngIf="editable" class="ppp-1">
+                        <div class="input-group input-group-sm">
+                            <select
+                                    class="form-control custom-select-icon"
+                                    formControlName="relationshipStatus"
+                            >
+                                <option [ngValue]="null" *ngIf="!informationForm?.value?.relationshipStatus" selected
+                                >{{ "I am" | translate }}...
+                                </option
+                                >
+                                <option
+                                        *ngFor="
+                              let relationshipStatus of relationshipStatusOptions
+                            "
+                                        value="{{ relationshipStatus._id }}"
+                                >
+                                    {{ relationshipStatus.name | translate }}
+                                </option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+    <div class="row pl-4 pt-1 pr-4" *ngIf="isGameActive">
+        <div class="col-sm-6 text-center">
+            <img width="100" height="100" src="../../../../../assets/img/Piercing.svg"/>
+        </div>
+        <div class="col-sm-6 text-center">
+            <img width="100" height="100" src="../../../../../assets/img/Tattoo.svg"/>
+            <p>frag mich</p>
+        </div>
+        <div class="col-sm-6 text-center">
+
+            <img width="100" height="100" src="../../../../../assets/img/Rauchen.svg"/>
+            <p>frag mich</p>
+        </div>
+        <div class="col-sm-6 text-center">
+
+            <img width="100" height="100" src="../../../../../assets/img/Alkohol.svg"/>
+            <p>ja</p>
+        </div>
+    </div>
+</div>
+
+

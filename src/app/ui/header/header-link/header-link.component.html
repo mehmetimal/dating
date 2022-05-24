@@ -1,0 +1,276 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 p-0">
+            <nav class="navbar navbar-expand-lg pr-xl-0 pr-lg-0 pr-md-0">
+                <img class="cursor-pointer logo-show-burger-bar" [routerLink]="['/eisdiele']"
+                     src="../../../assets/img/Logotext.png"
+                     style="height: 40px;"/>
+                <button class="navbar-toggler" #toggleButton type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation" style="border: 1px solid #fff;">
+                    <i class="fas fa-bars" style="color: #fff;"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto display-mobile">
+                        <img (click)="toggleMenuButton()" routerLink="/profilsuche" class="cursor-pointer"
+                             src="../../../assets/svg/icon-profilsuche.svg"
+                             style="height: 24px;cursor: pointer;"/>
+                    </ul>
+
+                    <ul class="navbar-nav mr-auto display-mobile">
+                        <img routerLink="/eisdiele" class="cursor-pointer"
+                             src="../../../assets/img/icon.png"
+                             style="height: 30px;cursor: pointer;"/>
+                    </ul>
+
+                    <ul (click)="toggleMenuButton()" class="navbar-nav m-auto logo-show-normal-bar">
+                        <img class="cursor-pointer" [routerLink]="['/eisdiele']"
+                             src="../../../assets/img/Logotext.png"
+                             style="height: 40px;"/>
+                    </ul>
+                    <ul (click)="toggleMenuButton()" class="navbar-nav login-card-dark login-card-dark-isLogin">
+                        <li class="menu-right tooltips custom-login-tooltips">
+                            <a>
+                                <i [routerLink]="['/messages']" class="fas fa-envelope"
+                                   [ngbPopover]="messagePopContent"
+                                   [openDelay]="600"
+                                   [closeDelay]="300"
+                                   triggers="mouseenter:mouseleave"
+                                   placement="bottom"
+                                   [ngStyle]="{'color': isUnreadMessage ? '#ff3366': ''}">
+                                </i>
+                            </a>
+
+                            <a (click)="openFavoriteModal(content)" style="margin-right: -30px">
+                                <i [ngbPopover]="favoritePopContent"
+                                   [openDelay]="600"
+                                   [closeDelay]="300"
+                                   triggers="mouseenter:mouseleave"
+                                   placement="bottom" class="fas fa-clipboard-list"></i>
+                            </a>
+
+                            <a id="popoverOpen" [ngbPopover]="messagePopContent"
+                               #p1="ngbPopover"
+                               placement="bottom"></a>
+
+                            <a id="feedPopover" [ngbPopover]="unansweredCallsElement"
+                               #p2="ngbPopover"
+                               placement="bottom"></a>
+
+                            <a class="feedInfoPopover"
+                               [ngbPopover]="p3.isOpen() ? '' : feedInfoPopContent"
+                               [openDelay]="600"
+                               [closeDelay]="300"
+                               triggers="mouseenter:mouseleave"
+                               [ngStyle]="{'color': checkActiveRecentTransaction() ? '#ff3366': ''}"><i
+                                    id="userRecentTransaction"
+                                    [ngbPopover]="userRecentContent" triggers="manual"
+                                    #p3="ngbPopover" (click)="togglePopover(p3)"
+                                    placement="bottom"
+                                    class="fas fa-exclamation"></i></a>
+
+                            <a class="user"><i [ngbPopover]="profileContent"
+                                  [openDelay]="600"
+                                  [closeDelay]="300"
+                                  triggers="mouseenter:mouseleave" [routerLink]="['/profile']"
+                                  class="fas fa-user-circle"></i></a>
+
+                            <a><i [ngbPopover]="settingContent"
+                                  [openDelay]="600"
+                                  [closeDelay]="300"
+                                  triggers="mouseenter:mouseleave" [routerLink]="['/profile/settings']"
+                                  class="fas fa-cog" style="cursor: pointer;"></i></a>
+
+                            <a style="margin-right: 0px !important;" (click)="logout()"
+                               *ngIf="isAuthenticated === true">
+                                <i [ngbPopover]="logoutContent"
+                                   [openDelay]="600"
+                                   [closeDelay]="300"
+                                   triggers="mouseenter:mouseleave" class="fas fa-sign-out-alt"></i>
+                            </a>
+
+                        </li>
+
+                        <ng-template #messagePopContent>
+                            <div *ngFor="let call of calls" class="mb-3">
+                                <span *ngIf="call.status === 'initiated'"
+                                      class="d-block text-center font-weight-bold text-white">{{call.sender?.name}}</span>
+                                <div class="row">
+                                    <div class="col-12 mx-auto text-center mt-1">
+                                        <a *ngIf="call.status === 'initiated'"
+                                           (click)="answer(true, call.sessionId)"
+                                           class="p-3 header-message-pop-template-call-item bg-color-primary">
+                                            <i class="fas fa-phone"></i>
+                                        </a>
+                                        <a *ngIf="call.status === 'initiated'"
+                                           (click)="answer(false, call.sessionId)"
+                                           class="p-3 header-message-pop-template-call-item bg-danger">
+                                            <i class="fas fa-phone"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template #userRecentContent>
+                            <div style="height: 300px;overflow: auto" class="m-auto">
+                                <div *ngFor="let call of calls" class="mb-3">
+                                <span *ngIf="call.status === 'initiated'"
+                                      class="d-block text-center font-weight-bold text-white">
+                                    {{call.sender?.name}} ruft dich an
+                                    </span>
+                                    <div class="row p-0 m-0">
+                                        <div class="col-12 p-0 m-0 mx-auto text-center mt-1">
+                                            <a *ngIf="call.status === 'initiated'"
+                                               (click)="answer(true, call)"
+                                               class="p-3 header-message-pop-template-call-item bg-color-primary">
+                                                <i class="fas fa-phone"></i>
+                                            </a>
+                                            <a *ngIf="call.status === 'initiated'"
+                                               (click)="answer(false, call)"
+                                               class="p-3 header-message-pop-template-call-item bg-danger">
+                                                <i class="fas fa-phone"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngFor="let userRecentTransaction of userRecentTransactions"
+                                     (click)="updateUserRecentTransaction(userRecentTransaction)">
+                                    <p [routerLink]="['/view', userRecentTransaction.fromUser?.profileName]"
+                                       class="text-white mb-2 cursor-pointer"
+                                       *ngIf="userRecentTransaction.type === viewProfile"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        {{userRecentTransaction.fromUser?.profileName}} hat dein Profil besucht.
+                                    </p>
+                                    <p class="text-white mb-2" *ngIf="userRecentTransaction.type === likeImage"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        <a routerLink="/view/{{userRecentTransaction.fromUser?.profileName}}"
+                                           class="m-0">{{userRecentTransaction.fromUser?.profileName}}</a> hat eines
+                                        deiner Bilder geliked.
+                                    </p>
+                                    <!--                                    <p class=" text-white mb-2" *ngIf="userRecentTransaction.type === calling"
+                                                                           [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                                                            {{userRecentTransaction.fromUser?.profileName}} Rief dich an
+                                                                        </p>-->
+                                    <p class="text-white mb-2" *ngIf="userRecentTransaction.type === sharedImage"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        User {{userRecentTransaction.fromUser?.profileName}} hat dir eine Freigabe für
+                                        seine Bilder erteilt. Schau sie dir am besten gleich an!
+                                    </p>
+
+                                    <p class="text-white mb-2" *ngIf="userRecentTransaction.type === sharedAllImage"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        <a routerLink="/view/{{userRecentTransaction.fromUser?.profileName}}"
+                                           class="m-0">
+                                            {{userRecentTransaction.fromUser?.profileName}} hat dir eine Bilderfreigabe
+                                            erteilt. Du kannst jetzt Bilder des Accounts ungefiltert sehen.
+                                        </a>
+                                    </p>
+
+                                    <p class="text-white mb-2" *ngIf="userRecentTransaction.type === acceptImageByAdmin"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        Der Support hat dein Bild freigegeben. Du kannst ab jetzt Einstellungen an
+                                        deinem Bild vornehmen.
+                                    </p>
+
+                                    <p class="text-white mb-2" *ngIf="userRecentTransaction.type === rejectImageByAdmin"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        Der Support hat dein Bild abgelehnt. Es entspricht nicht unserem
+                                        Verhaltenskodex. Es wird nach 14 Tagen automatisch gelöscht, wenn du es nicht
+                                        ersetzt.
+                                    </p>
+
+                                    <p class="text-white mb-2" *ngIf="userRecentTransaction.type === dateDelete"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        <a routerLink="/clubboard">
+                                            Dein Date-Anfrage am Clubboard ist abgelaufen und wurde gelöscht. Hast du
+                                            schon das nächste Date geplant?
+                                        </a>
+                                    </p>
+
+                                    <p class="text-white mb-2" *ngIf="userRecentTransaction.type === sendMessage"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        <a (click)="goMessagePage(userRecentTransaction.fromUser)" class="m-0">Du hast
+                                            eine Nachricht von</a>
+                                        <a routerLink="/view/{{userRecentTransaction.fromUser?.profileName}}"
+                                           class="m-0"> {{userRecentTransaction.fromUser?.profileName}} </a>
+                                        <a (click)="goMessagePage(userRecentTransaction.fromUser)"
+                                           class="m-0">bekommen.</a>
+                                    </p>
+
+                                    <p class="text-white mb-2" *ngIf="userRecentTransaction.type === missedCall"
+                                       [ngClass]="{'font-weight-bold': userRecentTransaction.active}">
+                                        Du hast einen verpassten Anruf
+                                        von {{userRecentTransaction.fromUser?.profileName}}.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template #unansweredCallsElement>
+                            <div *ngFor="let call of unansweredCalls" class="mb-3" (click)="resetUnAnsweredCalls()">
+                                <span class="d-block text-center font-weight-bold text-white">{{call.sender?.name}}</span>
+                                <p class="small text-white text-center m-auto">
+                                    verpasster Anruf
+                                </p>
+
+                            </div>
+                            <p class="small text-white text-center m-auto"
+                               *ngIf="!unansweredCalls || unansweredCalls.length <= 0">
+                                Keine Anrufe für jetzt
+                            </p>
+
+                        </ng-template>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <app-profile-visitor-modal [bsModalRef]="bsModalRef" [isFavoriteModal]="isFavoriteModal"
+                               [isLastVisitorModal]="isLastVisitorModal"></app-profile-visitor-modal>
+</ng-template>
+
+<ng-template #messagePopContent>
+    <div class="profile-card-dark" style="display: contents">
+        <p class="text-white text-center">Chat</p>
+    </div>
+</ng-template>
+
+<ng-template #favoritePopContent>
+    <div class="profile-card-dark" style="display: contents">
+        <p class="text-white text-center">Merkliste</p>
+    </div>
+</ng-template>
+
+<ng-template #feedInfoPopContent>
+    <div class="profile-card-dark" style="display: contents">
+        <p class="text-white text-center">Feed</p>
+    </div>
+</ng-template>
+
+<ng-template #profileContent>
+    <div class="profile-card-dark" style="display: contents">
+        <p class="text-white text-center">dein Profil</p>
+    </div>
+</ng-template>
+
+<ng-template #settingContent>
+    <div class="profile-card-dark" style="display: contents">
+        <p class="text-white text-center">Accounteinstellungen</p>
+    </div>
+</ng-template>
+
+<ng-template #logoutContent>
+    <div class="profile-card-dark" style="display: contents">
+        <p class="text-white text-center">Ausloggen</p>
+    </div>
+</ng-template>
+
+
+

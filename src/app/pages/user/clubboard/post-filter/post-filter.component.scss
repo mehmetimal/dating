@@ -1,0 +1,112 @@
+@import '~ng5-slider/scss/ng5-slider';
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #FF3366 !important;
+}
+
+
+.pin-erstellen {
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  padding: 5px;
+
+  &-text {
+    font-size: 12pt;
+    color: #666666;
+    font-family: "Noto Sans SC", sans-serif;
+  }
+}
+
+.clubboard-add-icon {
+  font-size: 82px;
+  cursor: pointer;
+  color: #FF3366;
+}
+
+.img-thumbnail {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.modal-options {
+  overflow: auto;
+  overflow-y: auto;
+  max-height: 450px;
+}
+
+
+::ng-deep {
+  .custom-slider {
+    .ng5-slider {
+      .ng5-slider-pointer {
+        cursor: pointer;
+        width: $handleSize / 2;
+        height: $handleSize / 2;
+        top: -$handleSize / 4 + $barDimension / 2;
+        margin-left: $handleSize / 4 + $barDimension / 2;
+        @include rounded($handleSize / 2);
+      }
+    }
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-pointer:after {
+    display: none;
+  }
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
+  color: #666666 !important;
+  background: #666666 !important;
+}
+
+
+.filter-fixed-top {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.filter-category-options {
+  height: 40px;
+}
+
+@media (max-width: 768px) {
+
+  .search-bottom {
+    margin-bottom: 10px;
+  }
+  .filter-text-right {
+    margin-right: 7px;
+  }
+  .font-12 {
+    font-size: 12px !important;
+    padding-top: 3px;
+  }
+  .custom-select-icon-two {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background: url(../../../../../assets/img/arrowBottom.png) 96% / 12px no-repeat !important;
+    background-color: #fff !important;
+  }
+
+}
+
+@media (max-width: 576px) {
+
+  .filter-left {
+    margin-left: -6px;
+  }
+  .custom-slider {
+    margin-top: 10px;
+  }
+
+}
+
+/*@media (max-width: 320px) {
+  .pin-erstellen {
+    width: 130px;
+  }
+}*/

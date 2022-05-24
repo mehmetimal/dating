@@ -1,0 +1,47 @@
+<h6>News suchen</h6>
+<div class="news-search-content border-top pt-4">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white" id="basic-addon1"><i
+                                    class="fa fa-search text-muted"></i></span>
+        </div>
+        <input type="text"
+               [(ngModel)]="title"
+               class="dating-custom-input-border-radius form-control border-left-0 pl-0 text-muted mr-1"
+               placeholder="Suche oder Stichwort..." aria-label="Suche oder Stichwort..."
+               aria-describedby="basic-addon1">
+        <button class="btn theme-outline-button" (click)="searchNews()">Suchen!</button>
+    </div>
+</div>
+<h6 class="mt-5">Beliebteste News</h6>
+<div class="news-popular-content border-top pt-2">
+    <div [routerLink]="'/neuigkeiten/' + card._id"  class="card bg-transparent border-top-0 border-right-0 border-left-0 border-bottom pb-2 mb-2 cursor-pointer" *ngFor="let card of popularNewsCard">
+        <div class="card-horizontal">
+            <div class="img-square-wrapper p-0 pr-1">
+                <img height="50" width="50" src="http://via.placeholder.com/100x100"
+                     alt="Card image cap">
+            </div>
+            <div class="card-body p-0 pl-1">
+                <small><p class="m-0 p-0"><b>{{ card?.title }}</b></p></small>
+                <small class="theme-color">{{ card?.likes?.length }} <i class="fas fa-heart"></i></small>
+            </div>
+        </div>
+    </div>
+</div>
+<h6 class="mt-5">Archiv</h6>
+<div class="news-archive-content border-top pt-2">
+    <div class="accordion">
+        <div class="accordion-item" *ngFor="let item of archiveCard; let i = index;">
+            <a data-toggle="collapse" (click)="clickArchiveItem($event)" href="#collapse{{i}}" role="button">
+                <i class="fa fa-angle-right"></i> {{ item?._id?.month}} {{ item?._id?.year}}
+            </a>
+            <div class="collapse" id="collapse{{i}}">
+                <ul>
+                    <li class="cursor-pointer" [routerLink]="'/neuigkeiten/' + news._id"  *ngFor="let news of item?.news">
+                        {{ news?.title }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<!--<div *ngIf="!isPremium">
+    <iframe sandbox="allow-top-navigation allow-same-origin allow-scripts allow-forms allow-popups"
+            [src]="iframeUrl | safe:'resourceUrl'" frameborder="0" width="100%"
+            style="height: 700px !important;"></iframe>
+</div>-->
+
+<div class="container-fluid bg-light pb-5 pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mb-5 text-center">
+                <h4>{{pricePage?.pageTitle}}</h4>
+            </div>
+
+            <div *ngFor="let item of priceCard"
+                 (click)="selectPrice(item)"
+                 [ngClass]="{'col-4': priceCard.length <= 3, 'col-3': priceCard.length > 3}">
+                <div [id]="item?.title" class="card mt-2 border-0 custom-box-shadow cursor-pointer"
+                     [ngClass]="{'custom-price-card-bg text-white': item?.isHighlighted === true, 'custom-click-shadow': selectedItem?.title === item?.title}">
+                    <div class="card-body text-center">
+                        <h4 class="card-title"> {{ item?.title }} </h4>
+                        <h1 class="card-title display-4"><strong>{{ item?.price }} <i *ngIf="item?.isHighlighted"
+                                                                                      class="fas fa-euro-sign"></i></strong>
+                        </h1>
+                        <small [ngClass]="{'text-white': item?.isHighlighted === true, 'text-muted': item?.isHighlighted === false}"> {{ item?.durationOfSubscribe }}
+                            monatlich</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9"></div>
+            <!--    <div class="col-3 text-center mt-5" *ngIf="isAuthenticated && priceCard && priceCard.length>0">
+                    <div class="form-check" *ngIf="pricePage?.confirmText">
+                        <input type="checkbox" class="form-check-input" id="confirmCheckBox" name="confirmCheckBox" [(ngModel)]="confirmCheckBoxValue">
+                        <label class="form-check-label" for="confirmCheckBox">{{pricePage?.confirmText}}</label>
+                    </div>
+                    <a *ngIf="pricePage?.buyButtonText" class="btn theme-background pl-5 pr-5 mt-4" [ngClass]="{'disabled': (!confirmCheckBoxValue || !selectedItem)}" (click)="payment(selectedItem)">{{pricePage?.buyButtonText}}</a>
+                </div>
+ -->
+            <div class="col-12 mt-5 text-center text-muted">
+                <span style="font-size: 0.5rem !important;">{{pricePage?.explanation}}</span>
+            </div>
+
+            <div class="col-12 text-right" *ngIf="!isPremium">
+                <button class="btn theme-background w-25" [disabled]="!selectedPrice" (click)="openPaymentModal()">Payment</button>
+            </div>
+
+        </div>
+    </div>
+</div>

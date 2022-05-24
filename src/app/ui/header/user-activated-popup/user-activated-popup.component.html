@@ -1,0 +1,27 @@
+<button class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" hidden id="modalOpenButton"
+        type="button"></button>
+
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content custom-modal-content">
+            <div class="modal-header border-bottom-0">
+                <button aria-label="Close" id="closeModalButton" class="close text-white" data-dismiss="modal"
+                        type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-white">
+                <h4>Bitte verifiziere deine Emailadresse:</h4>
+                <p>Bitte klicke auf den Link in der Mail um deine Adresse zu bestatigen. Erst danch erhaltst du Zugang
+                    zu deinem Profil. Bitte überprüfen Sie auch ihren Spamordner.</p>
+                <h5>Du hast keine Email erhalten?</h5>
+                <div class="text-center mb-4 mt-3">
+                    <a class="cursor-pointer text-primary" (click)="sendEmail()">Erneut Senden</a>
+                </div>
+                <p>Falls du weiterhin keine Email erhaltst, wende dich bitte im Kontaktformular an unseren Support. <br>
+                    Der Versand kann einige Minuten beanspruchen.</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,178 @@
+@import '~ng5-slider/scss/ng5-slider';
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+  display: flex !important;
+}
+
+
+.tc-sheet-left {
+
+  @media (min-width: 991px) {
+    margin-top: 107px;
+    z-index: 99;
+    position: absolute;
+    margin-right: -50px;
+  }
+
+  &-card {
+    border-radius: 6px;
+    background-color: #e6e6e6;
+    border: 0.5px solid #999999;
+  }
+
+  &-header {
+    margin-top: 32px;
+    background-color: rgb(153, 153, 153);
+    font-size: 20px;
+    border-radius: 0px;
+    color: #ffffff;
+    font-family: "Noto Sans SC";
+    font-weight: 400;
+  }
+
+  &-label {
+    align-items: center;
+    display: flex;
+    // justify-content: center;
+    font-size: 15px;
+    color: #666666;
+    font-family: "Noto Sans SC";
+    font-weight: 400;
+
+  }
+
+  &-plz-alter-input {
+    border: 0.5px solid #999999 !important;
+    border-radius: 3px !important;
+    background-color: #ffffff !important;
+
+    font-size: 14px;
+  }
+
+  &-weitere-options {
+    height: 90px;
+    width: 140px;;
+    overflow: auto;
+    background-color: #ffffff;
+    border: 0.5px solid #999999;
+    border-radius: 3px;
+  }
+
+  &-custom-input-group-item {
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
+  }
+
+  &-custom-input-group-item-text {
+    width: 190px;
+    padding-left: 15px;
+    color: #757575;
+    font-size: 10px;
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+
+  &-checkbox-list-title {
+    font-size: 11px;
+    color: #666666;
+    font-family: "Noto Sans SC";
+    font-weight: 400;
+  }
+
+  &-jetzt-button {
+    text-align: center;
+    background-color: #ff3366;
+    border-radius: 3px;
+    font-size: 13px;
+    color: #ffffff;
+    font-family: "Noto Sans SC";
+    font-weight: 500;
+    width: 100%;
+    height: 36px;
+  }
+
+  &-suche-input {
+    border: 0.5px solid #999999;
+    border-right: none;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+
+    font-size: 14px;
+
+    &::placeholder {
+      color: #F8F8F8;
+    }
+  }
+
+  &-suche-input-icon {
+    div {
+      background-color: #ffffff;
+      border: 0.5px solid #999999;
+      border-left: none;
+      border-top-right-radius: 3px !important;
+      border-bottom-right-radius: 3px !important;
+      padding: 0px;
+      padding-right: 10px;
+
+      i {
+        color: #84D7D9;
+        font-size: 26px;
+      }
+    }
+  }
+
+  &-suche-input-text {
+    div {
+      background-color: #ffffff;
+      border: 1px solid #999999;
+      border-top-right-radius: 1.5px !important;
+      border-bottom-right-radius: 1.5px !important;
+      padding: 0px 10px 0px 10px;
+
+      i {
+        // color: #84D7D9;
+        //font-size: 21px;
+      }
+    }
+  }
+}
+
+
+::ng-deep {
+  .custom-slider {
+    .ng5-slider {
+      .ng5-slider-pointer {
+        cursor: pointer;
+        width: $handleSize / 2 !important;
+        height: $handleSize / 2 !important;
+        top: -$handleSize / 4 + $barDimension / 2 !important;
+        margin-left: $handleSize / 4 + $barDimension / 2 !important;
+        @include rounded($handleSize / 2);
+      }
+
+      .ng5-slider-inner-tooltip {
+        font-size: 11px !important;
+        color: #666666 !important;
+        font-family: "Noto Sans SC" !important;
+        font-weight: 400 !important;
+        padding-top: 12px !important;
+      }
+    }
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-pointer:after {
+    display: none;
+  }
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
+  color: #999999 !important;
+  background: #999999 !important;
+}
+
+

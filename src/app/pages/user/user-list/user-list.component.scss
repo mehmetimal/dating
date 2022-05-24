@@ -1,0 +1,79 @@
+.image-search{
+  border: 6px solid #e6e6e7;
+}
+.img-thumbnail-custom {
+  padding: -1px !important;
+  background-color: #666666;
+  border: 1px solid #666666;
+  border-radius: 0.25rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.image-blur-custom {
+  filter: blur(4px);
+  -webkit-filter: blur(4px);
+}
+
+.tc-sheet-main {
+  &-card {
+    height: 1000px;
+    .card-body {
+      height: 700px;
+      max-height: 850px;
+      overflow: auto;
+      @media (min-width: 991px) {
+        padding-left: 80px;
+      }
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+
+  &-header {
+    background-color: #66CCCC;
+    margin-top: 15px;
+    text-align: center;
+    border-bottom: 0 !important;
+    font-size: 24px;
+    color: #ffffff;
+    font-family: "Noto Sans SC";
+    font-weight: 400;
+  }
+  &-reload-button {
+    color: #ffffff;
+    border-radius: 3px;
+    background-color: rgb(204, 204, 204);
+    width: 500px;
+    height: 45px;
+  }
+}
+
+.scroll-button {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+  outline: none;
+}
+
+.result-profileName {
+  font-size: 13px;
+  color: #000000;
+  font-family: "Noto Sans SC";
+  font-weight: 700;
+}
+
+.result-alter-plz {
+  font-size: 12px;
+  color: #000000;
+  font-family: "Noto Sans SC";
+  font-weight: 300;
+}
